@@ -1,11 +1,12 @@
 <div class="container-fluid container-fluid-purple">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <br /><br />
-                <img src="images/pharmacy.png" />
+                <img class="visible-md visible-lg" src="images/pharmacy.png" />
+                <img class="visible-xs visible-sm" src="images/pharmacy.png" style="width:48px;" />
             </div><!-- close div .col-md6 -->
-            <div class="col-md-6" style="padding-left:0px;padding-right:0px;">
+            <div class="col-sx-6 col-sm-6 col-md-6" style="padding-left:0px;padding-right:0px;">
                 <br /><br />
                 <div class="navs">
                     <!--
@@ -20,12 +21,12 @@
 
         <br /><br /><br /><br /><br /><br />
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-6">
                 <div class="motto" id="motto-hakiki">
-                    <h1>Hakiki<br/>taarifa za<br />duka la dawa</h1>
+                    <h1 class="visible-md visible-lg">Hakiki<br/>taarifa za<br />duka la dawa</h1>
                 </div>
                 <div class="motto" id="motto-ripoti" style="display:none;">
-                    <h1>Ripoti<br/>matatizo ya<br />duka la dawa</h1>
+                    <h1 class="visible-md visible-lg">Ripoti<br/>matatizo ya<br />duka la dawa</h1>
                 </div>
             </div>
             <div class="col-md-6">
