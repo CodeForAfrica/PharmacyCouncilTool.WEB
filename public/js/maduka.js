@@ -52,9 +52,11 @@ $('#hakiki-button').click(function(){
         cache: true,
         success: function(data){
             var pharmacy = data.pharmacies[0];
+
+            $('.pharmacy-registration-number').html($('#pharmacy-regno').val());
+
             if(pharmacy){
                 // Preparing values
-                $('.pharmacy-registration-number').html(pharmacy.registration_number);
                 $('#pharmacy-name').html(pharmacy.name);
                 $('#pharmacist-name').html(pharmacy.pharmacist);
                 $('#pharmacy-location').html(pharmacy.location);
