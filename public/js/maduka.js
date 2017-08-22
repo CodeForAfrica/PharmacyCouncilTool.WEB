@@ -1,5 +1,5 @@
 // API url
-var API_URL = "http://127.0.0.1:8090/api/";
+var API_URL = "http://htools-tz-pharmacy-reporting-tool-api.dokku-1.codefortanzania.org/api/";
 
 $('#hakiki-duka-la-dawa-button').click(function(){
     $('#container-fluid-hakiki').slideUp("slow");
