@@ -1,3 +1,6 @@
+// API url
+var API_URL = "http://127.0.0.1:8090/api/";
+
 $('#hakiki-duka-la-dawa-button').click(function(){
     $('#container-fluid-hakiki').slideUp("slow");
     $('#hakiki-form-and-results').slideDown("slow");
@@ -41,7 +44,7 @@ $('#pharmacy-regno').keyup(function(){
 });
 
 $('#hakiki-button').click(function(){
-    var url = "http://127.0.0.1:8090/api/pharmacies?registration_number=" + $('#pharmacy-regno').val();
+    var url = API_URL + "pharmacies?registration_number=" + $('#pharmacy-regno').val();
 
     $.ajax({
         dataType: "json",
@@ -50,7 +53,6 @@ $('#hakiki-button').click(function(){
         success: function(data){
             var pharmacy = data.pharmacies[0];
             if(pharmacy){
-                console.log('FOUND');
                 // Preparing values
                 $('.pharmacy-registration-number').html(pharmacy.registration_number);
                 $('#pharmacy-name').html(pharmacy.name);
@@ -62,8 +64,6 @@ $('#hakiki-button').click(function(){
                 $('#hakiki-results-found').show();
             }
             else{
-                console.log('NOT FOUND');
-
                 $('#hakiki-form').hide();
                 $('#hakiki-results-not-found').show();
             }
@@ -130,7 +130,7 @@ function validateRipotiForm(){
 
 
 $('#ripoti-button').click(function(){
-    var url = "http://127.0.0.1:8090/api/reports";
+    var url = API_URL + "reports";
 
     var data = {
         gender: $('#gender').val(),
