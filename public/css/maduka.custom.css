@@ -437,11 +437,17 @@ body.login{
 	margin-left: -33px;
 }
 
+.hakiki-results-found, .hakiki-results-not-found, .ripoti-results{
+    font-family: 'Roboto', sans-serif;
+}
+
 .btn-pink { 
   color: #FFFFFF; 
   background-color: #ff73b3; 
   border-color: #FF73B3;
   /*border-radius: 40px;*/
+  font-family: 'Baloo Bhaina', cursive;
+  font-size: 18px;
 } 
  
 .btn-pink:hover, 

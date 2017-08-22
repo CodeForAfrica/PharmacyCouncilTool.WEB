@@ -37,41 +37,91 @@
 
                     <div class="tab-content">
                         <div id="hakiki-tab" class="tab-pane fade in active">
-                            <div class="hakiki-form no-radius">
+                            <div class="hakiki-form no-radius" id="hakiki-form" style="display:;">
                                 <div class="arrow_box">
-                                    <span style="display:none;">TFDA/0111/D/PRE/REG/0023</span>
                                     <img src="images/sticker_blured.jpg" class="img-responsive"/>
                                 </div>
                                 <br />
                                 <br />
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Namba ya Usajili wa Duka la Dawa" />
+                                    <input type="text" class="form-control" placeholder="Namba ya Usajili wa Duka la Dawa" id="pharmacy-regno"/>
                                 </div>
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-lg btn-block btn-pink no-radius">HAKIKI</button>
+                                    <button type="button" class="btn btn-lg btn-block btn-pink no-radius" id="hakiki-button" disabled>HAKIKI</button>
                                 </div>
-                            </div>
-                        </div>
+                            </div><!-- close div .hakiki-form -->
+
+                            <div class="hakiki-results-found" id="hakiki-results-found" style="display:none;">
+                                <div class="alert alert-success" role="alert">
+                                    <span class="fa fa-check-circle-o"></span>&nbsp;&nbsp;
+                                    <span>Duka la dawa lenye namba <strong class="pharmacy-registration-number">222XX</strong> limesajiliwa.</span>
+                                </div><!-- close div .alert-success -->
+                                <div class="maelezo">
+                                    <br />
+                                    <table class="table">
+                                        <tr>
+                                            <td style="width:30%;"><strong>Jina la Duka</strong></td>
+                                            <td><span id="pharmacy-name">Jina Duka</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Muuzaji</strong></td>
+                                            <td><span id="pharmacist-name">Jina Muuzaji</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sehemu</strong></td>
+                                            <td><span id="pharmacy-location">Jina Sehemu</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Tarehe ya Usajili</strong></td>
+                                            <td><span id="pharmacy-registration-date">Tarehe</span></td>
+                                        </tr>
+                                    </table>
+                                </div><!-- close div .maelezo -->
+                                <button type="button" class="btn btn-pink no-radius btn-block hakiki-duka-jingine-button">HAKIKI DUKA LA DAWA JINGINE</button>
+                            </div><!-- close div .hakiki-results-found -->
+
+                            <div class="hakiki-results-not-found" id="hakiki-results-not-found"style="display:none;">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="fa fa-ban"></span>&nbsp;&nbsp;
+                                    <span>Duka la dawa lenye namba <strong class="pharmacy-registration-number">222XX</strong> halijasajiliwa.</span>
+                                </div><!-- close div .alert-success -->
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                <br /><br /><br />
+                                <button type="button" class="btn btn-pink no-radius btn-block hakiki-duka-jingine-button">HAKIKI DUKA LA DAWA JINGINE</button>
+                            </div><!-- closed div .hakiki-results-not-found -->
+                        </div><!-- close div #hakiki-tab -->
                         <div id="ripoti-tab" class="tab-pane fade">
-                            <div class="hakiki-form no-radius">
+                            <div class="hakiki-form no-radius" id="ripoti-form">
                                 <div class="form-group">
-                                    <select class="form-control">
-                                        <option selected="selected">Jinsia yako</option>
-                                        <option>Kiume</option>
-                                        <option>Kike</option>
+                                    <select class="form-control" id="gender">
+                                        <option value="0" selected="selected">Jinsia yako</option>
+                                        <option value="Kiume">Kiume</option>
+                                        <option value="Kike">Kike</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Mahali ulipo" />
+                                    <input type="text" class="form-control" id="location" placeholder="Mahali ulipo" />
                                 </div>
                                 <div class="form-group">
-                                    <textarea class="form-control" placeholder="Tatizo"></textarea>
+                                    <textarea class="form-control" id="message" placeholder="Tatizo"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-lg btn-block btn-pink no-radius">RIPOTI</button>
+                                    <button type="button" class="btn btn-lg btn-block btn-pink no-radius" id="ripoti-button" disabled>RIPOTI</button>
                                 </div>
-                            </div>
-                        </div>
+                            </div><!-- close div .hakiki-form -->
+
+                            <div id="ripoti-results" style="display:none;">
+                                 <div class="alert alert-success" role="alert">
+                                    <span class="fa fa-check-circle-o"></span>&nbsp;&nbsp;
+                                    <span>Asante kwa kuripoti tatizo kwenye duka la dawa.</span>
+                                </div><!-- close div .alert-success -->
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                <br /><br /><br />
+                                <button type="button" class="btn btn-pink no-radius btn-block ripoti-tatizo-jingine-button">RIPOTI TATIZO JINGINE</button>
+                            </div><!-- close div #ripoti-results -->
+                        </div><!-- close div #ripoti-tab -->
                     </div>
                 </div>
             </div><!-- close div .col-md-6 -->
