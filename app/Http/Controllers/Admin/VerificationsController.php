@@ -17,7 +17,8 @@ class VerificationsController extends Controller
         else{
             $user = session('user');
             $data = array(
-                'page' => 'Verifications'
+                'page' => 'Verifications',
+                'verifications' => null
             );
             return view('admin.verifications',compact('user','data'));
         }

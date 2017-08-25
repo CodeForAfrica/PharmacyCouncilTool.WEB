@@ -244,32 +244,14 @@ body.login{
     padding-bottom: 0px;
 }
 
-.admin-top .navs ul li a:link{
-    text-decoration: none;
-    color: #fff;
-}
-
 .admin-top .navs ul li a:hover{
     text-decoration: none;
     color: #ff73b3;
 }
 
-.admin-top .navs ul li.active{
-    background: #3c3f63;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 0px;
-    border-radius: 30px;
-}
-
-.admin-top .navs ul li.active a:link{
+.admin-top .navs ul li.active a{
     text-decoration: none;
-    color: #fff;
-}
-
-.admin-top .navs ul li.active a:hover{
-    text-decoration: none;
-    color: #fff;
+    color: #ff73b3;
 }
 
 .admin-top .user-menu{
@@ -300,6 +282,14 @@ body.login{
     font-size: 16px;
 }
 
+.user-menu .dropdown{
+    cursor: pointer;
+}
+
+.user-menu .dropdown-menu{
+    padding: 10px;
+}
+
 .admin-bottom{
     background: #f4f5f9;
     padding-left: 15%;
@@ -320,7 +310,7 @@ body.login{
     padding-right: 15%;
     height: 120px;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 50px;
 }
 
 #return-to-top {
@@ -459,6 +449,14 @@ body.login{
 
 .hakiki-results-found, .hakiki-results-not-found, .ripoti-results{
     font-family: 'Roboto', sans-serif;
+}
+
+.color-pink{
+    color: #ff73b3;
+}
+
+.background-pink{
+    background: #ff73b3;
 }
 
 .btn-pink { 

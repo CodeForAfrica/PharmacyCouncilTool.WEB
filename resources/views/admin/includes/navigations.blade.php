@@ -1,7 +1,7 @@
 <div class="row admin-top">
     <div class="col-md-8">
         <div class="logo">
-            <img src="{{ asset('images/pharmacy.png') }}" />
+            <a href="{{ route('admin.dashboard') }}"><img src="{{ asset('images/pharmacy.png') }}" /></a>
         </div>
         <div class="navs">
             <ul>
@@ -14,10 +14,18 @@
         </div><!-- close div .navs -->
     </div><!-- close div .col-md9 -->
     <div class="col-md-4 user-menu">
-        <span class="fa fa-angle-down arrow-down pull-right"></span>
-        <div class="image pull-right">
-            <span class="fa fa-user"></span>
-        </div><!-- close div .image -->
-        <span class="admin-name pull-right">Hello, {{ $user->name }}!</span>
+        <div class="dropdown">
+            <div class="dropdown-toggle" data-toggle="dropdown">
+                <span class="fa fa-angle-down arrow-down pull-right"></span>
+                <div class="image pull-right">
+                    <span class="fa fa-user"></span>
+                </div><!-- close div .image -->
+                <span class="admin-name pull-right">Hello, {{ $user->name }}!</span>
+            </div><!-- close div .dropdown-toggle -->
+            <ul class="dropdown-menu pull-right" style="top:60px;">
+                <li><a href="#">My Account</a></li>
+                <li><a href="{{ route('admin.logout') }}">Logout</a></li>
+            </ul>
+        </div><!-- close div .dropdown -->
     </div><!-- close div .user-menu -->
 </div><!-- close div .admin-top -->

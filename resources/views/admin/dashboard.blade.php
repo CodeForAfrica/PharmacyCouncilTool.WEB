@@ -17,7 +17,32 @@
         </div><!-- close div .admin-bottom -->
 
         <div class="row admin-contents">
-            <h3>Contents will be here</h3>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="well">
+                        <h1 class="color-pink">{{ count($data['pharmacies']) }}</h1>
+                        <h2>Pharmacies</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="well">
+                        <h1 class="color-pink">0</h1>
+                        <h2>Verifications</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="well">
+                        <h1 class="color-pink">0</h1>
+                        <h2>Reports</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="well">
+                        <h1 class="color-pink">0</h1>
+                        <h2>Users</h2>
+                    </div>
+                </div>
+            </div><!-- close div .row -->
         </div><!-- close div .admin-contents -->
     </div><!-- close div .container-fluid -->
 @stop
