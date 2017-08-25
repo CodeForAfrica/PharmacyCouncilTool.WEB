@@ -244,12 +244,32 @@ body.login{
     padding-bottom: 0px;
 }
 
+.admin-top .navs ul li a:link{
+    text-decoration: none;
+    color: #fff;
+}
+
+.admin-top .navs ul li a:hover{
+    text-decoration: none;
+    color: #ff73b3;
+}
+
 .admin-top .navs ul li.active{
     background: #3c3f63;
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 0px;
     border-radius: 30px;
+}
+
+.admin-top .navs ul li.active a:link{
+    text-decoration: none;
+    color: #fff;
+}
+
+.admin-top .navs ul li.active a:hover{
+    text-decoration: none;
+    color: #fff;
 }
 
 .admin-top .user-menu{

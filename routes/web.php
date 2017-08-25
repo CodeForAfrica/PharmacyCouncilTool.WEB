@@ -28,4 +28,27 @@ Route::post('admin/auth', [
 
 Route::get('admin/logout','Admin\LogoutController@index');
 
-Route::get('admin/dashboard','Admin\DashboardController@index');
+Route::get('admin/dashboard', [
+    'uses' => 'Admin\DashboardController@index',
+    'as' => 'admin.dashboard'
+]);
+
+Route::get('admin/pharmacies', [
+    'uses' => 'Admin\PharmaciesController@index',
+    'as' => 'admin.pharmacies'
+]);
+
+Route::get('admin/verifications', [
+    'uses' => 'Admin\VerificationsController@index',
+    'as' => 'admin.verifications'
+]);
+
+Route::get('admin/reports', [
+    'uses' => 'Admin\ReportsController@index',
+    'as' => 'admin.reports'
+]);
+
+Route::get('admin/users', [
+    'uses' => 'Admin\UsersController@index',
+    'as' => 'admin.users'
+]);

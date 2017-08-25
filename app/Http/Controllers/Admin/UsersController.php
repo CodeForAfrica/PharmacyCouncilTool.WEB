@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class UsersController extends Controller
 {
     public function index()
     {
@@ -17,9 +17,9 @@ class DashboardController extends Controller
         else{
             $user = session('user');
             $data = array(
-                'page' => 'Dashboard'
+                'page' => 'Users'
             );
-            return view('admin.dashboard',compact('user','data'));
+            return view('admin.users',compact('user','data'));
         }
     }
 }
