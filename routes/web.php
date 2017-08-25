@@ -14,3 +14,18 @@
 Route::get('/', 'HomeController@index');
 
 Route::get('admin/login','Admin\LoginController@index');
+Route::get('admin',function(){
+    return redirect('admin/login');
+});
+Route::get('admin/auth',function(){
+    return redirect('admin/login');
+});
+
+Route::post('admin/auth', [
+    'uses' => 'Admin\AuthController@index',
+    'as' => 'admin.auth'
+]);
+
+Route::get('admin/logout','Admin\LogoutController@index');
+
+Route::get('admin/dashboard','Admin\DashboardController@index');

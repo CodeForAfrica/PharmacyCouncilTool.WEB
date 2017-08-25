@@ -5,19 +5,17 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use Auth;
-
-class LoginController extends Controller
+class DashboardController extends Controller
 {
     public function index()
     {
         // Checking for session.
-        if(session()->has('user'))
+        if(!session()->has('user'))
         {
-            return redirect('admin/dashboard');
+            return redirect('admin/login');
         }
         else{
-            return view('admin.login');
+            echo 'Dashboard HERE.';
         }
     }
 }
