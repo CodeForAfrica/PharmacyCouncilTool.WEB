@@ -12,3 +12,46 @@
 */
 
 Route::get('/', 'HomeController@index');
+
+Route::get('admin/login','Admin\LoginController@index');
+Route::get('admin',function(){
+    return redirect('admin/login');
+});
+Route::get('admin/auth',function(){
+    return redirect('admin/login');
+});
+
+Route::post('admin/auth', [
+    'uses' => 'Admin\AuthController@index',
+    'as' => 'admin.auth'
+]);
+
+Route::get('admin/logout', [
+    'uses' => 'Admin\LogoutController@index',
+    'as' => 'admin.logout'
+]);
+
+Route::get('admin/dashboard', [
+    'uses' => 'Admin\DashboardController@index',
+    'as' => 'admin.dashboard'
+]);
+
+Route::get('admin/pharmacies', [
+    'uses' => 'Admin\PharmaciesController@index',
+    'as' => 'admin.pharmacies'
+]);
+
+Route::get('admin/verifications', [
+    'uses' => 'Admin\VerificationsController@index',
+    'as' => 'admin.verifications'
+]);
+
+Route::get('admin/reports', [
+    'uses' => 'Admin\ReportsController@index',
+    'as' => 'admin.reports'
+]);
+
+Route::get('admin/users', [
+    'uses' => 'Admin\UsersController@index',
+    'as' => 'admin.users'
+]);
