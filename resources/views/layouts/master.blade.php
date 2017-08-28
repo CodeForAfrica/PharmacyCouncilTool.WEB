@@ -21,5 +21,6 @@
 
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/maduka.js') }}" type="text/javascript"></script>
+    @yield('scripts')
 </body>
 </html>

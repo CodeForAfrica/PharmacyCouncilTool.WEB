@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid margin-bottom-100px">
         @include('admin.includes.navigations')
 
         <div class="row admin-bottom">
@@ -32,13 +32,13 @@
                 </div>
                 <div class="col-md-3">
                     <div class="well">
-                        <h1 class="color-pink">0</h1>
+                        <h1 class="color-pink">{{ count($data['reports']) }}</h1>
                         <h2>Reports</h2>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="well">
-                        <h1 class="color-pink">0</h1>
+                        <h1 class="color-pink">{{ count($data['users']) }}</h1>
                         <h2>Users</h2>
                     </div>
                 </div>
