@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid margin-bottom-100px">
         @include('admin.includes.navigations')
 
         <div class="row admin-bottom">

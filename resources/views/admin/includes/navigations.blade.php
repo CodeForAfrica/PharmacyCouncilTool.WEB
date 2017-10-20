@@ -23,9 +23,26 @@
                 <span class="admin-name pull-right">Hello, {{ $user->name }}!</span>
             </div><!-- close div .dropdown-toggle -->
             <ul class="dropdown-menu pull-right" style="top:60px;">
+                <li><a href="#" data-toggle="modal" data-target="#apiTokenModal">API Token</a></li>
                 <li><a href="#">My Account</a></li>
                 <li><a href="{{ route('admin.logout') }}">Logout</a></li>
             </ul>
         </div><!-- close div .dropdown -->
     </div><!-- close div .user-menu -->
+
+    <!-- Modal -->
+    <div id="apiTokenModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Your API Token</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{ $user->api_token }}</p>
+                </div>
+            </div><!-- close div .modal-content -->
+        </div>
+    </div><!-- close div .modal -->
 </div><!-- close div .admin-top -->

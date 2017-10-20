@@ -451,12 +451,24 @@ body.login{
     font-family: 'Roboto', sans-serif;
 }
 
+.margin-bottom-100px{
+    margin-bottom: 100px;
+}
+
 .color-pink{
     color: #ff73b3;
 }
 
 .background-pink{
     background: #ff73b3;
+}
+
+table td{
+    text-align: left;
+}
+
+.borderless td, .borderless th {
+    border: none !important;
 }
 
 .btn-pink { 
