@@ -134,3 +134,96 @@ Route::post('admin/users/create', [
     'uses' => 'Admin\UsersController@create',
     'as' => 'admin.users.create'
 ]);
+
+// Administrator Dispensers routes.
+Route::get('admin/dispensers', [
+    'uses' => 'Admin\DispensersController@index',
+    'as' => 'admin.dispensers'
+]);
+
+Route::get('admin/dispensers/view/{id}', [
+    'uses' => 'Admin\DispensersController@view',
+    'as' => 'admin.dispensers.view'
+]);
+
+Route::get('admin/dispensers/edit/{id}', [
+    'uses' => 'Admin\DispensersController@edit',
+    'as' => 'admin.dispensers.edit'
+]);
+
+Route::get('admin/dispensers/delete/{id}', [
+    'uses' => 'Admin\DispensersController@delete',
+    'as' => 'admin.dispensers.delete'
+]);
+
+Route::post('admin/dispensers', [
+    'uses' => 'Admin\DispensersController@update',
+    'as' => 'admin.dispensers.update'
+]);
+
+Route::post('admin/dispensers/create', [
+    'uses' => 'Admin\DispensersController@create',
+    'as' => 'admin.dispensers.create'
+]);
+
+// Administrator Addos routes.
+Route::get('admin/addos', [
+    'uses' => 'Admin\AddosController@index',
+    'as' => 'admin.addos'
+]);
+
+Route::get('admin/addos/view/{id}', [
+    'uses' => 'Admin\AddosController@view',
+    'as' => 'admin.addos.view'
+]);
+
+Route::get('admin/addos/edit/{id}', [
+    'uses' => 'Admin\AddosController@edit',
+    'as' => 'admin.addos.edit'
+]);
+
+Route::get('admin/addos/delete/{id}', [
+    'uses' => 'Admin\AddosController@delete',
+    'as' => 'admin.addos.delete'
+]);
+
+Route::post('admin/addos', [
+    'uses' => 'Admin\AddosController@update',
+    'as' => 'admin.addos.update'
+]);
+
+Route::post('admin/addos/create', [
+    'uses' => 'Admin\AddosController@create',
+    'as' => 'admin.addos.create'
+]);
+
+// Administrator Premises routes.
+Route::get('admin/premises', [
+    'uses' => 'Admin\PremisesController@index',
+    'as' => 'admin.premises'
+]);
+
+Route::get('admin/premises/view/{id}', [
+    'uses' => 'Admin\PremisesController@view',
+    'as' => 'admin.premises.view'
+]);
+
+Route::get('admin/premises/edit/{id}', [
+    'uses' => 'Admin\PremisesController@edit',
+    'as' => 'admin.premises.edit'
+]);
+
+Route::get('admin/premises/delete/{id}', [
+    'uses' => 'Admin\PremisesController@delete',
+    'as' => 'admin.premises.delete'
+]);
+
+Route::post('admin/premises', [
+    'uses' => 'Admin\PremisesController@update',
+    'as' => 'admin.premises.update'
+]);
+
+Route::post('admin/premises/create', [
+    'uses' => 'Admin\PremisesController@create',
+    'as' => 'admin.premises.create'
+]);

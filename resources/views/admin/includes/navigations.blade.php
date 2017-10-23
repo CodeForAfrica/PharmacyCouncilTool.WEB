@@ -1,19 +1,22 @@
 <div class="row admin-top">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <div class="logo">
             <a href="{{ route('admin.dashboard') }}"><img src="{{ asset('images/pharmacy.png') }}" /></a>
         </div>
         <div class="navs">
             <ul>
                 <li class="{{ $data['page'] == 'Dashboard' ? 'active' : '' }}"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="{{ $data['page'] == 'Pharmacies' ? 'active' : '' }}"><a href="{{ route('admin.pharmacies') }}">Pharmacies</a></li>
+                <li class="{{ $data['page'] == 'Dispensers' ? 'active' : '' }}"><a href="{{ route('admin.dispensers') }}">Dispensers</a></li>
+                <li class="{{ $data['page'] == 'Addos' ? 'active' : '' }}"><a href="{{ route('admin.addos') }}">Addos</a></li>
+                <li class="{{ $data['page'] == 'Premises' ? 'active' : '' }}"><a href="{{ route('admin.premises') }}">Premises</a></li>
+                <!-- <li class="{{ $data['page'] == 'Pharmacies' ? 'active' : '' }}"><a href="{{ route('admin.pharmacies') }}">Pharmacies</a></li> -->
                 <li class="{{ $data['page'] == 'Verifications' ? 'active' : '' }}"><a href="{{ route('admin.verifications') }}">Verifications</a></li>
                 <li class="{{ $data['page'] == 'Reports' ? 'active' : '' }}"><a href="{{ route('admin.reports') }}">Reports</a></li>
                 <li class="{{ $data['page'] == 'Users' ? 'active' : '' }}"><a href="{{ route('admin.users') }}">Users</a></li>
             </ul>
         </div><!-- close div .navs -->
     </div><!-- close div .col-md9 -->
-    <div class="col-md-4 user-menu">
+    <div class="col-md-3 user-menu">
         <div class="dropdown">
             <div class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-angle-down arrow-down pull-right"></span>
