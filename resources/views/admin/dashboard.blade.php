@@ -20,14 +20,33 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="well">
-                        <h1 class="color-pink">{{ count($data['pharmacies']) }}</h1>
-                        <h2>Pharmacies</h2>
+                        <h1 class="color-pink">{{ count($data['dispensers']) }}</h1>
+                        <h2>Dispensers</h2>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="well">
-                        <h1 class="color-pink">0</h1>
-                        <h2>Verifications</h2>
+                        <h1 class="color-pink">{{ count($data['addos']) }}</h1>
+                        <h2>Addos</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="well">
+                        <h1 class="color-pink">{{ count($data['pharmacists']) }}</h1>
+                        <h2>Pharmacists</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="well">
+                        <h1 class="color-pink">{{ count($data['pharmacies']) }}</h1>
+                        <h2>Pharmacies</h2>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="well">
+                        <h1 class="color-pink">{{ count($data['owners']) }}</h1>
+                        <h2>Owners</h2>
                     </div>
                 </div>
                 <div class="col-md-3">

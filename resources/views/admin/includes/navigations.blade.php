@@ -1,5 +1,5 @@
 <div class="row admin-top">
-    <div class="col-md-9">
+    <div class="col-md-10">
         <div class="logo">
             <a href="{{ route('admin.dashboard') }}"><img src="{{ asset('images/pharmacy.png') }}" /></a>
         </div>
@@ -8,22 +8,22 @@
                 <li class="{{ $data['page'] == 'Dashboard' ? 'active' : '' }}"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                 <li class="{{ $data['page'] == 'Dispensers' ? 'active' : '' }}"><a href="{{ route('admin.dispensers') }}">Dispensers</a></li>
                 <li class="{{ $data['page'] == 'Addos' ? 'active' : '' }}"><a href="{{ route('admin.addos') }}">Addos</a></li>
-                <li class="{{ $data['page'] == 'Premises' ? 'active' : '' }}"><a href="{{ route('admin.premises') }}">Premises</a></li>
-                <!-- <li class="{{ $data['page'] == 'Pharmacies' ? 'active' : '' }}"><a href="{{ route('admin.pharmacies') }}">Pharmacies</a></li> -->
-                <li class="{{ $data['page'] == 'Verifications' ? 'active' : '' }}"><a href="{{ route('admin.verifications') }}">Verifications</a></li>
+                <li class="{{ $data['page'] == 'Pharmacists' ? 'active' : '' }}"><a href="{{ route('admin.pharmacists') }}">Pharmacists</a></li>
+                <li class="{{ $data['page'] == 'Pharmacies' ? 'active' : '' }}"><a href="{{ route('admin.pharmacies') }}">Pharmacies</a></li>
+                <li class="{{ $data['page'] == 'Owners' ? 'active' : '' }}"><a href="{{ route('admin.owners') }}">Owners</a></li>
                 <li class="{{ $data['page'] == 'Reports' ? 'active' : '' }}"><a href="{{ route('admin.reports') }}">Reports</a></li>
                 <li class="{{ $data['page'] == 'Users' ? 'active' : '' }}"><a href="{{ route('admin.users') }}">Users</a></li>
             </ul>
         </div><!-- close div .navs -->
     </div><!-- close div .col-md9 -->
-    <div class="col-md-3 user-menu">
+    <div class="col-md-2 user-menu">
         <div class="dropdown">
             <div class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-angle-down arrow-down pull-right"></span>
                 <div class="image pull-right">
                     <span class="fa fa-user"></span>
                 </div><!-- close div .image -->
-                <span class="admin-name pull-right">Hello, {{ $user->name }}!</span>
+                <span class="admin-name pull-right">Hi, {{ $user->name }}!</span>
             </div><!-- close div .dropdown-toggle -->
             <ul class="dropdown-menu pull-right" style="top:60px;">
                 <li><a href="#" data-toggle="modal" data-target="#apiTokenModal">API Token</a></li>

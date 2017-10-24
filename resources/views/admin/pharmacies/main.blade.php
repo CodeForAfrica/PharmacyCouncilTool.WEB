@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Administrator - Premises | Maduka ya Madawa - Code for Tanzania
+    Administrator - Pharmacies | Maduka ya Madawa - Code for Tanzania
 @stop
 
 @section('styles')
@@ -15,7 +15,7 @@
         <div class="row admin-bottom">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Premises</h1>
+                    <h1>Pharmacies</h1>
                 </div>
             </div>
         </div><!-- close div .admin-bottom -->
@@ -27,13 +27,13 @@
                 </div>
             @endif
             <div class="col-md-12" style="overflow:auto;">
-                <button type="button" class="btn btn-md btn-success no-radius pull-right" data-toggle="modal" data-target="#newAddoModal">NEW PREMISE</button>
+                <button type="button" class="btn btn-md btn-success no-radius pull-right" data-toggle="modal" data-target="#newAddoModal">NEW PHARMACY</button>
                 <br />
                 <hr />
                 <br />
             </div><!-- close div .col-md-12 -->
 
-            @if ($data['premises'])
+            @if ($data['pharmacies'])
                 <table id="myTable" class="table table-striped">
                     <thead>
                     <tr>
@@ -49,26 +49,26 @@
                     </thead>
                     <tbody style="text-align:left;">
                         <?php $n=1; ?>
-                        @foreach($data['premises'] as $premise)
+                        @foreach($data['pharmacies'] as $pharmacy)
                         <tr>
                             <td>{{ $n++ }}</td>
-                            <td>{{ $premise->fin }}</td>
-                            <td>{{ $premise->name }}</td>
-                            <td>{{ $premise->category }}</td>
-                            <td>{{ $premise->district }}</td>
-                            <td>{{ $premise->region }}</td>
-                            <td>{{ $premise->pharmacist }}</td>
+                            <td>{{ $pharmacy->fin }}</td>
+                            <td>{{ $pharmacy->name }}</td>
+                            <td>{{ $pharmacy->category }}</td>
+                            <td>{{ $pharmacy->district }}</td>
+                            <td>{{ $pharmacy->region }}</td>
+                            <td>{{ ucfirst(strtolower($pharmacy->pharmacist->firstname)) }} {{ ucfirst(strtolower($pharmacy->pharmacist->middlename)) }} {{ ucfirst(strtolower($pharmacy->pharmacist->surname)) }}</td>
                             <td>
-                                <a href="{{ route('admin.premises.delete',$premise->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
-                                <a href="{{ route('admin.premises.edit',$premise->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
-                                <a href="{{ route('admin.premises.view',$premise->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
+                                <a href="{{ route('admin.pharmacies.delete',$pharmacy->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
+                                <a href="{{ route('admin.pharmacies.edit',$pharmacy->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
+                                <a href="{{ route('admin.pharmacies.view',$pharmacy->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             @else
-                <h2>There is no any Premise.</h2>
+                <h2>There is no any Pharmacy.</h2>
             @endif
         </div><!-- close div .admin-contents -->
 
@@ -79,10 +79,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">New Premise</h4>
+                        <h4 class="modal-title">New Pharmacy</h4>
                     </div>
                     <div class="modal-body" style="overflow:auto;padding:20px;font-family: 'Roboto', sans-serif">
-                        <form method="post" action="{{ route('admin.premises.create') }}">
+                        <form method="post" action="{{ route('admin.pharmacies.create') }}">
                             {{ csrf_field() }}
                             <div class="col-md-6">
                                 <label>FIN</label>
@@ -182,7 +182,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label>Physical</label>
                                 <div class="form-group">
                                     <input type="text" name="physical" class="form-control no-radius" value="" placeholder="Physical" />
@@ -190,23 +190,16 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label>Owner Name</label>
+                                <label>Owner</label>
                                 <div class="form-group">
-                                    <input type="text" name="owner_name" class="form-control no-radius" value="" placeholder="Owner Name" />
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Owner Phone</label>
-                                <div class="form-group">
-                                    <input type="text" name="owner_phone" class="form-control no-radius" value="" placeholder="Owner Phone" />
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Owner Email</label>
-                                <div class="form-group">
-                                    <input type="text" name="owner_email" class="form-control no-radius" value="" placeholder="Owner Email" />
+                                    <select name="owner_id" class="form-control no-radius">
+                                        <option value="0">Choose Premise Owner</option>
+                                        @if(count($data['owners']) > 0)
+                                            @foreach($data['owners'] as $owner)
+                                                <option value="{{ $owner->id }}">{{ ucfirst(strtolower($owner->firstname)) }} {{ ucfirst(strtolower($owner->middlename)) }} {{ ucfirst(strtolower($owner->surname)) }} ({{ ucfirst(strtolower($owner->phone)) }})</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
 
@@ -227,21 +220,28 @@
                             <div class="col-md-6">
                                 <label>Pharmacist</label>
                                 <div class="form-group">
-                                    <input type="text" name="pharmacist" class="form-control no-radius" value="" placeholder="Pharmacist" />
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Pharmacist Phonenumber</label>
-                                <div class="form-group">
-                                    <input type="text" name="pharmacist_phone" class="form-control no-radius" value="" placeholder="Pharmacist Phonenumber" />
+                                    <select name="pharmacist_id" class="form-control no-radius">
+                                        <option value="0">Choose Premise Pharmacist</option>
+                                        @if(count($data['pharmacists']) > 0)
+                                            @foreach($data['pharmacists'] as $pharmacist)
+                                                <option value="{{ $pharmacist->id }}">{{ ucfirst(strtolower($pharmacist->firstname)) }} {{ ucfirst(strtolower($pharmacist->middlename)) }} {{ ucfirst(strtolower($pharmacist->surname)) }} ({{ $pharmacist->level }})</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <label>Pharmaceutical Personnel</label>
                                 <div class="form-group">
-                                    <input type="text" name="pharmaceutical_personnel" class="form-control no-radius" value="" placeholder="Pharmaceutical Personnel" />
+                                    <select name="pharmaceutical_personnel_id" class="form-control no-radius">
+                                        <option value="0">Choose Pharmaceutical Personnel</option>
+                                        @if(count($data['pharmacists']) > 0)
+                                            @foreach($data['pharmacists'] as $pharmacist)
+                                                <option value="{{ $pharmacist->id }}">{{ ucfirst(strtolower($pharmacist->firstname)) }} {{ ucfirst(strtolower($pharmacist->middlename)) }} {{ ucfirst(strtolower($pharmacist->surname)) }} ({{ $pharmacist->level }})</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
 
@@ -308,20 +308,13 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label>Owner Status</label>
-                                <div class="form-group">
-                                    <input type="text" name="owner_status" class="form-control no-radius" value="" placeholder="Owner Status" />
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
                                 <label>Black Book List</label>
                                 <div class="form-group">
                                     <input type="text" name="black_book_list" class="form-control no-radius" value="" placeholder="Black Book List" />
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label>Extra Payment</label>
                                 <div class="form-group">
                                     <input type="text" name="extra_payment" class="form-control no-radius" value="" placeholder="Extra Payment" />
@@ -329,7 +322,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" class="btn btn-lg btn-pink no-radius pull-right" value="ADD ADDO" />
+                                <input type="submit" class="btn btn-lg btn-pink no-radius pull-right" value="ADD PHARMACY" />
                             </div>
                         </form>
                     </div>

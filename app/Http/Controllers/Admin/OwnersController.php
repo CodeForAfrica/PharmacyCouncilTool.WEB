@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class PremisesController extends Controller
+class OwnersController extends Controller
 {
     public function index()
     {
@@ -17,11 +17,11 @@ class PremisesController extends Controller
         else{
             $user = session('user');
             $data = array(
-                'page' => 'Premises',
-                'premises' => $this->getPremises($user)
+                'page' => 'Owners',
+                'owners' => $this->getOwners($user)
             );
 
-            return view('admin.premises.main',compact('user','data'));
+            return view('admin.owners.main',compact('user','data'));
         }
     }
 
@@ -203,7 +203,7 @@ class PremisesController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "premises";
+            $url .= "owners";
             $url .= "/";
             $url .= $id;
             $url .= "?api_token=";
@@ -213,23 +213,23 @@ class PremisesController extends Controller
                 $response = $client->request('DELETE', $url);
                 $response_json = json_decode($response->getBody());
 
-                return redirect()->back()->with(['message' => 'Premise removed.','class' => 'success']);
+                return redirect()->back()->with(['message' => 'Owner removed.','class' => 'success']);
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/owners');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/owners');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/owners');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/premises');
+                return redirect('admin/owners');
             }
         }
     }
@@ -246,85 +246,56 @@ class PremisesController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "premises";
+            $url .= "owners";
             $url .= "?api_token=";
             $url .= $user->api_token;
 
             $values = array(
-                'fin' => $request->fin,
-                'registration_date' => $request->registration_date,
-                'name' => $request->name,
-                'category' => $request->category,
-                'category_code' => $request->category_code,
-                'country' => $request->country,
-                'region' => $request->region,
-                'region_code' => $request->region_code,
-                'district' => $request->district,
-                'district_code' => $request->district_code,
-                'ward' => $request->ward,
-                'ward_code' => $request->ward_code,
-                'village' => $request->village,
-                'village_code' => $request->village_code,
-                'physical' => $request->physical,
-                'owner_name' => $request->owner_name,
-                'owner_phone' => $request->owner_phone,
-                'owner_email' => $request->owner_email,
-                'postal_address' => $request->postal_address,
-                'fax' => $request->fax,
-                'pharmacist' => $request->pharmacist,
-                'pharmacist_phone' => $request->pharmacist_phone,
-                'pharmaceutical_personnel' => $request->pharmaceutical_personnel,
-                'submitted_dispenser_contract' => $request->submitted_dispenser_contract,
-                'permit_profit_amount' => $request->permit_profit_amount,
-                'receipt_no' => $request->receipt_no,
-                'payment_date' => $request->payment_date,
-                'remarks' => $request->remarks,
-                'data_entry_date' => $request->data_entry_date,
-                'premise_fees_due' => $request->premise_fees_due,
-                'retention_due' => $request->retention_due,
-                'renewal_status' => $request->renewal_status,
-                'owner_status' => $request->owner_status,
-                'black_book_list' => $request->black_book_list,
-                'extra_payment' => $request->extra_payment
+                'firstname' => $request->firstname,
+                'middlename' => $request->middlename,
+                'surname' => $request->surname,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'status' => $request->status
             );
 
             try{
                 $response = $client->request('POST', $url, ['json' => $values]);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->premise)
+                if($response_json->owner)
                 {
-                    return redirect()->back()->with(['message' => 'Premises added.','class' => 'success']);
+                    return redirect()->back()->with(['message' => 'Owner added.','class' => 'success']);
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/premises');
+                    return redirect('admin/owners');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/owners');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/owners');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/owners');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/premises');
+                return redirect('admin/owners');
             }
         }
     }
 
-    public function getPremises($user)
+    public function getOwners($user)
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
-        $url .= "premises";
+        $url .= "owners";
         $url .= "?api_token=";
         $url .= $user->api_token;
 
@@ -332,9 +303,9 @@ class PremisesController extends Controller
             $response = $client->request('GET', $url);
             $response_json = json_decode($response->getBody());
 
-            if($response_json->premises)
+            if($response_json->owners)
             {
-                return $response_json->premises;
+                return $response_json->owners;
             }
             else{
                 // No Dispenser.

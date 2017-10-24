@@ -18,7 +18,8 @@ class AddosController extends Controller
             $user = session('user');
             $data = array(
                 'page' => 'Addos',
-                'addos' => $this->getAddos($user)
+                'addos' => $this->getAddos($user),
+                'owners' => $this->getOwners($user)
             );
 
             return view('admin.addos.main',compact('user','data'));
@@ -257,10 +258,7 @@ class AddosController extends Controller
                 'district' => $request->district,
                 'ward' => $request->ward,
                 'street' => $request->street,
-                'owner_firstname' => $request->owner_firstname,
-                'owner_middlename' => $request->owner_middlename,
-                'owner_surname' => $request->owner_surname,
-                'owner_phone' => $request->owner_phone
+                'owner_id' => $request->owner_id
             );
 
             try{
@@ -310,6 +308,45 @@ class AddosController extends Controller
             if($response_json->addos)
             {
                 return $response_json->addos;
+            }
+            else{
+                // No Dispenser.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getOwners($user)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "owners";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+
+        try{
+            $response = $client->request('GET', $url);
+            $response_json = json_decode($response->getBody());
+
+            if($response_json->owners)
+            {
+                return $response_json->owners;
             }
             else{
                 // No Dispenser.

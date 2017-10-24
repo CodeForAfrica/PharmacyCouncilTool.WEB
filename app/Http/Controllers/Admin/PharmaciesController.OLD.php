@@ -18,12 +18,9 @@ class PharmaciesController extends Controller
             $user = session('user');
             $data = array(
                 'page' => 'Pharmacies',
-                'pharmacies' => $this->getPharmacies($user),
-                'owners' => $this->getOwners($user),
-                'pharmacists' => $this->getPharmacists($user)
+                'pharmacies' => $this->getPharmacies()
             );
-
-            return view('admin.pharmacies.main',compact('user','data'));
+            return view('admin.pharmacies',compact('user','data'));
         }
     }
 
@@ -205,7 +202,7 @@ class PharmaciesController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "premises";
+            $url .= "pharmacies";
             $url .= "/";
             $url .= $id;
             $url .= "?api_token=";
@@ -215,23 +212,23 @@ class PharmaciesController extends Controller
                 $response = $client->request('DELETE', $url);
                 $response_json = json_decode($response->getBody());
 
-                return redirect()->back()->with(['message' => 'Premise removed.','class' => 'success']);
+                return redirect()->back()->with(['message' => 'Pharamacy removed.','class' => 'success']);
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
         }
     }
@@ -248,172 +245,70 @@ class PharmaciesController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "premises";
+            $url .= "pharmacies";
             $url .= "?api_token=";
             $url .= $user->api_token;
 
             $values = array(
-                'fin' => $request->fin,
-                'registration_date' => $request->registration_date,
+                'registration_number' => $request->registration_number,
                 'name' => $request->name,
-                'category' => $request->category,
-                'category_code' => $request->category_code,
-                'country' => $request->country,
-                'region' => $request->region,
-                'region_code' => $request->region_code,
-                'district' => $request->district,
-                'district_code' => $request->district_code,
+                'pharmacist' => $request->pharmacist,
+                'address' => $request->address,
+                'location' => $request->location,
                 'ward' => $request->ward,
-                'ward_code' => $request->ward_code,
-                'village' => $request->village,
-                'village_code' => $request->village_code,
-                'physical' => $request->physical,
-                'owner_id' => $request->owner_id,
-                'postal_address' => $request->postal_address,
-                'fax' => $request->fax,
-                'pharmacist_id' => $request->pharmacist_id,
-                'pharmaceutical_personnel_id' => $request->pharmaceutical_personnel_id,
-                'submitted_dispenser_contract' => $request->submitted_dispenser_contract,
-                'permit_profit_amount' => $request->permit_profit_amount,
-                'receipt_no' => $request->receipt_no,
-                'payment_date' => $request->payment_date,
-                'remarks' => $request->remarks,
-                'data_entry_date' => $request->data_entry_date,
-                'premise_fees_due' => $request->premise_fees_due,
-                'retention_due' => $request->retention_due,
-                'renewal_status' => $request->renewal_status,
-                'black_book_list' => $request->black_book_list,
-                'extra_payment' => $request->extra_payment
+                'district' => $request->district,
+                'region' => $request->region,
+                'date_registered' => $request->date_registered
             );
 
             try{
                 $response = $client->request('POST', $url, ['json' => $values]);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->premise)
+                if($response_json->pharmacy)
                 {
-                    return redirect()->back()->with(['message' => 'Premises added.','class' => 'success']);
+                    return redirect()->back()->with(['message' => 'Pharamacy added.','class' => 'success']);
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/premises');
+                    return redirect('admin/pharmacies');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
         }
     }
 
-    public function getPharmacies($user)
+    public function getPharmacies()
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
-        $url .= "premises";
-        $url .= "?api_token=";
-        $url .= $user->api_token;
+        $url .= "pharmacies";
 
         try{
             $response = $client->request('GET', $url);
             $response_json = json_decode($response->getBody());
 
-            if($response_json->premises)
+            if($response_json->pharmacies)
             {
-                return $response_json->premises;
+                return $response_json->pharmacies;
             }
             else{
-                // No Dispenser.
-                return null;
-            }
-        }
-        catch (ClientErrorResponseException $e) {
-            \Log::info("Client error :" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (ServerErrorResponseException $e) {
-            \Log::info("Server error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (BadResponseException $e) {
-            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (\Exception $e) {
-            \Log::info("Err" . $e->getMessage());
-            return null;
-        }
-    }
-
-    public function getOwners($user)
-    {
-        $client = new \GuzzleHttp\Client(['http_errors' => true]);
-        $url = env('APP_URL');
-        $url .= "owners";
-        $url .= "?api_token=";
-        $url .= $user->api_token;
-
-        try{
-            $response = $client->request('GET', $url);
-            $response_json = json_decode($response->getBody());
-
-            if($response_json->owners)
-            {
-                return $response_json->owners;
-            }
-            else{
-                // No Dispenser.
-                return null;
-            }
-        }
-        catch (ClientErrorResponseException $e) {
-            \Log::info("Client error :" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (ServerErrorResponseException $e) {
-            \Log::info("Server error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (BadResponseException $e) {
-            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (\Exception $e) {
-            \Log::info("Err" . $e->getMessage());
-            return null;
-        }
-    }
-
-    public function getPharmacists($user)
-    {
-        $client = new \GuzzleHttp\Client(['http_errors' => true]);
-        $url = env('APP_URL');
-        $url .= "pharmacists";
-        $url .= "?api_token=";
-        $url .= $user->api_token;
-
-        try{
-            $response = $client->request('GET', $url);
-            $response_json = json_decode($response->getBody());
-
-            if($response_json->pharmacists)
-            {
-                return $response_json->pharmacists;
-            }
-            else{
-                // No Dispenser.
+                // No Pharmacies.
                 return null;
             }
         }

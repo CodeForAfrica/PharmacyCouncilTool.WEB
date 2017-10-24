@@ -197,33 +197,64 @@ Route::post('admin/addos/create', [
     'as' => 'admin.addos.create'
 ]);
 
-// Administrator Premises routes.
-Route::get('admin/premises', [
-    'uses' => 'Admin\PremisesController@index',
-    'as' => 'admin.premises'
+// Administrator Owners routes.
+Route::get('admin/owners', [
+    'uses' => 'Admin\OwnersController@index',
+    'as' => 'admin.owners'
 ]);
 
-Route::get('admin/premises/view/{id}', [
-    'uses' => 'Admin\PremisesController@view',
-    'as' => 'admin.premises.view'
+Route::get('admin/owners/view/{id}', [
+    'uses' => 'Admin\OwnersController@view',
+    'as' => 'admin.owners.view'
 ]);
 
-Route::get('admin/premises/edit/{id}', [
-    'uses' => 'Admin\PremisesController@edit',
-    'as' => 'admin.premises.edit'
+Route::get('admin/owners/edit/{id}', [
+    'uses' => 'Admin\OwnersController@edit',
+    'as' => 'admin.owners.edit'
 ]);
 
-Route::get('admin/premises/delete/{id}', [
-    'uses' => 'Admin\PremisesController@delete',
-    'as' => 'admin.premises.delete'
+Route::get('admin/owners/delete/{id}', [
+    'uses' => 'Admin\OwnersController@delete',
+    'as' => 'admin.owners.delete'
 ]);
 
-Route::post('admin/premises', [
-    'uses' => 'Admin\PremisesController@update',
-    'as' => 'admin.premises.update'
+Route::post('admin/owners', [
+    'uses' => 'Admin\OwnersController@update',
+    'as' => 'admin.owners.update'
 ]);
 
-Route::post('admin/premises/create', [
-    'uses' => 'Admin\PremisesController@create',
-    'as' => 'admin.premises.create'
+Route::post('admin/owners/create', [
+    'uses' => 'Admin\OwnersController@create',
+    'as' => 'admin.owners.create'
+]);
+
+// Administrator Pharmacists routes.
+Route::get('admin/pharmacists', [
+    'uses' => 'Admin\PharmacistsController@index',
+    'as' => 'admin.pharmacists'
+]);
+
+Route::get('admin/pharmacists/view/{id}', [
+    'uses' => 'Admin\PharmacistsController@view',
+    'as' => 'admin.pharmacists.view'
+]);
+
+Route::get('admin/pharmacists/edit/{id}', [
+    'uses' => 'Admin\PharmacistsController@edit',
+    'as' => 'admin.pharmacists.edit'
+]);
+
+Route::get('admin/pharmacists/delete/{id}', [
+    'uses' => 'Admin\PharmacistsController@delete',
+    'as' => 'admin.pharmacists.delete'
+]);
+
+Route::post('admin/pharmacists', [
+    'uses' => 'Admin\PharmacistsController@update',
+    'as' => 'admin.pharmacists.update'
+]);
+
+Route::post('admin/pharmacists/create', [
+    'uses' => 'Admin\PharmacistsController@create',
+    'as' => 'admin.pharmacists.create'
 ]);

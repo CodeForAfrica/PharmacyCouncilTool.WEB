@@ -58,8 +58,8 @@
                             <td>{{ $addo->region }}</td>
                             <td>{{ $addo->district }}</td>
                             <td>{{ $addo->ward }}</td>
-                            <td>{{ ucfirst(strtolower($addo->owner_firstname)) }} {{ ucfirst(strtolower($addo->owner_middlename)) }} {{ ucfirst(strtolower($addo->owner_surname)) }}</td>
-                            <td>{{ $addo->owner_phone }}</td>
+                            <td>{{ ucfirst(strtolower($addo->owner->firstname)) }} {{ ucfirst(strtolower($addo->owner->middlename)) }} {{ ucfirst(strtolower($addo->owner->surname)) }}</td>
+                            <td>{{ $addo->owner->phone }}</td>
                             <td>
                                 <a href="{{ route('admin.addos.delete',$addo->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
                                 <a href="{{ route('admin.addos.edit',$addo->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
@@ -116,24 +116,16 @@
                                 <input type="text" name="street" class="form-control no-radius" value="" placeholder="Street" />
                             </div>
 
-                            <label>Owner Firstname</label>
+                            <label>Owner</label>
                             <div class="form-group">
-                                <input type="text" name="owner_firstname" class="form-control no-radius" value="" placeholder="Owner Firstname" />
-                            </div>
-                            
-                            <label>Owner Middlename</label>
-                            <div class="form-group">
-                                <input type="text" name="owner_middlename" class="form-control no-radius" value="" placeholder="Owner Middlename" />
-                            </div>
-
-                            <label>Owner Surname</label>
-                            <div class="form-group">
-                                <input type="text" name="owner_surname" class="form-control no-radius" value="" placeholder="Owner Surname" />
-                            </div>
-
-                            <label>Owner Phonenumber</label>
-                            <div class="form-group">
-                                <input type="text" name="owner_phone" class="form-control no-radius" value="" placeholder="Owner Phonenumber" />
+                                <select name="owner_id" class="form-control no-radius">
+                                    <option value="0">Choose Addo Owner</option>
+                                    @if(count($data['owners']) > 0)
+                                        @foreach($data['owners'] as $owner)
+                                            <option value="{{ $owner->id }}">{{ ucfirst(strtolower($owner->firstname)) }} {{ ucfirst(strtolower($owner->middlename)) }} {{ ucfirst(strtolower($owner->surname)) }} ({{ ucfirst(strtolower($owner->phone)) }})</option>
+                                        @endforeach
+                                    @endif
+                                </select>
                             </div>
 
                             <div class="form-group">
