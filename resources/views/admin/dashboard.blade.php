@@ -42,7 +42,10 @@
                         <h2>Pharmacies</h2>
                     </div>
                 </div>
-
+            </div><!-- close div .row -->
+            <hr />
+            <br />
+            <div class="row">
                 <div class="col-md-3">
                     <div class="well">
                         <h1 class="color-pink">{{ count($data['owners']) }}</h1>
