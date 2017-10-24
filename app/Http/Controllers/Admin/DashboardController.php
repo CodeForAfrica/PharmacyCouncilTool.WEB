@@ -42,9 +42,9 @@ class DashboardController extends Controller
             $response = $client->request('GET', $url);
             $response_json = json_decode($response->getBody());
 
-            if($response_json->pharmacies)
+            if($response_json->premises)
             {
-                return $response_json->pharmacies;
+                return $response_json->premises;
             }
             else{
                 // No Pharmacies.
