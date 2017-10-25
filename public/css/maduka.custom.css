@@ -494,22 +494,22 @@ table td{
     text-transform: capitalize;
 }
 
-.navs ul li ul li a:link{
+.admin-top .navs ul li ul li a:link{
     color: #333;
     text-decoration: none;
 }
 
-.navs ul li ul li a:active{
+.admin-top .navs ul li ul li a:active{
     color: #333;
     text-decoration: none;
 }
 
-.navs ul li ul li a:hover{
+.admin-top .navs ul li ul li a:hover{
     color: #333;
     text-decoration: none;
 }
 
-.navs ul li ul li a:visited{
+.admin-top .navs ul li ul li a:visited{
     color: #333;
     text-decoration: none;
 }
