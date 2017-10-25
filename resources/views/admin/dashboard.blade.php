@@ -60,6 +60,12 @@
                 </div>
                 <div class="col-md-3">
                     <div class="well">
+                        <h1 class="color-pink">{{ count($data['attendances']) }}</h1>
+                        <h2>Attendances</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="well">
                         <h1 class="color-pink">{{ count($data['users']) }}</h1>
                         <h2>Users</h2>
                     </div>

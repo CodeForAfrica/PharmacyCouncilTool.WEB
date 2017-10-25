@@ -24,6 +24,7 @@ class DashboardController extends Controller
                 'pharmacies' => $this->getPharmacies($user),
                 'owners' => $this->getOwners($user),
                 'reports' => $this->getReports($user),
+                'attendances' => $this->getAttendances($user),
                 'users' => $this->getUsers($user)
             );
             return view('admin.dashboard',compact('user','data'));
@@ -279,6 +280,45 @@ class DashboardController extends Controller
             if($response_json->owners)
             {
                 return $response_json->owners;
+            }
+            else{
+                // No Dispenser.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getAttendances($user)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "attendances";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+
+        try{
+            $response = $client->request('GET', $url);
+            $response_json = json_decode($response->getBody());
+
+            if($response_json->attendances)
+            {
+                return $response_json->attendances;
             }
             else{
                 // No Dispenser.

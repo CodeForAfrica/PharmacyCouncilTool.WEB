@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ReportsController extends Controller
+class AttendancesController extends Controller
 {
     public function index()
     {
@@ -18,9 +18,9 @@ class ReportsController extends Controller
             $user = session('user');
             $data = array(
                 'page' => 'More',
-                'reports' => $this->getreports($user)
+                'attendances' => $this->getAttendances($user)
             );
-            return view('admin.reports',compact('user','data'));
+            return view('admin.attendances.main',compact('user','data'));
         }
     }
 
@@ -231,11 +231,11 @@ class ReportsController extends Controller
         }
     }
 
-    public function getreports($user)
+    public function getAttendances($user)
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
-        $url .= "reports";
+        $url .= "attendances";
         $url .= "?api_token=";
         $url .= $user->api_token;
 
@@ -243,12 +243,12 @@ class ReportsController extends Controller
             $response = $client->request('GET', $url);
             $response_json = json_decode($response->getBody());
 
-            if($response_json->reports)
+            if($response_json->attendances)
             {
-                return $response_json->reports;
+                return $response_json->attendances;
             }
             else{
-                // No Reports.
+                // No Dispenser.
                 return null;
             }
         }

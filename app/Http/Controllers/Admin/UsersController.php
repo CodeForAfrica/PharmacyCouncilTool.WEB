@@ -17,7 +17,7 @@ class UsersController extends Controller
         else{
             $user = session('user');
             $data = array(
-                'page' => 'Users',
+                'page' => 'More',
                 'users' => $this->getUsers($user)
             );
             return view('admin.users',compact('user','data'));

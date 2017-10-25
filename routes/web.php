@@ -258,3 +258,34 @@ Route::post('admin/pharmacists/create', [
     'uses' => 'Admin\PharmacistsController@create',
     'as' => 'admin.pharmacists.create'
 ]);
+
+// Administrator Attendances routes.
+Route::get('admin/attendances', [
+    'uses' => 'Admin\AttendancesController@index',
+    'as' => 'admin.attendances'
+]);
+
+Route::get('admin/attendances/view/{id}', [
+    'uses' => 'Admin\AttendancesController@view',
+    'as' => 'admin.attendances.view'
+]);
+
+Route::get('admin/attendances/edit/{id}', [
+    'uses' => 'Admin\AttendancesController@edit',
+    'as' => 'admin.attendances.edit'
+]);
+
+Route::get('admin/attendances/delete/{id}', [
+    'uses' => 'Admin\AttendancesController@delete',
+    'as' => 'admin.attendances.delete'
+]);
+
+Route::post('admin/pharmacists', [
+    'uses' => 'Admin\AttendancesController@update',
+    'as' => 'admin.attendances.update'
+]);
+
+Route::post('admin/attendances/create', [
+    'uses' => 'Admin\AttendancesController@create',
+    'as' => 'admin.attendances.create'
+]);

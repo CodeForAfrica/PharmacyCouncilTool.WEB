@@ -11,8 +11,14 @@
                 <li class="{{ $data['page'] == 'Pharmacists' ? 'active' : '' }}"><a href="{{ route('admin.pharmacists') }}">Pharmacists</a></li>
                 <li class="{{ $data['page'] == 'Pharmacies' ? 'active' : '' }}"><a href="{{ route('admin.pharmacies') }}">Pharmacies</a></li>
                 <li class="{{ $data['page'] == 'Owners' ? 'active' : '' }}"><a href="{{ route('admin.owners') }}">Owners</a></li>
-                <li class="{{ $data['page'] == 'Reports' ? 'active' : '' }}"><a href="{{ route('admin.reports') }}">Reports</a></li>
-                <li class="{{ $data['page'] == 'Users' ? 'active' : '' }}"><a href="{{ route('admin.users') }}">Users</a></li>
+                <li class="{{ $data['page'] == 'More' ? 'active' : '' }} dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">More</a>
+                    <ul class="dropdown-menu" style="top:60px;">
+                        <li><a href="{{ route('admin.reports') }}">Reports</a></li>
+                        <li><a href="{{ route('admin.attendances') }}">Attendances</a></li>
+                        <li><a href="{{ route('admin.users') }}">Users</a></li>
+                    </ul>
+                </li>
             </ul>
         </div><!-- close div .navs -->
     </div><!-- close div .col-md9 -->

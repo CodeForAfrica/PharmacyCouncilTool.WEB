@@ -471,6 +471,49 @@ table td{
     border: none !important;
 }
 
+.navs ul li ul{
+    position: absolute;
+    background: #fff;
+    color: #333;
+    padding: 10px;
+    padding-left: 14px;
+    padding-right: 15px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+
+.admin-top .navs ul li ul li{
+    float: none;
+    color: #333;
+    font-size: 15px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    line-height: 27px;
+    text-transform: capitalize;
+}
+
+.navs ul li ul li a:link{
+    color: #333;
+    text-decoration: none;
+}
+
+.navs ul li ul li a:active{
+    color: #333;
+    text-decoration: none;
+}
+
+.navs ul li ul li a:hover{
+    color: #333;
+    text-decoration: none;
+}
+
+.navs ul li ul li a:visited{
+    color: #333;
+    text-decoration: none;
+}
+
 .btn-pink { 
   color: #FFFFFF; 
   background-color: #ff73b3; 
