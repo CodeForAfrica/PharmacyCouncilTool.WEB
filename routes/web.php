@@ -280,7 +280,7 @@ Route::get('admin/attendances/delete/{id}', [
     'as' => 'admin.attendances.delete'
 ]);
 
-Route::post('admin/pharmacists', [
+Route::post('admin/attendances', [
     'uses' => 'Admin\AttendancesController@update',
     'as' => 'admin.attendances.update'
 ]);

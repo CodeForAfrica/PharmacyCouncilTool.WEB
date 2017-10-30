@@ -37,42 +37,44 @@ class OwnersController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "owners";
             $url .= "/";
             $url .= $id;
+            $url .= "?api_token=";
+            $url .= $user->api_token;
 
             try{
                 $response = $client->request('GET', $url);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json->owner)
                 {
                     $data = array(
-                        'page' => 'Pharmacies',
-                        'pharmacy' => $response_json->pharmacy
+                        'page' => 'Owners',
+                        'owner' => $response_json->owner
                     );
-                    return view('admin.pharmacy_view',compact('user','data'));
+                    return view('admin.owners.view',compact('user','data'));
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/pharmacies');
+                    return redirect('admin/owners');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
         }
     }
@@ -89,42 +91,45 @@ class OwnersController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "owners";
             $url .= "/";
             $url .= $id;
+            $url .= "?api_token=";
+            $url .= $user->api_token;
 
             try{
                 $response = $client->request('GET', $url);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json->owner)
                 {
                     $data = array(
-                        'page' => 'Pharmacies',
-                        'pharmacy' => $response_json->pharmacy
+                        'page' => 'Owners',
+                        'owner' => $response_json->owner
                     );
-                    return view('admin.pharmacy_edit',compact('user','data'));
+                    
+                    return view('admin.owners.edit',compact('user','data'));
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/pharmacies');
+                    return redirect('admin/owners');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
         }
     }
@@ -141,52 +146,49 @@ class OwnersController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "owners";
             $url .= "/";
             $url .= $request->id;
             $url .= "?api_token=";
             $url .= $user->api_token;
 
             $values = array(
-                'registration_number' => $request->registration_number,
-                'name' => $request->name,
-                'pharmacist' => $request->pharmacist,
-                'address' => $request->address,
-                'location' => $request->location,
-                'ward' => $request->ward,
-                'district' => $request->district,
-                'region' => $request->region,
-                'date_registered' => $request->date_registered
+                'firstname' => $request->firstname,
+                'middlename' => $request->middlename,
+                'surname' => $request->surname,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'status' => $request->status
             );
 
             try{
                 $response = $client->request('PUT', $url, ['json' => $values]);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json-owner)
                 {
-                    return redirect()->back()->with(['message' => 'Pharamacy details are updated.','class' => 'success']);
+                    return redirect()->back()->with(['message' => 'Owner details are updated.','class' => 'success']);
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/pharmacies');
+                    return redirect('admin/owners');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/pharmacies');
+                return redirect('admin/owners');
             }
         }
     }

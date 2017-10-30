@@ -37,42 +37,44 @@ class DispensersController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "dispensers";
             $url .= "/";
             $url .= $id;
+            $url .= "?api_token=";
+            $url .= $user->api_token;
 
             try{
                 $response = $client->request('GET', $url);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json->dispenser)
                 {
                     $data = array(
-                        'page' => 'Pharmacies',
-                        'pharmacy' => $response_json->pharmacy
+                        'page' => 'Dispensers',
+                        'dispenser' => $response_json->dispenser
                     );
-                    return view('admin.pharmacy_view',compact('user','data'));
+                    return view('admin.dispensers.view',compact('user','data'));
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/pharmacies');
+                    return redirect('admin/dispensers');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/dispensers');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/dispensers');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/dispensers');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/pharmacies');
+                return redirect('admin/dispensers');
             }
         }
     }
@@ -89,42 +91,44 @@ class DispensersController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "dispensers";
             $url .= "/";
             $url .= $id;
+            $url .= "?api_token=";
+            $url .= $user->api_token;
 
             try{
                 $response = $client->request('GET', $url);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json->dispenser)
                 {
                     $data = array(
-                        'page' => 'Pharmacies',
-                        'pharmacy' => $response_json->pharmacy
+                        'page' => 'Dispensers',
+                        'dispenser' => $response_json->dispenser
                     );
-                    return view('admin.pharmacy_edit',compact('user','data'));
+                    return view('admin.dispensers.edit',compact('user','data'));
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/pharmacies');
+                    return redirect('admin/dispensers');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/dispensers');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/dispensers');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/dispensers');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/pharmacies');
+                return redirect('admin/dispensers');
             }
         }
     }
@@ -141,35 +145,39 @@ class DispensersController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "dispensers";
             $url .= "/";
             $url .= $request->id;
             $url .= "?api_token=";
             $url .= $user->api_token;
 
             $values = array(
-                'registration_number' => $request->registration_number,
-                'name' => $request->name,
-                'pharmacist' => $request->pharmacist,
-                'address' => $request->address,
-                'location' => $request->location,
-                'ward' => $request->ward,
-                'district' => $request->district,
-                'region' => $request->region,
-                'date_registered' => $request->date_registered
+                'pin' => $request->pin,
+                'firstname' => $request->firstname,
+                'middlename' => $request->middlename,
+                'surname' => $request->surname,
+                'registration_date' => $request->registration_date,
+                'birth_date' => $request->birth_date,
+                'sex' => $request->sex,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'postal_address' => $request->postal_address,
+                'nationality' => $request->nationality,
+                'certificate_no' => $request->certificate_no,
+                'training_place' => $request->training_place
             );
 
             try{
                 $response = $client->request('PUT', $url, ['json' => $values]);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json->dispenser)
                 {
-                    return redirect()->back()->with(['message' => 'Pharamacy details are updated.','class' => 'success']);
+                    return redirect()->back()->with(['message' => 'Dispenser details are updated.','class' => 'success']);
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/pharmacies');
+                    return redirect('admin/dispensers');
                 }
             }
             catch (ClientErrorResponseException $e) {

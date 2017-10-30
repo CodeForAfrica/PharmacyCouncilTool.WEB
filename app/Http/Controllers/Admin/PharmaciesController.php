@@ -39,21 +39,23 @@ class PharmaciesController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "premises";
             $url .= "/";
             $url .= $id;
+            $url .= "?api_token=";
+            $url .= $user->api_token;
 
             try{
                 $response = $client->request('GET', $url);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json->premise)
                 {
                     $data = array(
                         'page' => 'Pharmacies',
-                        'pharmacy' => $response_json->pharmacy
+                        'pharmacy' => $response_json->premise
                     );
-                    return view('admin.pharmacy_view',compact('user','data'));
+                    return view('admin.pharmacies.view',compact('user','data'));
                 }
                 else{
                     // No Pharmacy.
@@ -91,21 +93,25 @@ class PharmaciesController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "premises";
             $url .= "/";
             $url .= $id;
+            $url .= "?api_token=";
+            $url .= $user->api_token;
 
             try{
                 $response = $client->request('GET', $url);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json->premise)
                 {
                     $data = array(
                         'page' => 'Pharmacies',
-                        'pharmacy' => $response_json->pharmacy
+                        'pharmacy' => $response_json->premise,
+                        'owners' => $this->getOwners($user),
+                        'pharmacists' => $this->getPharmacists($user)
                     );
-                    return view('admin.pharmacy_edit',compact('user','data'));
+                    return view('admin.pharmacies.edit',compact('user','data'));
                 }
                 else{
                     // No Pharmacy.
@@ -143,22 +149,44 @@ class PharmaciesController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "premises";
             $url .= "/";
             $url .= $request->id;
             $url .= "?api_token=";
             $url .= $user->api_token;
 
             $values = array(
-                'registration_number' => $request->registration_number,
+                'fin' => $request->fin,
+                'registration_date' => $request->registration_date,
                 'name' => $request->name,
-                'pharmacist' => $request->pharmacist,
-                'address' => $request->address,
-                'location' => $request->location,
-                'ward' => $request->ward,
-                'district' => $request->district,
+                'category' => $request->category,
+                'category_code' => $request->category_code,
+                'country' => $request->country,
                 'region' => $request->region,
-                'date_registered' => $request->date_registered
+                'region_code' => $request->region_code,
+                'district' => $request->district,
+                'district_code' => $request->district_code,
+                'ward' => $request->ward,
+                'ward_code' => $request->ward_code,
+                'village' => $request->village,
+                'village_code' => $request->village_code,
+                'physical' => $request->physical,
+                'owner_id' => $request->owner_id,
+                'postal_address' => $request->postal_address,
+                'fax' => $request->fax,
+                'pharmacist_id' => $request->pharmacist_id,
+                'pharmaceutical_personnel_id' => $request->pharmaceutical_personnel_id,
+                'submitted_dispenser_contract' => $request->submitted_dispenser_contract,
+                'permit_profit_amount' => $request->permit_profit_amount,
+                'receipt_no' => $request->receipt_no,
+                'payment_date' => $request->payment_date,
+                'remarks' => $request->remarks,
+                'data_entry_date' => $request->data_entry_date,
+                'premise_fees_due' => $request->premise_fees_due,
+                'retention_due' => $request->retention_due,
+                'renewal_status' => $request->renewal_status,
+                'black_book_list' => $request->black_book_list,
+                'extra_payment' => $request->extra_payment
             );
 
             try{

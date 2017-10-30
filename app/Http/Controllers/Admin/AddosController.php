@@ -38,42 +38,44 @@ class AddosController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "addos";
             $url .= "/";
             $url .= $id;
+            $url .= "?api_token=";
+            $url .= $user->api_token;
 
             try{
                 $response = $client->request('GET', $url);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json->addo)
                 {
                     $data = array(
-                        'page' => 'Pharmacies',
-                        'pharmacy' => $response_json->pharmacy
+                        'page' => 'Addos',
+                        'addo' => $response_json->addo
                     );
-                    return view('admin.pharmacy_view',compact('user','data'));
+                    return view('admin.addos.view',compact('user','data'));
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/pharmacies');
+                    return redirect('admin/addos');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
         }
     }
@@ -90,42 +92,45 @@ class AddosController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "addos";
             $url .= "/";
             $url .= $id;
+            $url .= "?api_token=";
+            $url .= $user->api_token;
 
             try{
                 $response = $client->request('GET', $url);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json->addo)
                 {
                     $data = array(
-                        'page' => 'Pharmacies',
-                        'pharmacy' => $response_json->pharmacy
+                        'page' => 'Addos',
+                        'addo' => $response_json->addo,
+                        'owners' => $this->getOwners($user)
                     );
-                    return view('admin.pharmacy_edit',compact('user','data'));
+                    return view('admin.addos.edit',compact('user','data'));
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/pharmacies');
+                    return redirect('admin/addos');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
         }
     }
@@ -142,52 +147,50 @@ class AddosController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "pharmacies";
+            $url .= "addos";
             $url .= "/";
             $url .= $request->id;
             $url .= "?api_token=";
             $url .= $user->api_token;
 
             $values = array(
-                'registration_number' => $request->registration_number,
                 'name' => $request->name,
-                'pharmacist' => $request->pharmacist,
-                'address' => $request->address,
-                'location' => $request->location,
-                'ward' => $request->ward,
-                'district' => $request->district,
+                'accreditation_no' => $request->accreditation_no,
                 'region' => $request->region,
-                'date_registered' => $request->date_registered
+                'district' => $request->district,
+                'ward' => $request->ward,
+                'street' => $request->street,
+                'owner_id' => $request->owner_id
             );
 
             try{
                 $response = $client->request('PUT', $url, ['json' => $values]);
                 $response_json = json_decode($response->getBody());
 
-                if($response_json->pharmacy)
+                if($response_json->addo)
                 {
-                    return redirect()->back()->with(['message' => 'Pharamacy details are updated.','class' => 'success']);
+                    return redirect()->back()->with(['message' => 'Addo details are updated.','class' => 'success']);
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/pharmacies');
+                    return redirect('admin/addos');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/pharmacies');
+                return redirect('admin/addos');
             }
         }
     }
