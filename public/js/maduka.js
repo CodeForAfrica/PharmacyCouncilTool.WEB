@@ -61,7 +61,7 @@ $('#hakiki-button').click(function(){
                 $('#pharmacy-name').html(pharmacy.name);
                 $('#pharmacist-name').html(pharmacy.pharmacist);
                 $('#pharmacy-location').html(pharmacy.location);
-                $('#pharmacy-registration-date').html(pharmacy.date_registered);
+                $('#pharmacy-registration-date').html(pharmacy.registration_date);
 
                 $('#hakiki-form').hide();
                 $('#hakiki-results-found').show();
