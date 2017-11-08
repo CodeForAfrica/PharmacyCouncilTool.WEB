@@ -45,27 +45,29 @@
                 </tr>
                 <tr>
                     <th>Region</th>
-                    <td>{{ $data['pharmacy']->region }}</td>
+                    <td>{{ $data['pharmacy']->region->name }}</td>
                 </tr>
                 <tr>
                     <th>Region Code</th>
-                    <td>{{ $data['pharmacy']->region_code }}</td>
+                    <td>{{ $data['pharmacy']->region->keycode }}</td>
                 </tr>
                 <tr>
                     <th>District</th>
-                    <td>{{ $data['pharmacy']->district }}</td>
+                    <td>{{ $data['pharmacy']->district->name }}</td>
                 </tr>
                 <tr>
                     <th>District Code</th>
-                    <td>{{ $data['pharmacy']->district_code }}</td>
-                </tr><tr>
+                    <td>{{ $data['pharmacy']->district->keycode }}</td>
+                </tr>
+                <tr>
                     <th>Ward</th>
-                    <td>{{ $data['pharmacy']->ward }}</td>
+                    <td>{{ $data['pharmacy']->ward->name }}</td>
                 </tr>
                 <tr>
                     <th>Ward Code</th>
-                    <td>{{ $data['pharmacy']->ward_code }}</td>
-                </tr><tr>
+                    <td>{{ $data['pharmacy']->ward->keycode }}</td>
+                </tr>
+                <tr>
                     <th>Village</th>
                     <td>{{ $data['pharmacy']->village }}</td>
                 </tr>

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class PharmaciesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Checking for session.
         if(!session()->has('user'))
@@ -16,11 +16,21 @@ class PharmaciesController extends Controller
         }
         else{
             $user = session('user');
+            $pharmacies = null;
+            
+            if($request->status){
+                $pharmacies = $this->getPharmacies($user, $request->status);
+            }
+            else{
+                $pharmacies = $this->getPharmacies($user);
+            }
+
             $data = array(
                 'page' => 'Pharmacies',
-                'pharmacies' => $this->getPharmacies($user),
+                'pharmacies' => $pharmacies,
                 'owners' => $this->getOwners($user),
-                'pharmacists' => $this->getPharmacists($user)
+                'personnels' => $this->getPersonnels($user),
+                'regions' => $this->getRegions($user)
             );
 
             return view('admin.pharmacies.main',compact('user','data'));
@@ -109,7 +119,10 @@ class PharmaciesController extends Controller
                         'page' => 'Pharmacies',
                         'pharmacy' => $response_json->premise,
                         'owners' => $this->getOwners($user),
-                        'pharmacists' => $this->getPharmacists($user)
+                        'personnels' => $this->getPersonnels($user),
+                        'regions' => $this->getRegions($user),
+                        'districts' => $this->getDistricts($user),
+                        'wards' => $this->getWards($user)
                     );
                     return view('admin.pharmacies.edit',compact('user','data'));
                 }
@@ -132,6 +145,7 @@ class PharmaciesController extends Controller
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
+                dd($e->getMessage());
                 return redirect('admin/pharmacies');
             }
         }
@@ -155,19 +169,25 @@ class PharmaciesController extends Controller
             $url .= "?api_token=";
             $url .= $user->api_token;
 
+            // Finding category code
+            if($request->category == "Retail") $category_code = "01";
+            else if($request->category == "Wholesale") $category_code = "02";
+            else if($request->category == "Medical Device") $category_code = "03";
+            else if($request->category == "ADDO") $category_code = "04";
+            else if($request->category == "ARW") $category_code = "05";
+            else if($request->category == "Warehouse") $category_code = "06";
+            else $category_code = "";
+
             $values = array(
                 'fin' => $request->fin,
                 'registration_date' => $request->registration_date,
                 'name' => $request->name,
                 'category' => $request->category,
-                'category_code' => $request->category_code,
+                'category_code' => $category_code,
                 'country' => $request->country,
-                'region' => $request->region,
-                'region_code' => $request->region_code,
-                'district' => $request->district,
-                'district_code' => $request->district_code,
-                'ward' => $request->ward,
-                'ward_code' => $request->ward_code,
+                'region_id' => $request->region_id,
+                'district_id' => $request->district_id,
+                'ward_id' => $request->ward_id,
                 'village' => $request->village,
                 'village_code' => $request->village_code,
                 'physical' => $request->physical,
@@ -247,19 +267,19 @@ class PharmaciesController extends Controller
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
         }
     }
@@ -280,19 +300,25 @@ class PharmaciesController extends Controller
             $url .= "?api_token=";
             $url .= $user->api_token;
 
+            // Finding category code
+            if($request->category == "Retail") $category_code = "01";
+            else if($request->category == "Wholesale") $category_code = "02";
+            else if($request->category == "Medical Device") $category_code = "03";
+            else if($request->category == "ADDO") $category_code = "04";
+            else if($request->category == "ARW") $category_code = "05";
+            else if($request->category == "Warehouse") $category_code = "06";
+            else $category_code = "";
+
             $values = array(
                 'fin' => $request->fin,
                 'registration_date' => $request->registration_date,
                 'name' => $request->name,
                 'category' => $request->category,
-                'category_code' => $request->category_code,
+                'category_code' => $category_code,
                 'country' => $request->country,
-                'region' => $request->region,
-                'region_code' => $request->region_code,
-                'district' => $request->district,
-                'district_code' => $request->district_code,
-                'ward' => $request->ward,
-                'ward_code' => $request->ward_code,
+                'region_id' => $request->region_id,
+                'district_id' => $request->district_id,
+                'ward_id' => $request->ward_id,
                 'village' => $request->village,
                 'village_code' => $request->village_code,
                 'physical' => $request->physical,
@@ -324,35 +350,40 @@ class PharmaciesController extends Controller
                 }
                 else{
                     // No Pharmacy.
-                    return redirect('admin/premises');
+                    return redirect('admin/pharmacies');
                 }
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/premises');
+                return redirect('admin/pharmacies');
             }
         }
     }
 
-    public function getPharmacies($user)
+    public function getPharmacies($user, $status = "")
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
         $url .= "premises";
         $url .= "?api_token=";
         $url .= $user->api_token;
+
+        if($status != ""){
+            $url .= "&renewal_status=";
+            $url .= $status;
+        }
 
         try{
             $response = $client->request('GET', $url);
@@ -424,24 +455,145 @@ class PharmaciesController extends Controller
         }
     }
 
-    public function getPharmacists($user)
+    public function getPersonnels($user)
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
-        $url .= "pharmacists";
+        $url .= "personnels";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
             $response_json = json_decode($response->getBody());
 
-            if($response_json->pharmacists)
+            if($response_json->personnels)
             {
-                return $response_json->pharmacists;
+                return $response_json->personnels;
             }
             else{
                 // No Dispenser.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getRegions($user)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "regions";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+        $url .= "&limit=all";
+
+        try{
+            $response = $client->request('GET', $url);
+            $response_json = json_decode($response->getBody());
+
+            if($response_json->regions)
+            {
+                return $response_json->regions;
+            }
+            else{
+                // No Region.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getDistricts($user)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "districts";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+        $url .= "&limit=all";
+
+        try{
+            $response = $client->request('GET', $url);
+            $response_json = json_decode($response->getBody());
+
+            if($response_json->districts)
+            {
+                return $response_json->districts;
+            }
+            else{
+                // No Region.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getWards($user)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "wards";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+        $url .= "&limit=all";
+
+        try{
+            $response = $client->request('GET', $url);
+            $response_json = json_decode($response->getBody());
+
+            if($response_json->wards)
+            {
+                return $response_json->wards;
+            }
+            else{
+                // No Region.
                 return null;
             }
         }

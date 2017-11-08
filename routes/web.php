@@ -228,35 +228,35 @@ Route::post('admin/owners/create', [
     'as' => 'admin.owners.create'
 ]);
 
-// Administrator Pharmacists routes.
-Route::get('admin/pharmacists', [
-    'uses' => 'Admin\PharmacistsController@index',
-    'as' => 'admin.pharmacists'
+// Administrator Personnels routes.
+Route::get('admin/personnel', [
+    'uses' => 'Admin\PersonnelController@index',
+    'as' => 'admin.personnel'
 ]);
 
-Route::get('admin/pharmacists/view/{id}', [
-    'uses' => 'Admin\PharmacistsController@view',
-    'as' => 'admin.pharmacists.view'
+Route::get('admin/personnel/view/{id}', [
+    'uses' => 'Admin\PersonnelController@view',
+    'as' => 'admin.personnel.view'
 ]);
 
-Route::get('admin/pharmacists/edit/{id}', [
-    'uses' => 'Admin\PharmacistsController@edit',
-    'as' => 'admin.pharmacists.edit'
+Route::get('admin/personnel/edit/{id}', [
+    'uses' => 'Admin\PersonnelController@edit',
+    'as' => 'admin.personnel.edit'
 ]);
 
-Route::get('admin/pharmacists/delete/{id}', [
-    'uses' => 'Admin\PharmacistsController@delete',
-    'as' => 'admin.pharmacists.delete'
+Route::get('admin/personnel/delete/{id}', [
+    'uses' => 'Admin\PersonnelController@delete',
+    'as' => 'admin.personnel.delete'
 ]);
 
-Route::post('admin/pharmacists', [
-    'uses' => 'Admin\PharmacistsController@update',
-    'as' => 'admin.pharmacists.update'
+Route::post('admin/personnel', [
+    'uses' => 'Admin\PersonnelController@update',
+    'as' => 'admin.personnel.update'
 ]);
 
-Route::post('admin/pharmacists/create', [
-    'uses' => 'Admin\PharmacistsController@create',
-    'as' => 'admin.pharmacists.create'
+Route::post('admin/personnel/create', [
+    'uses' => 'Admin\PersonnelController@create',
+    'as' => 'admin.personnel.create'
 ]);
 
 // Administrator Attendances routes.
@@ -289,3 +289,9 @@ Route::post('admin/attendances/create', [
     'uses' => 'Admin\AttendancesController@create',
     'as' => 'admin.attendances.create'
 ]);
+
+// Adding new owner
+Route::get('admin/operations/addowner', 'Admin\OperationsController@addOwner');
+Route::get('admin/operations/addpersonnel', 'Admin\OperationsController@addPersonnel');
+Route::get('admin/operations/getdistricts', 'Admin\OperationsController@getDistricts');
+Route::get('admin/operations/getwards', 'Admin\OperationsController@getWards');

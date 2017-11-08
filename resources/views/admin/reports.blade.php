@@ -33,7 +33,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Gender</th>
-                        <th>Location</th>
+                        <th>Pharmacy Registration Number</th>
                         <th>Message</th>
                         <th style="width:130px;">Options</th>
                     </tr>
@@ -44,7 +44,7 @@
                         <tr>
                             <td>{{ $n++ }}</td>
                             <td>{{ $report->gender }}</td>
-                            <td>{{ $report->location }}</td>
+                            <td>{{ $report->pharmacy_registration_number }}</td>
                             <td>{{ $report->message }}</td>
                             <td>
                                 <a href="{{ route('admin.reports.delete',$report->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>

@@ -23,6 +23,7 @@
         <div class="row admin-contents">
             @if(Session::has('message'))
                 <div class="alert alert-{{Session::get('class')}}" role="alert" style="text-align:left;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     {{Session::get('message')}}
                 </div>
             @endif
@@ -72,7 +73,7 @@
 
         <!-- Modal -->
         <div id="newDispenserModal" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-md">
+            <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -82,73 +83,107 @@
                     <div class="modal-body" style="overflow:auto;padding:20px;font-family: 'Roboto', sans-serif">
                         <form method="post" action="{{ route('admin.dispensers.create') }}">
                             {{ csrf_field() }}
-                            <label>PIN</label>
-                            <div class="form-group">
-                                <input type="text" name="pin" class="form-control no-radius" value="" placeholder="PIN" />
+                            <div class="col-md-12">
+                                <label>PIN</label>
+                                <div class="form-group">
+                                    <input type="text" name="pin" class="form-control no-radius" value="" placeholder="PIN" />
+                                </div>
                             </div>
 
-                            <label>Firstname</label>
-                            <div class="form-group">
-                                <input type="text" name="firstname" class="form-control no-radius" value="" placeholder="Firstname" />
+                            <div class="col-md-4">
+                                <label>Firstname</label>
+                                <div class="form-group">
+                                    <input type="text" name="firstname" class="form-control no-radius" value="" placeholder="Firstname" />
+                                </div>
                             </div>
 
-                            <label>Middlename</label>
-                            <div class="form-group">
-                                <input type="text" name="middlename" class="form-control no-radius" value="" placeholder="Middlename" />
+                            <div class="col-md-4">
+                                <label>Middlename</label>
+                                <div class="form-group">
+                                    <input type="text" name="middlename" class="form-control no-radius" value="" placeholder="Middlename" />
+                                </div>
                             </div>
 
-                            <label>Surname</label>
-                            <div class="form-group">
-                                <input type="text" name="surname" class="form-control no-radius" value="" placeholder="Surname" />
+                            <div class="col-md-4">
+                                <label>Surname</label>
+                                <div class="form-group">
+                                    <input type="text" name="surname" class="form-control no-radius" value="" placeholder="Surname" />
+                                </div>
                             </div>
 
-                            <label>Registration Date</label>
-                            <div class="form-group">
-                                <input type="text" name="registration_date" class="form-control no-radius" value="" placeholder="Registration Date" />
+                            <div class="col-md-6">
+                                <label>Registration Date</label>
+                                <div class="form-group">
+                                    <input type="text" name="registration_date" class="form-control no-radius" value="" placeholder="Registration Date" />
+                                </div>
                             </div>
 
-                            <label>Birth Date</label>
-                            <div class="form-group">
-                                <input type="text" name="birth_date" class="form-control no-radius" value="" placeholder="Birth Date" />
+                            <div class="col-md-6">
+                                <label>Birth Date</label>
+                                <div class="form-group">
+                                    <input type="text" name="birth_date" class="form-control no-radius" value="" placeholder="Birth Date" />
+                                </div>
                             </div>
 
-                            <label>Sex</label>
-                            <div class="form-group">
-                                <input type="text" name="sex" class="form-control no-radius" value="" placeholder="Sex" />
+                            <div class="col-md-12">
+                                <label>Sex</label>
+                                <div class="form-group">
+                                    <select name="sex" class="form-control no-radius">
+                                        <option value="0">Choose sex</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <label>Phonenumber</label>
-                            <div class="form-group">
-                                <input type="text" name="phone" class="form-control no-radius" value="" placeholder="Phonenumber" />
+                            <div class="col-md-12">
+                                <label>Phonenumber</label>
+                                <div class="form-group">
+                                    <input type="text" name="phone" class="form-control no-radius" value="" placeholder="Phonenumber" />
+                                </div>
                             </div>
 
-                            <label>Email</label>
-                            <div class="form-group">
-                                <input type="text" name="email" class="form-control no-radius" value="" placeholder="Email" />
+                            <div class="col-md-12">
+                                <label>Email</label>
+                                <div class="form-group">
+                                    <input type="text" name="email" class="form-control no-radius" value="" placeholder="Email" />
+                                </div>
                             </div>
 
-                            <label>Postal Address</label>
-                            <div class="form-group">
-                                <input type="text" name="postal_address" class="form-control no-radius" value="" placeholder="Postal Address" />
+                            <div class="col-md-12">
+                                <label>Postal Address</label>
+                                <div class="form-group">
+                                    <input type="text" name="postal_address" class="form-control no-radius" value="" placeholder="Postal Address" />
+                                </div>
                             </div>
 
-                            <label>Nationality</label>
-                            <div class="form-group">
-                                <input type="text" name="nationality" class="form-control no-radius" value="" placeholder="Nationality" />
+                            <div class="col-md-12">
+                                <label>Nationality</label>
+                                <div class="form-group">
+                                    <select name="nationality" class="form-control no-radius">
+                                        <option value="TANZANIAN" selected="selected">TANZANIAN</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <label>Certificate Number</label>
-                            <div class="form-group">
-                                <input type="text" name="certificate_no" class="form-control no-radius" value="" placeholder="Certificate Number" />
+                            <div class="col-md-12">
+                                <label>Certificate Number</label>
+                                <div class="form-group">
+                                    <input type="text" name="certificate_no" class="form-control no-radius" value="" placeholder="Certificate Number" />
+                                </div>
                             </div>
 
-                            <label>Training Place</label>
-                            <div class="form-group">
-                                <input type="text" name="training_place" class="form-control no-radius" value="" placeholder="Training Place" />
+                            <div class="col-md-12">
+                                <label>Training Place</label>
+                                <div class="form-group">
+                                    <input type="text" name="training_place" class="form-control no-radius" value="" placeholder="Training Place" />
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-lg btn-pink no-radius pull-right" value="ADD DISPENSER" />
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-lg btn-pink no-radius pull-right" value="ADD DISPENSER" />
+                                </div>
                             </div>
                         </form>
                     </div>

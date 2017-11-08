@@ -33,8 +33,11 @@
                     <tr>
                         <th>ID</th>
                         <th>Type</th>
-                        <th>Pharmarcy Registration No</th>
-                        <th>Days</th>
+                        <th>Pharmarcy RegNo</th>
+                        <th>Pharmarcy Name</th>
+                        <th>Pharmarcist</th>
+                        <th>Days NOT Present</th>
+                        <th>Owner</th>
                         <th style="width:130px;">Options</th>
                     </tr>
                     </thead>
@@ -45,7 +48,10 @@
                             <td>{{ $n++ }}</td>
                             <td>{{ $attendance->type }}</td>
                             <td>{{ $attendance->pharmacy_registration_number }}</td>
+                            <td>{{ $attendance->pharmacy->name }}</td>
+                            <td>{{ $attendance->pharmacy->pharmacist }}</td>
                             <td>{{ $attendance->days }}</td>
+                            <td>{{ $attendance->pharmacy->owner }}</td>
                             <td>
                                 <a href="{{ route('admin.attendances.delete',$attendance->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
                                 <a href="{{ route('admin.attendances.edit',$attendance->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>

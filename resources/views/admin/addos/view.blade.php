@@ -29,15 +29,15 @@
                 </tr>
                 <tr>
                     <th>Region</th>
-                    <td>{{ $data['addo']->region }}</td>
+                    <td>{{ $data['addo']->region->name }}</td>
                 </tr>
                 <tr>
                     <th>District</th>
-                    <td>{{ $data['addo']->district }}</td>
+                    <td>{{ $data['addo']->district->name }}</td>
                 </tr>
                 <tr>
                     <th>Ward</th>
-                    <td>{{ $data['addo']->ward }}</td>
+                    <td>{{ $data['addo']->ward->name }}</td>
                 </tr>
                 <tr>
                     <th>Street</th>

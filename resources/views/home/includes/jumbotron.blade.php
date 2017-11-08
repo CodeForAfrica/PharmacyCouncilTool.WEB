@@ -102,7 +102,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="location" placeholder="Mahali ulipo" />
+                                    <input type="text" class="form-control" id="pharmacy_regno" placeholder="Nambari ya usajili wa Duka la Dawa" />
                                 </div>
                                 <div class="form-group">
                                     <textarea class="form-control" id="message" placeholder="Tatizo"></textarea>

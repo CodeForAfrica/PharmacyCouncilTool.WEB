@@ -52,7 +52,7 @@ $('#hakiki-button').click(function(){
         url: url,
         cache: true,
         success: function(data){
-            var pharmacy = data.pharmacies[0];
+            var pharmacy = data.pharmacy;
 
             $('.pharmacy-registration-number').html($('#pharmacy-regno').val());
 
@@ -105,8 +105,8 @@ $('#gender').change(function(){
 });
 
 
-$('#location').keyup(function(){
-    if($('#location').val().length >= 3)
+$('#pharmacy_regno').keyup(function(){
+    if($('#pharmacy_regno').val().length >= 3)
         location_error = false;
     else 
         location_error = true;
@@ -137,7 +137,7 @@ $('#ripoti-button').click(function(){
 
     var data = {
         gender: $('#gender').val(),
-        location: $('#location').val(),
+        pharmacy_registration_number: $('#pharmacy_regno').val(),
         message: $('#message').val()
     };
 

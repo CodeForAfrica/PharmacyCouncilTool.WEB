@@ -19,7 +19,8 @@ class AddosController extends Controller
             $data = array(
                 'page' => 'Addos',
                 'addos' => $this->getAddos($user),
-                'owners' => $this->getOwners($user)
+                'owners' => $this->getOwners($user),
+                'regions' => $this->getRegions($user)
             );
 
             return view('admin.addos.main',compact('user','data'));
@@ -107,7 +108,10 @@ class AddosController extends Controller
                     $data = array(
                         'page' => 'Addos',
                         'addo' => $response_json->addo,
-                        'owners' => $this->getOwners($user)
+                        'owners' => $this->getOwners($user),
+                        'regions' => $this->getRegions($user),
+                        'districts' => $this->getDistricts($user),
+                        'wards' => $this->getWards($user)
                     );
                     return view('admin.addos.edit',compact('user','data'));
                 }
@@ -156,9 +160,9 @@ class AddosController extends Controller
             $values = array(
                 'name' => $request->name,
                 'accreditation_no' => $request->accreditation_no,
-                'region' => $request->region,
-                'district' => $request->district,
-                'ward' => $request->ward,
+                'region_id' => $request->region_id,
+                'district_id' => $request->district_id,
+                'ward_id' => $request->ward_id,
                 'street' => $request->street,
                 'owner_id' => $request->owner_id
             );
@@ -257,9 +261,9 @@ class AddosController extends Controller
             $values = array(
                 'name' => $request->name,
                 'accreditation_no' => $request->accreditation_no,
-                'region' => $request->region,
-                'district' => $request->district,
-                'ward' => $request->ward,
+                'region_id' => $request->region_id,
+                'district_id' => $request->district_id,
+                'ward_id' => $request->ward_id,
                 'street' => $request->street,
                 'owner_id' => $request->owner_id
             );
@@ -353,6 +357,126 @@ class AddosController extends Controller
             }
             else{
                 // No Dispenser.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getRegions($user)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "regions";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+        $url .= "&limit=all";
+
+        try{
+            $response = $client->request('GET', $url);
+            $response_json = json_decode($response->getBody());
+
+            if($response_json->regions)
+            {
+                return $response_json->regions;
+            }
+            else{
+                // No Region.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getDistricts($user)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "districts";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+        $url .= "&limit=all";
+
+        try{
+            $response = $client->request('GET', $url);
+            $response_json = json_decode($response->getBody());
+
+            if($response_json->districts)
+            {
+                return $response_json->districts;
+            }
+            else{
+                // No Region.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getWards($user)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "wards";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+        $url .= "&limit=all";
+
+        try{
+            $response = $client->request('GET', $url);
+            $response_json = json_decode($response->getBody());
+
+            if($response_json->wards)
+            {
+                return $response_json->wards;
+            }
+            else{
+                // No Region.
                 return null;
             }
         }

@@ -20,6 +20,7 @@
         <div class="row admin-contents" style="text-align:left;">
             @if(Session::has('message'))
                 <div class="alert alert-{{Session::get('class')}}" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     {{Session::get('message')}}
                 </div>
             @endif
@@ -59,7 +60,13 @@
 
                 <label>Sex</label>
                 <div class="form-group">
-                    <input type="text" name="sex" class="form-control no-radius" value="{{ $data['dispenser']->sex }}" placeholder="Sex" />
+                    <div class="form-group">
+                        <select name="sex" class="form-control no-radius">
+                            <option value="0">Choose sex</option>
+                            <option value="Male" @if($data['dispenser']->sex == "Male") selected="selected" @endif>Male</option>
+                            <option value="Female" @if($data['dispenser']->sex == "Female") selected="selected" @endif>Female</option>
+                        </select>
+                    </div>
                 </div>
 
                 <label>Phonenumber</label>
@@ -79,7 +86,9 @@
 
                 <label>Nationality</label>
                 <div class="form-group">
-                    <input type="text" name="nationality" class="form-control no-radius" value="{{ $data['dispenser']->nationality }}" placeholder="Nationality" />
+                    <select name="nationality" class="form-control no-radius">
+                        <option value="TANZANIAN" selected="selected">TANZANIAN</option>
+                    </select>
                 </div>
 
                 <label>Certificate Number</label>

@@ -516,6 +516,36 @@ table td{
     text-decoration: none;
 }
 
+.new-owner{
+    background: #f0f0f0; 
+    margin-bottom:20px; 
+    overflow:auto; 
+    padding-top:5px; 
+    padding-bottom:15px; 
+    border:1px solid #dedede;
+    display: none;
+}
+
+.admin-contents .well a:link{
+    text-decoration: none;
+    color: #636b6f;
+}
+
+.admin-contents .well a:active{
+    text-decoration: none;
+    color: #636b6f;
+}
+
+.admin-contents .well a:hover{
+    text-decoration: underline;
+    color: #636b6f;
+}
+
+.admin-contents .well a:visited{
+    text-decoration: none;
+    color: #636b6f;
+}
+
 .btn-pink { 
   color: #FFFFFF; 
   background-color: #ff73b3; 

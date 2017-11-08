@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Administrator - Pharmacists | Maduka ya Madawa - Code for Tanzania
+    Administrator - Personnel | Maduka ya Madawa - Code for Tanzania
 @stop
 
 @section('styles')
@@ -15,7 +15,7 @@
         <div class="row admin-bottom">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Pharmacists</h1>
+                    <h1>Personnel</h1>
                 </div>
             </div>
         </div><!-- close div .admin-bottom -->
@@ -23,25 +23,26 @@
         <div class="row admin-contents">
             @if(Session::has('message'))
                 <div class="alert alert-{{Session::get('class')}}" role="alert" style="text-align:left;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     {{Session::get('message')}}
                 </div>
             @endif
             <div class="col-md-12" style="overflow:auto;">
-                <button type="button" class="btn btn-md btn-success no-radius pull-right" data-toggle="modal" data-target="#newPharmacistModal">NEW PHARMACIST</button>
+                <button type="button" class="btn btn-md btn-success no-radius pull-right" data-toggle="modal" data-target="#newPersonnelModal">NEW PERSONNEL</button>
                 <br />
                 <hr />
                 <br />
             </div><!-- close div .col-md-12 -->
 
-            @if ($data['pharmacists'])
+            @if ($data['personnels'])
                 <table id="myTable" class="table table-striped">
                     <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Category</th>
                         <th>Firstname</th>
                         <th>Middlename</th>
                         <th>Surname</th>
-                        <th>Level</th>
                         <th>Phone</th>
                         <th>Email</th>
                         <th style="width:130px;">Options</th>
@@ -49,41 +50,54 @@
                     </thead>
                     <tbody style="text-align:left;">
                         <?php $n=1; ?>
-                        @foreach($data['pharmacists'] as $pharmacist)
+                        @foreach($data['personnels'] as $personnel)
                         <tr>
                             <td>{{ $n++ }}</td>
-                            <td>{{ ucfirst(strtolower($pharmacist->firstname)) }}</td>
-                            <td>{{ ucfirst(strtolower($pharmacist->middlename)) }}</td>
-                            <td>{{ ucfirst(strtolower($pharmacist->surname)) }}</td>
-                            <td>{{ $pharmacist->level }}</td>
-                            <td>{{ $pharmacist->phone }}</td>
-                            <td>{{ $pharmacist->email }}</td>
+                            <td>{{ $personnel->type }}</td>
+                            <td>{{ ucfirst(strtolower($personnel->firstname)) }}</td>
+                            <td>{{ ucfirst(strtolower($personnel->middlename)) }}</td>
+                            <td>{{ ucfirst(strtolower($personnel->surname)) }}</td>
+                            <td>{{ $personnel->phone }}</td>
+                            <td>{{ $personnel->email }}</td>
                             <td>
-                                <a href="{{ route('admin.pharmacists.delete',$pharmacist->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
-                                <a href="{{ route('admin.pharmacists.edit',$pharmacist->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
-                                <a href="{{ route('admin.pharmacists.view',$pharmacist->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
+                                <a href="{{ route('admin.personnel.delete',$personnel->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
+                                <a href="{{ route('admin.personnel.edit',$personnel->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
+                                <a href="{{ route('admin.personnel.view',$personnel->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             @else
-                <h2>There is no any pharmacist.</h2>
+                <h2>There is no any personnel.</h2>
             @endif
         </div><!-- close div .admin-contents -->
 
         <!-- Modal -->
-        <div id="newPharmacistModal" class="modal fade" role="dialog">
+        <div id="newPersonnelModal" class="modal fade" role="dialog">
             <div class="modal-dialog modal-md">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">New Pharmacist</h4>
+                        <h4 class="modal-title">New Personnel</h4>
                     </div>
                     <div class="modal-body" style="overflow:auto;padding:20px;font-family: 'Roboto', sans-serif">
-                        <form method="post" action="{{ route('admin.pharmacists.create') }}">
+                        <form method="post" action="{{ route('admin.personnel.create') }}">
                             {{ csrf_field() }}
+
+                            <label>Category</label>
+                            <div class="form-group">
+                                <select name="type" class="form-control no-radius">
+                                    <option value="0">Choose personnel category</option>
+                                    <option value="Pharmacist">Pharmacist</option>
+                                    <option value="Temporary Pharmacist">Temporary Pharmacist</option>
+                                    <option value="intern Pharmacist">Intern Pharmacist</option>
+                                    <option value="Pharmaceutical Technician">Pharmaceutical Technician</option>
+                                    <option value="Pharmaceutical Assistant">Pharmaceutical Assistant</option>
+                                    <option value="Medical Representative">Medical Representative</option>
+                                </select>
+                            </div>
 
                             <label>Firstname</label>
                             <div class="form-group">
@@ -100,11 +114,6 @@
                                 <input type="text" name="surname" class="form-control no-radius" value="" placeholder="Surname" />
                             </div>
 
-                            <label>Level</label>
-                            <div class="form-group">
-                                <input type="text" name="level" class="form-control no-radius" value="" placeholder="Level" />
-                            </div>
-
                             <label>Phonenumber</label>
                             <div class="form-group">
                                 <input type="text" name="phone" class="form-control no-radius" value="" placeholder="Phonenumber" />
@@ -116,7 +125,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" class="btn btn-lg btn-pink no-radius pull-right" value="ADD PHARMACIST" />
+                                <input type="submit" class="btn btn-lg btn-pink no-radius pull-right" value="ADD PERSONNEL" />
                             </div>
                         </form>
                     </div>

@@ -25,7 +25,7 @@
                 </tr>
                 <tr>
                     <th>Location</th>
-                    <td>{{ $data['report']->location }}</td>
+                    <td>{{ $data['report']->pharmacy_registration_number }}</td>
                 </tr>
                 <tr>
                     <th>Message</th>

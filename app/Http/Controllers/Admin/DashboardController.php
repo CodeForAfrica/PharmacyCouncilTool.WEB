@@ -20,10 +20,23 @@ class DashboardController extends Controller
                 'page' => 'Dashboard',
                 'dispensers' => $this->getDispensers($user),
                 'addos' => $this->getAddos($user),
-                'pharmacists' => $this->getPharmacists($user),
+                'personnels' => $this->getPersonnels($user),
+                'personnels_pharmacists' => $this->getPersonnels($user, "Pharmacist"),
+                'personnels_pharmaceutical_technicians' => $this->getPersonnels($user, "Pharmaceutical Technician"),
+                'personnels_medical_representatives' => $this->getPersonnels($user, "Medical Representative"),
                 'pharmacies' => $this->getPharmacies($user),
+                'pharmacies_renewed' => $this->getPharmacies($user, "Renewed"),
+                'pharmacies_pending' => $this->getPharmacies($user, "Pending"),
+                'pharmacies_waiting_permit' => $this->getPharmacies($user, "Waiting Permit"),
+                'pharmacies_not_renewed' => $this->getPharmacies($user, "Not Renewed"),
+                'pharmacies_closed' => $this->getPharmacies($user, "Closed"),
+                'pharmacies_temporary_closed' => $this->getPharmacies($user, "Temporary Closed"),
                 'owners' => $this->getOwners($user),
+                'owners_professional' => $this->getOwners($user, "Proffessional"),
+                'owners_not_professional' => $this->getOwners($user, "Not Proffessional"),
                 'reports' => $this->getReports($user),
+                'reports_males' => $this->getReports($user, "Male"),
+                'reports_females' => $this->getReports($user, "Female"),
                 'attendances' => $this->getAttendances($user),
                 'users' => $this->getUsers($user)
             );
@@ -31,13 +44,18 @@ class DashboardController extends Controller
         }
     }
 
-    public function getPharmacies($user)
+    public function getPharmacies($user, $status = "")
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
         $url .= "premises";
         $url .= "?api_token=";
         $url .= $user->api_token;
+
+        if($status != ""){
+            $url .= "&renewal_status=";
+            $url .= $status;
+        }
 
         try{
             $response = $client->request('GET', $url);
@@ -70,13 +88,18 @@ class DashboardController extends Controller
         }
     }
 
-    public function getReports($user)
+    public function getReports($user, $gender = "")
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
         $url .= "reports";
         $url .= "?api_token=";
         $url .= $user->api_token;
+
+        if($gender != ""){
+            $url .= "&gender=";
+            $url .= $gender;
+        }
 
         try{
             $response = $client->request('GET', $url);
@@ -226,24 +249,29 @@ class DashboardController extends Controller
         }
     }
 
-    public function getPharmacists($user)
+    public function getPersonnels($user, $type="")
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
-        $url .= "pharmacists";
+        $url .= "personnels";
         $url .= "?api_token=";
         $url .= $user->api_token;
+
+        if($type != ""){
+            $url .= "&type=";
+            $url .= $type;
+        }
 
         try{
             $response = $client->request('GET', $url);
             $response_json = json_decode($response->getBody());
 
-            if($response_json->pharmacists)
+            if($response_json->personnels)
             {
-                return $response_json->pharmacists;
+                return $response_json->personnels;
             }
             else{
-                // No Dispenser.
+                // No Personnels.
                 return null;
             }
         }
@@ -265,13 +293,18 @@ class DashboardController extends Controller
         }
     }
 
-    public function getOwners($user)
+    public function getOwners($user, $status = "")
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
         $url .= "owners";
         $url .= "?api_token=";
         $url .= $user->api_token;
+
+        if($status != ""){
+            $url .= "&status=";
+            $url .= $status;
+        }
 
         try{
             $response = $client->request('GET', $url);

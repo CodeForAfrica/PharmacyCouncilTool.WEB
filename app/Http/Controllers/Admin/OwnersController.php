@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class OwnersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Checking for session.
         if(!session()->has('user'))
@@ -16,9 +16,17 @@ class OwnersController extends Controller
         }
         else{
             $user = session('user');
+            $owners = null;
+            
+            if($request->status){
+                $owners = $this->getOwners($user, $request->status);
+            }
+            else{
+                $owners = $this->getOwners($user);
+            }
             $data = array(
                 'page' => 'Owners',
-                'owners' => $this->getOwners($user)
+                'owners' => $owners
             );
 
             return view('admin.owners.main',compact('user','data'));
@@ -293,13 +301,18 @@ class OwnersController extends Controller
         }
     }
 
-    public function getOwners($user)
+    public function getOwners($user, $status = "")
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
         $url .= "owners";
         $url .= "?api_token=";
         $url .= $user->api_token;
+
+        if($status != ""){
+            $url .= "&status=";
+            $url .= $status;
+        }
 
         try{
             $response = $client->request('GET', $url);

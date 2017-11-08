@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class ReportsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Checking for session.
         if(!session()->has('user'))
@@ -16,9 +16,17 @@ class ReportsController extends Controller
         }
         else{
             $user = session('user');
+            $reports = null;
+            
+            if($request->gender){
+                $reports = $this->getreports($user, $request->gender);
+            }
+            else{
+                $reports = $this->getreports($user);
+            }
             $data = array(
                 'page' => 'More',
-                'reports' => $this->getreports($user)
+                'reports' => $reports
             );
             return view('admin.reports',compact('user','data'));
         }
@@ -231,13 +239,18 @@ class ReportsController extends Controller
         }
     }
 
-    public function getreports($user)
+    public function getreports($user, $gender = "")
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
         $url .= "reports";
         $url .= "?api_token=";
         $url .= $user->api_token;
+
+        if($gender != ""){
+            $url .= "&gender=";
+            $url .= $gender;
+        }
 
         try{
             $response = $client->request('GET', $url);

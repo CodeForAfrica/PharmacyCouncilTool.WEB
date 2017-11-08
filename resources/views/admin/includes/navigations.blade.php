@@ -8,7 +8,7 @@
                 <li class="{{ $data['page'] == 'Dashboard' ? 'active' : '' }}"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                 <li class="{{ $data['page'] == 'Dispensers' ? 'active' : '' }}"><a href="{{ route('admin.dispensers') }}">Dispensers</a></li>
                 <li class="{{ $data['page'] == 'Addos' ? 'active' : '' }}"><a href="{{ route('admin.addos') }}">Addos</a></li>
-                <li class="{{ $data['page'] == 'Pharmacists' ? 'active' : '' }}"><a href="{{ route('admin.pharmacists') }}">Pharmacists</a></li>
+                <li class="{{ $data['page'] == 'Personnel' ? 'active' : '' }}"><a href="{{ route('admin.personnel') }}">Personnel</a></li>
                 <li class="{{ $data['page'] == 'Pharmacies' ? 'active' : '' }}"><a href="{{ route('admin.pharmacies') }}">Pharmacies</a></li>
                 <li class="{{ $data['page'] == 'Owners' ? 'active' : '' }}"><a href="{{ route('admin.owners') }}">Owners</a></li>
                 <li class="{{ $data['page'] == 'More' ? 'active' : '' }} dropdown">
