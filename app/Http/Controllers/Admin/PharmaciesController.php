@@ -379,6 +379,7 @@ class PharmaciesController extends Controller
         $url .= "premises";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         if($status != ""){
             $url .= "&renewal_status=";
@@ -423,6 +424,7 @@ class PharmaciesController extends Controller
         $url .= "owners";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);

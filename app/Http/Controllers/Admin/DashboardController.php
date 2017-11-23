@@ -51,6 +51,7 @@ class DashboardController extends Controller
         $url .= "premises";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         if($status != ""){
             $url .= "&renewal_status=";
@@ -95,6 +96,7 @@ class DashboardController extends Controller
         $url .= "reports";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         if($gender != ""){
             $url .= "&gender=";
@@ -139,6 +141,7 @@ class DashboardController extends Controller
         $url .= "users";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -178,6 +181,7 @@ class DashboardController extends Controller
         $url .= "dispensers";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -217,6 +221,7 @@ class DashboardController extends Controller
         $url .= "addos";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -256,6 +261,7 @@ class DashboardController extends Controller
         $url .= "personnels";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         if($type != ""){
             $url .= "&type=";
@@ -300,6 +306,7 @@ class DashboardController extends Controller
         $url .= "owners";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         if($status != ""){
             $url .= "&status=";
@@ -344,6 +351,7 @@ class DashboardController extends Controller
         $url .= "attendances";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);

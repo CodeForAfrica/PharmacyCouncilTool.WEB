@@ -246,6 +246,7 @@ class ReportsController extends Controller
         $url .= "reports";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         if($gender != ""){
             $url .= "&gender=";

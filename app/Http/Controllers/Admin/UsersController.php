@@ -256,6 +256,7 @@ class UsersController extends Controller
         $url .= "users";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);

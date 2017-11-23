@@ -327,6 +327,7 @@ class PersonnelController extends Controller
         $url .= "personnels";
         $url .= "?api_token=";
         $url .= $user->api_token;
+        $url .= "&limit=all";
 
         if($type != ""){
             $url .= "&type=";
