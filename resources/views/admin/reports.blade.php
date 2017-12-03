@@ -48,7 +48,7 @@
                             <td>{{ $report->message }}</td>
                             <td>
                                 <a href="{{ route('admin.reports.delete',$report->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
-                                <a href="{{ route('admin.reports.edit',$report->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
+                                <a href="{{ route('admin.reports.edit',$report->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;" disabled>Edit</a>
                                 <a href="{{ route('admin.reports.view',$report->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
                             </td>
                         </tr>

@@ -295,3 +295,9 @@ Route::get('admin/operations/addowner', 'Admin\OperationsController@addOwner');
 Route::get('admin/operations/addpersonnel', 'Admin\OperationsController@addPersonnel');
 Route::get('admin/operations/getdistricts', 'Admin\OperationsController@getDistricts');
 Route::get('admin/operations/getwards', 'Admin\OperationsController@getWards');
+
+// Language route
+Route::get('/switchlanguage', [
+    'as' => 'switchlanguage',
+    'uses' => 'LanguageController@index'
+]);

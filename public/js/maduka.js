@@ -60,7 +60,7 @@ $('#hakiki-button').click(function(){
                 // Preparing values
                 $('#pharmacy-name').html(pharmacy.name);
                 $('#pharmacist-name').html(pharmacy.pharmacist);
-                $('#pharmacy-location').html(pharmacy.location);
+                $('#pharmacy-location').html(pharmacy.location + " - (" + pharmacy.district + ", " + pharmacy.region +")");
                 $('#pharmacy-registration-date').html(pharmacy.registration_date);
 
                 $('#hakiki-form').hide();

@@ -2,10 +2,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 kichwa">
-                <h1>Sababu<br />za<br />Kuripoti<br /></h1>
+                <h1>{{ trans('app.Reasons') }}<br />{{ trans('app.For') }}<br />{{ trans('app.Reporting') }}<br /></h1>
                 <div class="line">&nbsp;</div>
             </div><!-- close div .col-md6 -->
             <div class="col-md-6">
+                <!-- 
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
@@ -17,7 +18,7 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     </div>
                 </div><!-- close div .media -->
-                <br />
+                <!-- <br /> -->
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
@@ -25,8 +26,8 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Dawa Hatarishi</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <h4 class="media-heading">{{ trans('app.Facilitation_Of_Non_Prescribed_Meds') }}</h4>
+                        <p>{{ trans('app.Facilitation_Of_Non_Prescribed_Meds_Message') }}</p>
                     </div>
                 </div><!-- close div .media -->
                 <br />
@@ -37,11 +38,12 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Mashaka na Muuzaji</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <h4 class="media-heading">{{ trans('app.Suspicion_Of_Pharmacist') }}</h4>
+                        <p>{{ trans('app.Suspicion_Of_Pharmacist_Message') }}</p>
                     </div>
                 </div><!-- close div .media -->
                 <br />
+                <!--
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
@@ -53,6 +55,7 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     </div>
                 </div><!-- close div .media -->
+                <br />
             </div><!-- close div .col-md6 -->
         </div><!-- close div .row -->
     </div><!-- close div .container -->

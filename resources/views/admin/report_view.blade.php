@@ -24,7 +24,7 @@
                     <td>{{ $data['report']->gender }}</td>
                 </tr>
                 <tr>
-                    <th>Location</th>
+                    <th>Pharmacy Registration Number</th>
                     <td>{{ $data['report']->pharmacy_registration_number }}</td>
                 </tr>
                 <tr>
@@ -39,7 +39,7 @@
 
             <div class="pull-right">
                 <a href="{{ route('admin.reports.delete',$data['report']->id) }}" class="btn btn-md btn-danger no-radius" style="margin-right:10px;">Delete</a>
-                <a href="{{ route('admin.reports.edit',$data['report']->id) }}" type="button" class="btn btn-md btn-warning no-radius" style="margin-right:10px;">Edit</a>
+                <a href="{{ route('admin.reports.edit',$data['report']->id) }}" type="button" class="btn btn-md btn-warning no-radius" style="margin-right:10px;" disabled>Edit</a>
             </div>
         </div><!-- close div .admin-contents -->
     </div><!-- close div .container-fluid -->

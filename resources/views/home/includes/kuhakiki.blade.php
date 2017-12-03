@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 kichwa">
-                <h1>Faida<br />za<br />Kuhakiki<br /></h1>
+                <h1>{{ trans('app.Benefits') }}<br />{{ trans('app.Of') }}<br />{{ trans('app.Verifications') }}<br /></h1>
                 <div class="line">&nbsp;</div>
                 
             </div><!-- close div .col-md6 <--></-->
@@ -14,8 +14,8 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Tambua Usajili wa Duka la Dawa</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <h4 class="media-heading">{{ trans('app.Verify_Pharmacy_Registration') }}</h4>
+                        <p>{{ trans('app.Verify_Pharmacy_Registration_Message') }}</p>
                     </div>
                 </div><!-- close div .media -->
                 <br />
@@ -26,8 +26,8 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Pata Vigezo vya Muuzaji</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <h4 class="media-heading">{{ trans('app.Pharmacists_Qualifications') }}</h4>
+                        <p>{{ trans('app.Pharmacists_Qualifications_Message') }}</p>
                     </div>
                 </div><!-- close div .media -->
                 <br />
@@ -38,8 +38,8 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Jua Eneo Halali la Duka la Dawa</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <h4 class="media-heading">{{ trans('app.Discover_The_Validity_Of_Pharmacy_Location') }}</h4>
+                    <p>{{ trans('app.Discover_The_Validity_Of_Pharmacy_Location_Message') }}</p>
                     </div>
                 </div><!-- close div .media -->
             </div><!-- close div .col-md6 -->
