@@ -300,74 +300,81 @@ class PharmaciesController extends Controller
             $url .= "?api_token=";
             $url .= $user->api_token;
 
-            // Finding category code
-            if($request->category == "Retail") $category_code = "01";
-            else if($request->category == "Wholesale") $category_code = "02";
-            else if($request->category == "Medical Device") $category_code = "03";
-            else if($request->category == "ADDO") $category_code = "04";
-            else if($request->category == "ARW") $category_code = "05";
-            else if($request->category == "Warehouse") $category_code = "06";
-            else $category_code = "";
+            // Check if required fields are filled
+            if($request->region_id == 0 || $request->district_id == 0 || $request->ward_id == 0 || $request->owner_id == 0 || 
+                $request->pharmacist_id == 0 || $request->pharmaceutical_personnel_id == 0){
+                return redirect()->back()->with(['message' => 'Fill required fields.','class' => 'warning']);
+            }
+            else{
+                // Finding category code
+                if($request->category == "Retail") $category_code = "01";
+                else if($request->category == "Wholesale") $category_code = "02";
+                else if($request->category == "Medical Device") $category_code = "03";
+                else if($request->category == "ADDO") $category_code = "04";
+                else if($request->category == "ARW") $category_code = "05";
+                else if($request->category == "Warehouse") $category_code = "06";
+                else $category_code = "";
 
-            $values = array(
-                'fin' => $request->fin,
-                'registration_date' => $request->registration_date,
-                'name' => $request->name,
-                'category' => $request->category,
-                'category_code' => $category_code,
-                'country' => $request->country,
-                'region_id' => $request->region_id,
-                'district_id' => $request->district_id,
-                'ward_id' => $request->ward_id,
-                'village' => $request->village,
-                'village_code' => $request->village_code,
-                'physical' => $request->physical,
-                'owner_id' => $request->owner_id,
-                'postal_address' => $request->postal_address,
-                'fax' => $request->fax,
-                'pharmacist_id' => $request->pharmacist_id,
-                'pharmaceutical_personnel_id' => $request->pharmaceutical_personnel_id,
-                'submitted_dispenser_contract' => $request->submitted_dispenser_contract,
-                'permit_profit_amount' => $request->permit_profit_amount,
-                'receipt_no' => $request->receipt_no,
-                'payment_date' => $request->payment_date,
-                'remarks' => $request->remarks,
-                'data_entry_date' => $request->data_entry_date,
-                'premise_fees_due' => $request->premise_fees_due,
-                'retention_due' => $request->retention_due,
-                'renewal_status' => $request->renewal_status,
-                'black_book_list' => $request->black_book_list,
-                'extra_payment' => $request->extra_payment
-            );
+                $values = array(
+                    'fin' => $request->fin,
+                    'registration_date' => $request->registration_date,
+                    'name' => $request->name,
+                    'category' => $request->category,
+                    'category_code' => $category_code,
+                    'country' => $request->country,
+                    'region_id' => $request->region_id,
+                    'district_id' => $request->district_id,
+                    'ward_id' => $request->ward_id,
+                    'village' => $request->village,
+                    'village_code' => $request->village_code,
+                    'physical' => $request->physical,
+                    'owner_id' => $request->owner_id,
+                    'postal_address' => $request->postal_address,
+                    'fax' => $request->fax,
+                    'pharmacist_id' => $request->pharmacist_id,
+                    'pharmaceutical_personnel_id' => $request->pharmaceutical_personnel_id,
+                    'submitted_dispenser_contract' => $request->submitted_dispenser_contract,
+                    'permit_profit_amount' => $request->permit_profit_amount,
+                    'receipt_no' => $request->receipt_no,
+                    'payment_date' => $request->payment_date,
+                    'remarks' => $request->remarks,
+                    'data_entry_date' => $request->data_entry_date,
+                    'premise_fees_due' => $request->premise_fees_due,
+                    'retention_due' => $request->retention_due,
+                    'renewal_status' => $request->renewal_status,
+                    'black_book_list' => $request->black_book_list,
+                    'extra_payment' => $request->extra_payment
+                );
 
-            try{
-                $response = $client->request('POST', $url, ['json' => $values]);
-                $response_json = json_decode($response->getBody());
+                try{
+                    $response = $client->request('POST', $url, ['json' => $values]);
+                    $response_json = json_decode($response->getBody());
 
-                if($response_json->premise)
-                {
-                    return redirect()->back()->with(['message' => 'Premises added.','class' => 'success']);
+                    if($response_json->premise)
+                    {
+                        return redirect()->back()->with(['message' => 'Premises added.','class' => 'success']);
+                    }
+                    else{
+                        // No Pharmacy.
+                        return redirect('admin/pharmacies');
+                    }
                 }
-                else{
-                    // No Pharmacy.
+                catch (ClientErrorResponseException $e) {
+                    \Log::info("Client error :" . $e->getResponse()->getBody(true));
                     return redirect('admin/pharmacies');
                 }
-            }
-            catch (ClientErrorResponseException $e) {
-                \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
-            }
-            catch (ServerErrorResponseException $e) {
-                \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
-            }
-            catch (BadResponseException $e) {
-                \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/pharmacies');
-            }
-            catch (\Exception $e) {
-                \Log::info("Err" . $e->getMessage());
-                return redirect('admin/pharmacies');
+                catch (ServerErrorResponseException $e) {
+                    \Log::info("Server error" . $e->getResponse()->getBody(true));
+                    return redirect('admin/pharmacies');
+                }
+                catch (BadResponseException $e) {
+                    \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+                    return redirect('admin/pharmacies');
+                }
+                catch (\Exception $e) {
+                    \Log::info("Err" . $e->getMessage());
+                    return redirect('admin/pharmacies');
+                }
             }
         }
     }

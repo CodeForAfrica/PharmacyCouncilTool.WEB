@@ -157,44 +157,50 @@ class AddosController extends Controller
             $url .= "?api_token=";
             $url .= $user->api_token;
 
-            $values = array(
-                'name' => $request->name,
-                'accreditation_no' => $request->accreditation_no,
-                'region_id' => $request->region_id,
-                'district_id' => $request->district_id,
-                'ward_id' => $request->ward_id,
-                'street' => $request->street,
-                'owner_id' => $request->owner_id
-            );
-
-            try{
-                $response = $client->request('PUT', $url, ['json' => $values]);
-                $response_json = json_decode($response->getBody());
-
-                if($response_json->addo)
-                {
-                    return redirect()->back()->with(['message' => 'Addo details are updated.','class' => 'success']);
+            // Check if required fields are filled
+            if($request->region_id == 0 || $request->district_id == 0 || $request->ward_id == 0 || $request->owner_id == 0){
+                return redirect()->back()->with(['message' => 'Fill required fields.','class' => 'warning']);
+            }
+            else{
+                $values = array(
+                    'name' => $request->name,
+                    'accreditation_no' => $request->accreditation_no,
+                    'region_id' => $request->region_id,
+                    'district_id' => $request->district_id,
+                    'ward_id' => $request->ward_id,
+                    'street' => $request->street,
+                    'owner_id' => $request->owner_id
+                );
+    
+                try{
+                    $response = $client->request('PUT', $url, ['json' => $values]);
+                    $response_json = json_decode($response->getBody());
+    
+                    if($response_json->addo)
+                    {
+                        return redirect()->back()->with(['message' => 'Addo details are updated.','class' => 'success']);
+                    }
+                    else{
+                        // No Pharmacy.
+                        return redirect('admin/addos');
+                    }
                 }
-                else{
-                    // No Pharmacy.
+                catch (ClientErrorResponseException $e) {
+                    \Log::info("Client error :" . $e->getResponse()->getBody(true));
                     return redirect('admin/addos');
                 }
-            }
-            catch (ClientErrorResponseException $e) {
-                \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/addos');
-            }
-            catch (ServerErrorResponseException $e) {
-                \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/addos');
-            }
-            catch (BadResponseException $e) {
-                \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/addos');
-            }
-            catch (\Exception $e) {
-                \Log::info("Err" . $e->getMessage());
-                return redirect('admin/addos');
+                catch (ServerErrorResponseException $e) {
+                    \Log::info("Server error" . $e->getResponse()->getBody(true));
+                    return redirect('admin/addos');
+                }
+                catch (BadResponseException $e) {
+                    \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+                    return redirect('admin/addos');
+                }
+                catch (\Exception $e) {
+                    \Log::info("Err" . $e->getMessage());
+                    return redirect('admin/addos');
+                }
             }
         }
     }
@@ -258,44 +264,50 @@ class AddosController extends Controller
             $url .= "?api_token=";
             $url .= $user->api_token;
 
-            $values = array(
-                'name' => $request->name,
-                'accreditation_no' => $request->accreditation_no,
-                'region_id' => $request->region_id,
-                'district_id' => $request->district_id,
-                'ward_id' => $request->ward_id,
-                'street' => $request->street,
-                'owner_id' => $request->owner_id
-            );
-
-            try{
-                $response = $client->request('POST', $url, ['json' => $values]);
-                $response_json = json_decode($response->getBody());
-
-                if($response_json->addo)
-                {
-                    return redirect()->back()->with(['message' => 'Addo added.','class' => 'success']);
+            // Check if required fields are filled
+            if($request->region_id == 0 || $request->district_id == 0 || $request->ward_id == 0 || $request->owner_id == 0){
+                return redirect()->back()->with(['message' => 'Fill required fields.','class' => 'warning']);
+            }
+            else{
+                $values = array(
+                    'name' => $request->name,
+                    'accreditation_no' => $request->accreditation_no,
+                    'region_id' => $request->region_id,
+                    'district_id' => $request->district_id,
+                    'ward_id' => $request->ward_id,
+                    'street' => $request->street,
+                    'owner_id' => $request->owner_id
+                );
+    
+                try{
+                    $response = $client->request('POST', $url, ['json' => $values]);
+                    $response_json = json_decode($response->getBody());
+    
+                    if($response_json->addo)
+                    {
+                        return redirect()->back()->with(['message' => 'Addo added.','class' => 'success']);
+                    }
+                    else{
+                        // No Pharmacy.
+                        return redirect('admin/addos');
+                    }
                 }
-                else{
-                    // No Pharmacy.
+                catch (ClientErrorResponseException $e) {
+                    \Log::info("Client error :" . $e->getResponse()->getBody(true));
                     return redirect('admin/addos');
                 }
-            }
-            catch (ClientErrorResponseException $e) {
-                \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/addos');
-            }
-            catch (ServerErrorResponseException $e) {
-                \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/addos');
-            }
-            catch (BadResponseException $e) {
-                \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/addos');
-            }
-            catch (\Exception $e) {
-                \Log::info("Err" . $e->getMessage());
-                return redirect('admin/addos');
+                catch (ServerErrorResponseException $e) {
+                    \Log::info("Server error" . $e->getResponse()->getBody(true));
+                    return redirect('admin/addos');
+                }
+                catch (BadResponseException $e) {
+                    \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+                    return redirect('admin/addos');
+                }
+                catch (\Exception $e) {
+                    \Log::info("Err" . $e->getMessage());
+                    return redirect('admin/addos');
+                }
             }
         }
     }
