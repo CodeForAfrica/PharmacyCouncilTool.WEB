@@ -40,6 +40,8 @@ class DashboardController extends Controller
                 'attendances' => $this->getAttendances($user),
                 'users' => $this->getUsers($user)
             );
+
+            dd($data);
             return view('admin.dashboard',compact('user','data'));
         }
     }
