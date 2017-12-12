@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="well">
-                        <h1 class="color-pink">{{ count($data['personnels']) }}</h1>
+                        <h1 class="color-pink">{{ count(null) }}</h1>
                         <h3><a href="{{ route('admin.personnel') }}">Personnels</a></h3>
                         <hr />
                         <div style="text-align:left; overflow:auto; width:100%;">
