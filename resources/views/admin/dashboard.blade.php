@@ -32,14 +32,14 @@
                 </div>
                 <div class="col-md-3">
                     <div class="well">
-                        <h1 class="color-pink">{{ count(null) }}</h1>
+                        <h1 class="color-pink">{{ count($data['personnels']) }}</h1>
                         <h3><a href="{{ route('admin.personnel') }}">Personnels</a></h3>
                         <hr />
                         <div style="text-align:left; overflow:auto; width:100%;">
-                            <span class="pull-left"><a href="{{ route('admin.personnel') }}?type=Pharmacist">Pharmacists - <strong>{{ count(null) }}</strong></a></span>
+                            <span class="pull-left"><a href="{{ route('admin.personnel') }}?type=Pharmacist">Pharmacists - <strong>{{ count($data['personnels_pharmacists']) }}</strong></a></span>
                         </div>
                         <div style="text-align:left; overflow:auto; width:100%">
-                            <span class="pull-left"><a href="{{ route('admin.personnel') }}?type=Pharmaceutical Technician">Pharmaceutical Technicians - <strong>{{ count(null) }}</strong></a></span>
+                            <span class="pull-left"><a href="{{ route('admin.personnel') }}?type=Pharmaceutical Technician">Pharmaceutical Technicians - <strong>{{ count($data['personnels_pharmaceutical_technicians']) }}</strong></a></span>
                         </div>
                         <div style="text-align:left; overflow:auto; width:100%">
                             <span class="pull-left"><a href="{{ route('admin.personnel') }}?type=Medical Representative">Medical Representatives - <strong>{{ count($data['personnels_medical_representatives']) }}</strong></span>
