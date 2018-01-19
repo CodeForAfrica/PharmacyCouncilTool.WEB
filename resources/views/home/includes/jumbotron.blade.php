@@ -58,7 +58,7 @@
                             <div class="hakiki-results-found" id="hakiki-results-found" style="display:none;">
                                 <div class="alert alert-success" role="alert">
                                     <span class="fa fa-check-circle-o"></span>&nbsp;&nbsp;
-                                    <span>{{ trans('app.Pharmacy_With_Registration_Number') }} <strong class="pharmacy-registration-number">222XX</strong> {{ trans('app.Is_Registered') }}</span>
+                                    <span>{{ trans('app.Pharmacy_With_Registration_Number') }}<strong class="pharmacy-registration-number">222XX</strong> {{ trans('app.Is_Registered') }}</span>
                                 </div><!-- close div .alert-success -->
                                 <div class="maelezo">
                                     <br />
