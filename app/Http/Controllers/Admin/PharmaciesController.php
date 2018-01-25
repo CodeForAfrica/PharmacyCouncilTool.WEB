@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class PharmaciesController extends Controller
 {
@@ -375,6 +376,56 @@ class PharmaciesController extends Controller
                     \Log::info("Err" . $e->getMessage());
                     return redirect('admin/pharmacies');
                 }
+            }
+        }
+    }
+
+    public function import(Request $request){
+        // Checking for session.
+        if(!session()->has('user'))
+        {
+            return redirect('admin/login');
+        }
+        else{
+            $file = $request->file('file');
+
+            $timestamp = Carbon::now()->timestamp;
+
+            // Uploading a file
+            // Renaming
+            $temp = explode(".", $file->getClientOriginalName());
+            $filename = $temp[0];
+            $new_filename = $filename."_".$timestamp.".".$file->getClientOriginalExtension();
+
+            //Move Uploaded File
+            $destinationPath = 'uploads/';
+            $file->move($destinationPath,$new_filename);
+
+            // Reading File
+            if(($handle = fopen(public_path().'/uploads/'.$new_filename, 'r' )) !== FALSE){
+                fgetcsv($handle, 10000, ":");
+                while(($data = fgetcsv($handle, 10000, ':')) !== FALSE) {
+                   var_dump($data);
+                   // Preparing values
+                   $fin = $data[1];
+                   $registration_date = $data[2];
+                   $name = $data[3];
+                   $category = $data[4];
+
+                   $values = array(
+                       'fin' => $data[1],
+                       'registration_date' => $registration_date,
+                       'name' => $name,
+                       'category' => $category
+                   );
+
+                   echo '<br /><br /><br />';
+
+                   print_r($values);
+
+                   break;
+                }
+                fclose($handle);
             }
         }
     }

@@ -67,6 +67,11 @@ Route::post('admin/pharmacies/create', [
     'as' => 'admin.pharmacies.create'
 ]);
 
+Route::post('admin/pharmacies/import', [
+    'uses' => 'Admin\PharmaciesController@import',
+    'as' => 'admin.pharmacies.import'
+]);
+
 // Administrator Verifications routes.
 Route::get('admin/verifications', [
     'uses' => 'Admin\VerificationsController@index',
