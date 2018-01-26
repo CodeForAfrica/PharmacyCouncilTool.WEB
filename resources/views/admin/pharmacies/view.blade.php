@@ -85,7 +85,7 @@
                 </tr>
                 <tr>
                     <th>Owner</th>
-                    <td>{{ ucfirst(strtolower($data['pharmacy']->owner->firstname)) }} {{ ucfirst(strtolower($data['pharmacy']->owner->surname)) }}</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <th>Postal Address</th>

@@ -34,6 +34,8 @@
                 <br />
             </div><!-- close div .col-md-12 -->
 
+            
+
             @if ($data['pharmacies'])
                 <table id="myTable" class="table table-striped">
                     <thead>
