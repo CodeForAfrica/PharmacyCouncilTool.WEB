@@ -22,12 +22,11 @@ class AuthController extends Controller
             $url .= "?email=".$request->email;
             $url .= "&password=".$request->password;
 
-
-            dd($url);
-
             try{
                 $response = $client->request('GET', $url);
                 $response_json = json_decode($response->getBody());
+
+                dd($response);
 
                 if($response_json->token && $response_json->token != "")
                 {
@@ -57,19 +56,23 @@ class AuthController extends Controller
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/login')->with(['message' => 'Something went wrong, try login again.','class' => 'warning']);
+                dd($e->getResponse()->getBody(true));
+                //return redirect('admin/login')->with(['message' => 'Something went wrong, try login again.','class' => 'warning']);
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/login')->with(['message' => 'Something went wrong, try login again.','class' => 'warning']);
+                dd($e->getResponse()->getBody(true));
+                //return redirect('admin/login')->with(['message' => 'Something went wrong, try login again.','class' => 'warning']);
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/login')->with(['message' => 'Something went wrong, try login again.','class' => 'warning']);
+                dd($e->getResponse()->getBody(true));
+                //return redirect('admin/login')->with(['message' => 'Something went wrong, try login again.','class' => 'warning']);
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
-                return redirect('admin/login')->with(['message' => 'Invalid email or password.','class' => 'danger']);
+                dd($e->getMessage());
+                //return redirect('admin/login')->with(['message' => 'Invalid email or password.','class' => 'danger']);
             }
         }
         else
