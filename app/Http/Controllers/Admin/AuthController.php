@@ -22,6 +22,9 @@ class AuthController extends Controller
             $url .= "?email=".$request->email;
             $url .= "&password=".$request->password;
 
+
+            dd($url);
+
             try{
                 $response = $client->request('GET', $url);
                 $response_json = json_decode($response->getBody());
