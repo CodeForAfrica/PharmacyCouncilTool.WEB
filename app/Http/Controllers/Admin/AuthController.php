@@ -54,15 +54,15 @@ class AuthController extends Controller
             }
             catch (ClientErrorResponseException $e) {
                 \Log::info("Client error :" . $e->getResponse()->getBody(true));
-                return redirect('admin/login')->with(['message' => 'Something went wrong, try login again.','class' => 'warning']);
+                return redirect('admin/login')->with(['message' => 'Something went wrong, try login again','class' => 'warning']);
             }
             catch (ServerErrorResponseException $e) {
                 \Log::info("Server error" . $e->getResponse()->getBody(true));
-                return redirect('admin/login')->with(['message' => 'Something went wrong, try login again.','class' => 'warning']);
+                return redirect('admin/login')->with(['message' => 'Something went wrong, try login again','class' => 'warning']);
             }
             catch (BadResponseException $e) {
                 \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-                return redirect('admin/login')->with(['message' => 'Something went wrong, try login again.','class' => 'warning']);
+                return redirect('admin/login')->with(['message' => 'Something went wrong, try login again','class' => 'warning']);
             }
             catch (\Exception $e) {
                 \Log::info("Err" . $e->getMessage());
