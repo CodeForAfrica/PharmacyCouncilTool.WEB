@@ -60,7 +60,7 @@
                             <td>{{ $pharmacy->category }}</td>
                             <td>{{ $pharmacy->district->name }}</td>
                             <td>{{ $pharmacy->region->name }}</td>
-                            <td>{{ ucfirst(strtolower($pharmacy->pharmacist->firstname)) }} {{ ucfirst(strtolower($pharmacy->pharmacist->middlename)) }} {{ ucfirst(strtolower($pharmacy->pharmacist->surname)) }}</td>
+                            <td>{{ ucfirst(strtolower($pharmacy->pharmacist->firstname)) }} {{ ucfirst(strtolower($pharmacy->pharmacist->surname)) }}</td>
                             <td>
                                 <a href="{{ route('admin.pharmacies.delete',$pharmacy->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
                                 <a href="{{ route('admin.pharmacies.edit',$pharmacy->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
