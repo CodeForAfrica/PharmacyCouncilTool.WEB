@@ -308,7 +308,7 @@ class OwnersController extends Controller
         $url .= "owners";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=all";
+        $url .= "&limit=5";
 
         if($status != ""){
             $url .= "&status=";

@@ -313,7 +313,7 @@ class DispensersController extends Controller
         $url .= "dispensers";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=all";
+        $url .= "&limit=5";
 
         try{
             $response = $client->request('GET', $url);

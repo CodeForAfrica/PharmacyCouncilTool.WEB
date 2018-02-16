@@ -319,7 +319,7 @@ class AddosController extends Controller
         $url .= "addos";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=all";
+        $url .= "&limit=5";
 
         try{
             $response = $client->request('GET', $url);
@@ -359,7 +359,7 @@ class AddosController extends Controller
         $url .= "owners";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=all";
+        $url .= "&limit=5";
 
         try{
             $response = $client->request('GET', $url);
@@ -399,7 +399,7 @@ class AddosController extends Controller
         $url .= "regions";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=all";
+        $url .= "&limit=5";
 
         try{
             $response = $client->request('GET', $url);
@@ -439,7 +439,7 @@ class AddosController extends Controller
         $url .= "districts";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=all";
+        $url .= "&limit=5";
 
         try{
             $response = $client->request('GET', $url);
@@ -479,7 +479,7 @@ class AddosController extends Controller
         $url .= "wards";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=all";
+        $url .= "&limit=5";
 
         try{
             $response = $client->request('GET', $url);
