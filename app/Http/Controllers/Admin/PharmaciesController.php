@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
+use Psr\Http\Message\ResponseInterface;
+
 class PharmaciesController extends Controller
 {
     public function index(Request $request)
@@ -390,6 +392,13 @@ class PharmaciesController extends Controller
         else{
             $user = session('user');
 
+            // Reserve values in arrays.
+            $ARR_Regions = $this->getRegions($user);
+            $ARR_Districts = $this->getDistricts($user);
+            $ARR_Wards = $this->getWards($user);
+            $ARR_Owners = $this->getOwners($user);
+            $ARR_Personnels = $this->getPersonnels($user);
+
             $file = $request->file('file');
             $timestamp = Carbon::now()->timestamp;
 
@@ -405,8 +414,9 @@ class PharmaciesController extends Controller
 
             // Reading File
             if(($handle = fopen(public_path().'/uploads/'.$new_filename, 'r' )) !== FALSE){
-                fgetcsv($handle, 10000, ":");
-                $n = 1;
+                //fgetcsv($handle, 10000, ":");
+                
+                $query_row = 0;
                 while(($data = fgetcsv($handle, 10000, ':')) !== FALSE) {
                    // Preparing values
                    $fin = $data[1];
@@ -451,19 +461,53 @@ class PharmaciesController extends Controller
                    $country = $data[6];
 
                    // Finding Region ID
-                   $region = $this->getRegion($user, $data[7]);
-                   if(!empty($region) && isset($region->id)) $region_id = $region->id;
-                   else $region_id = 9999;
+                   $region_key = false;
+                   $search = ['name' => $data[7]];
+                   foreach($ARR_Regions as $k => $v){
+                       if($v->name == $search['name']){
+                           $region_key = $k;
+                           break;
+                        }
+                    }
+                    
+                    if($region_key){
+                        $region_id = $ARR_Regions[$region_key]->id;
+                    }
+                    else $region_id = 9999;
 
-                   // Finding District ID
-                   $district = $this->getDistrict($user, $data[9]);
-                   if(!empty($district) && isset($district->id)) $district_id = $district->id;
-                   else $district_id = 9999;
+                    // Finding District ID based on Region ID
+                    $district_key = false;
+                    if($region_key){
+                        $search = ['region_id' => $region_id, 'name' => $data[9]];
+                        foreach($ARR_Districts as $k => $v){
+                            if($v->region_id == $search['region_id'] && $v->name == $search['name']){
+                                $district_key = $k;
+                                break;
+                            }
+                        }
+                    }
+
+                    if($district_key){
+                        $district_id = $ARR_Districts[$district_key]->id;
+                    }
+                    else $district_id = 9999;
                    
-                   // Finding Ward ID
-                   $ward = $this->getWard($user, $data[11]);
-                   if(!empty($ward) && isset($ward->id)) $ward_id = $ward->id;
-                   else $ward_id = 9999;
+                    // Finding Ward ID based on district ID
+                    $ward_key = false;
+                    if($district_key){
+                        $search = ['district_id' => $district_id, 'name' => $data[11]];
+                        foreach($ARR_Wards as $k => $v){
+                            if($v->district_id == $search['district_id'] && $v->name == $search['name']){
+                                $ward_key = $k;
+                                break;
+                            }
+                        }
+                    }
+
+                    if($ward_key){
+                        $ward_id = $ARR_Wards[$ward_key]->id;
+                    }
+                    else $ward_id = 9999;
 
                    $village = $data[13];
                    $village_code = $data[14];
@@ -480,23 +524,36 @@ class PharmaciesController extends Controller
                        if(isset($temp[1])) $owner_middlename = $temp[1]; else $owner_middlename = "";
                        if(isset($temp[2])) $owner_surname = $temp[2]; else $owner_surname = "";
 
-                       // Check if owner already present.
-                       $owner = $this->getOwner($user, $owner_firstname, $owner_middlename, $owner_surname);
-                       if(!empty($owner) && isset($owner->id)) $owners_ids_list[] = $owner->id;
-                       else{
-                           // Add Owner
-                           $values = array(
-                               'firstname' => $owner_firstname,
-                               'middlename' => $owner_middlename,
-                               'surname' => $owner_surname,
-                               'phone' => $data[17],
-                               'email' => $data[18],
-                               'status' => $data[33]
-                            );
+                        // Check if owner already present.
+                        $owner_key = false;
+                        $search = ['firstname' => $owner_firstname, 'middlename' => $owner_middlename, 'surname' => $owner_surname];
+                        if($ARR_Owners){
+                            foreach($ARR_Owners as $k => $v){
+                                if($v->firstname == $search['firstname'] && $v->middlename == $search['middlename'] && $v->surname == $search['surname']){
+                                    $owner_key = $k;
+                                    break;
+                                }
+                            }
+                        }
 
+                        if($owner_key){
+                            $owner_id = $ARR_Owners[$owner_key]->id;
+                            $owners_ids_list[] = $owner_id;
+                        }
+                        else{
+                            // Add Owner
+                            $values = array(
+                                'firstname' => $owner_firstname,
+                                'middlename' => $owner_middlename,
+                                'surname' => $owner_surname,
+                                'phone' => $data[17],
+                                'email' => $data[18],
+                                'status' => $data[33]
+                             );
+ 
                             $owner = $this->addOwner($user, $values);
                             if(!empty($owner) && isset($owner->id)) $owners_ids_list[] = $owner->id;
-                       }
+                        }
                    }
 
                    $owners_ids = implode(":",$owners_ids_list);
@@ -513,11 +570,23 @@ class PharmaciesController extends Controller
 
                    $pharmacist_id = 9999;
 
-                   // Check if pharmacist already present.
-                   $type = "Pharmacist";
-                   $pharmacist = $this->getPersonnel($user, $type, $pharmacist_firstname, $pharmacist_middlename, $pharmacist_surname);
-                   if(!empty($pharmacist) && isset($pharmacist->id)) $pharmacist_id = $pharmacist->id;
-                   else{
+                    // Check if pharmacist already present.
+                    $type = "Pharmacist";
+                    $pharmacist_key = false;
+                    $search = ['type' => 'Pharmacist','firstname' => $pharmacist_firstname, 'middlename' => $pharmacist_middlename, 'surname' => $pharmacist_surname];
+                    if($ARR_Personnels){
+                        foreach($ARR_Personnels as $k => $v){
+                            if($v->type == $search['type'] && $v->firstname == $search['firstname'] && $v->middlename == $search['middlename'] && $v->surname == $search['surname']){
+                                $pharmacist_key = $k;
+                                break;
+                            }
+                        }
+                    }
+
+                    if($pharmacist_key){
+                        $pharmacist_id = $ARR_Personnels[$pharmacist_key]->id;
+                    }
+                    else{
                         // Add Pharmacist
                         $values = array(
                             'type' => $type,
@@ -541,17 +610,29 @@ class PharmaciesController extends Controller
 
                    $pharmaceutical_personnel_id = 9999;
 
-                   // Check if pharmaceutical personnel already present.
-                   $type = "";
-                   $pp = $this->getPersonnel($user, $type, $pp_firstname, $pp_middlename, $pp_surname);
-                   if(!empty($pp) && isset($pp->id)) $pharmaceutical_personnel_id = $pp->id;
-                   else{
+                    // Check if pharmaceutical personnel already present.
+                    $type = "";
+                    $pp_key = false;
+                    $search = ['type' => 'Pharmacist','firstname' => $pp_firstname, 'middlename' => $pp_middlename, 'surname' => $pp_surname];
+                    if($ARR_Personnels){
+                        foreach($ARR_Personnels as $k => $v){
+                            if($v->type != $search['type'] && $v->firstname == $search['firstname'] && $v->middlename == $search['middlename'] && $v->surname == $search['surname']){
+                                $pp_key = $k;
+                                break;
+                            }
+                        }
+                    }
+
+                    if($pp_key){
+                        $pharmaceutical_personnel_id = $ARR_Personnels[$pp_key]->id;
+                    }
+                    else{
                         // Finding Type
                         if(strpos($pharmaceutical_personnel_str, "PT")) {$type = "Pharmaceutical Technician"; $keycode = "04";}
                         else if(strpos($pharmaceutical_personnel_str, "PT")) {$type = "Pharmaceutical Assistant"; $keycode = "05";}
                         else {$type = "UNKNOWN"; $keycode = "00";}
 
-                        // Add Pharmacist
+                        // Add Pharmaceutical Personnel
                         $values = array(
                             'type' => $type,
                             'keycode' => $keycode,
@@ -610,8 +691,8 @@ class PharmaciesController extends Controller
                     // Add Pharmacy.
                     $pharmacy = $this->addPharmacy($user, $values);
 
-                    $n++;
-                    if($n >= 30); break;
+                    $query_row = $query_row + 1;
+                    if($query_row >= 30) break; // <-- Submitting only 30 records for now.
 
                 } // <- End of While loop
                 fclose($handle);
@@ -983,7 +1064,7 @@ class PharmaciesController extends Controller
         $url .= "?api_token=";
         $url .= $user->api_token;
         $url .= "&limit=1";
-        $url .= "&name=".$name."";
+        $url .= "&name=".$name."*";
 
         try{
             $response = $client->request('GET', $url);
@@ -1106,10 +1187,9 @@ class PharmaciesController extends Controller
         $url .= $user->api_token;
 
         try{
-            $response = $client->request('POST', $url, ['json' => $values]);
-
+            $promise = $client->requestAsync('POST', $url, ['json' => $values]);
+            $response = $promise->wait();
             $response_json = json_decode($response->getBody());
-
             if($response_json->owner)
             {
                 return $response_json->owner;
@@ -1146,9 +1226,9 @@ class PharmaciesController extends Controller
         $url .= $user->api_token;
 
         try{
-            $response = $client->request('POST', $url, ['json' => $values]);
+            $promise = $client->requestAsync('POST', $url, ['json' => $values]);
+            $response = $promise->wait();
             $response_json = json_decode($response->getBody());
-
             if($response_json->personnel)
             {
                 return $response_json->personnel;
@@ -1185,9 +1265,9 @@ class PharmaciesController extends Controller
         $url .= $user->api_token;
 
         try{
-            $response = $client->request('POST', $url, ['json' => $values]);
+            $promise = $client->requestAsync('POST', $url, ['json' => $values]);
+            $response = $promise->wait();
             $response_json = json_decode($response->getBody());
-
             if($response_json->premise)
             {
                 return $response_json->premise;
