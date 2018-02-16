@@ -418,7 +418,7 @@ body.login{
 
 .arrow_box {
 	position: relative;
-	background: #afa6a9;
+	background: #c5c6be;
     border: 2px solid #8a918f;
     border-radius: 8px;
     font-size: 20px;
@@ -438,7 +438,7 @@ body.login{
 
 .arrow_box:after {
 	border-color: rgba(244, 245, 249, 0);
-	border-top-color: #afa6a9;
+	border-top-color: #c5c6be;
 	border-width: 30px;
 	margin-left: -30px;
 }
