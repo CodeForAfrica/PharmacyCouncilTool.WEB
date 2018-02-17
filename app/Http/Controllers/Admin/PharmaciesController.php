@@ -710,6 +710,7 @@ class PharmaciesController extends Controller
         $url .= "?api_token=";
         $url .= $user->api_token;
         $url .= "&limit=5";
+        $url .= "&order_by=created_at,asc";
 
         if($status != ""){
             $url .= "&renewal_status=";
