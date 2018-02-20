@@ -142,11 +142,7 @@
                     <div id="old-owner-div" class="form-group">
                         <select id="owner_id" name="owner_id" class="form-control no-radius">
                             <option value="0">Choose Premise Owner</option>
-                            @if(count($data['owners']) > 0)
-                                @foreach($data['owners'] as $owner)
-                                    <option value="{{ $owner->id }}" @if($data['pharmacy']->owner_id == $owner->id) selected="selected" @endif>{{ ucfirst(strtolower($owner->firstname)) }} {{ ucfirst(strtolower($owner->middlename)) }} {{ ucfirst(strtolower($owner->surname)) }} ({{ ucfirst(strtolower($owner->phone)) }})</option>
-                                @endforeach
-                            @endif
+                            
                         </select>
                     </div>
 

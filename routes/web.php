@@ -72,6 +72,11 @@ Route::post('admin/pharmacies/import', [
     'as' => 'admin.pharmacies.import'
 ]);
 
+Route::post('admin/pharmacies/datatable', [
+    'uses' => 'Admin\PharmaciesController@datatable',
+    'as' => 'admin.pharmacies.datatable'
+]);
+
 // Administrator Verifications routes.
 Route::get('admin/verifications', [
     'uses' => 'Admin\VerificationsController@index',

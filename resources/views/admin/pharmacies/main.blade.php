@@ -5,7 +5,7 @@
 @stop
 
 @section('styles')
-    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 @stop
 
 @section('content')
@@ -34,45 +34,21 @@
                 <br />
             </div><!-- close div .col-md-12 -->
 
+            <table id="myTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>SN</th>
+                    <th>FIN</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>District</th>
+                    <th>Region</th>
+                    <th>Pharmacist</th>
+                    <th style="width:130px;">Options</th>
+                </tr>
+                </thead>
+            </table>
             
-
-            @if ($data['pharmacies'])
-                <table id="myTable" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>SN</th>
-                        <th>FIN</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>District</th>
-                        <th>Region</th>
-                        <th>Pharmacist</th>
-                        <th style="width:130px;">Options</th>
-                    </tr>
-                    </thead>
-                    <tbody style="text-align:left;">
-                        <?php $n=1; ?>
-                        @foreach($data['pharmacies'] as $pharmacy)
-                        <tr>
-                            <td>{{ $n++ }}</td>
-                            <td>{{ $pharmacy->fin }}</td>
-                            <td>{{ $pharmacy->name }}</td>
-                            <td>{{ $pharmacy->category }}</td>
-                            <td>{{ $pharmacy->district->name }}</td>
-                            <td>{{ $pharmacy->region->name }}</td>
-                            <td>{{ ucfirst(strtolower($pharmacy->pharmacist->firstname)) }} {{ ucfirst(strtolower($pharmacy->pharmacist->surname)) }}</td>
-                            <td>
-                                <a href="{{ route('admin.pharmacies.delete',$pharmacy->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
-                                <a href="{{ route('admin.pharmacies.edit',$pharmacy->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
-                                <a href="{{ route('admin.pharmacies.view',$pharmacy->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                <h2>There is no any Pharmacy.</h2>
-            @endif
         </div><!-- close div .admin-contents -->
 
         <!-- Modal -->
@@ -537,10 +513,33 @@
 @stop
 
 @section('scripts')
-    <script src="{{ asset('js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script>
+        //alert("{!! env('APP_URL') !!}");
+        //alert("{!! $user->api_token !!}")
+        var url = "{!! env('APP_URL') !!}" + "getpremises" + "?api_token=" + "{!! $user->api_token !!}";
+        //alert(url);
         $(document).ready(function(){
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    "url": '{!! route('admin.pharmacies.datatable') !!}',
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": { _token: "{{csrf_token()}}"}
+                },
+                columns: [
+                    { "data": "id" },
+                    { "data": "fin" },
+                    { "data": "name" },
+                    { "data": "category" },
+                    { "data": "district", "orderable": false },
+                    { "data": "region", "orderable": false},
+                    { "data": "pharmacist", "orderable": false },
+                    { "data": "options", "orderable": false}
+                ]
+            });
         });
     </script>
 

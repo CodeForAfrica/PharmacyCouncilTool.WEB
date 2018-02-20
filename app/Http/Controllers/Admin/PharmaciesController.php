@@ -702,6 +702,53 @@ class PharmaciesController extends Controller
         }
     }
 
+    public function datatable(Request $request){
+        $user = session('user');
+
+        $limit = $request->length;
+        $start = $request->start;
+        $order = $request->input('order.0.column');
+        $dir = $request->input('order.0.dir');
+        $search = $request->input('search.value');
+
+        $values = array(
+            'limit' => $limit,
+            'start' => $start,
+            'order' => $order,
+            'dir' => $dir,
+            'search' => $search
+        );
+
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "datatables/getpremises";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+
+        try{
+            $response = $client->request('POST', $url, ['json' => $values]);
+            $response_json = json_decode($response->getBody());
+            
+            echo $response->getBody();
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
     public function getPharmacies($user, $status = "")
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
@@ -709,7 +756,7 @@ class PharmaciesController extends Controller
         $url .= "premises";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
         $url .= "&order_by=created_at,asc";
 
         if($status != ""){
@@ -1294,5 +1341,57 @@ class PharmaciesController extends Controller
             \Log::info("Err" . $e->getMessage());
             return null;
         }
+    }
+
+    public function getAll(Request $request){
+        $user = session('user');
+        $pharmacies = $this->getPharmacies($user);
+
+        $columns = array( 
+            0 =>'sn', 
+            1 =>'fin',
+            2 => 'name',
+            3 => 'category',
+            4 => 'district',
+            5 => 'region',
+            6 => 'pharmacist',
+            7 => 'options'
+        );
+        
+        $total_data = count($pharmacies);
+        $total_filtered = $total_data;
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        $data = array();
+
+        // Looping.
+        if(!empty($pharmacies)){
+            $n = 0;
+            foreach($pharmacies as $pharmacy){
+                $temp['sn'] = $n++;
+                $temp['fin'] = $pharmacy->fin;
+                $temp['name'] = $pharmacy->name;
+                $temp['category'] = $pharmacy->category;
+                $temp['district'] = $pharmacy->district->name;
+                $temp['region'] = $pharmacy->region->name;
+                $temp['pharmacist'] = $pharmacy->pharmacist->firstname." ".$pharmacy->pharmacist->surname;
+                $temp['options'] = "HERE";
+
+                $data[] = $temp;
+            }
+        }
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),  
+            "recordsTotal"    => intval($total_data),  
+            "recordsFiltered" => intval($total_filtered),
+            "data"            => $data  
+        );
+    
+        echo json_encode($json_data); 
     }
 }
