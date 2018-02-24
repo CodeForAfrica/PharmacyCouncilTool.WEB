@@ -31,9 +31,50 @@ Route::get('admin/logout', [
     'as' => 'admin.logout'
 ]);
 
+// Administrator Dashboard routes.
 Route::get('admin/dashboard', [
     'uses' => 'Admin\DashboardController@index',
     'as' => 'admin.dashboard'
+]);
+
+Route::get('admin/dashboard/getdispensersdata', [
+    'uses' => 'Admin\DashboardController@getDispensersData',
+    'as' => 'admin.dashboard.getdispensersdata'
+]);
+
+Route::get('admin/dashboard/getaddosdata', [
+    'uses' => 'Admin\DashboardController@getAddosData',
+    'as' => 'admin.dashboard.getaddosdata'
+]);
+
+Route::get('admin/dashboard/getpersonnelsdata', [
+    'uses' => 'Admin\DashboardController@getPersonnelsData',
+    'as' => 'admin.dashboard.getpersonnelsdata'
+]);
+
+Route::get('admin/dashboard/getpharmaciesdata', [
+    'uses' => 'Admin\DashboardController@getPharmaciesData',
+    'as' => 'admin.dashboard.getpharmaciesdata'
+]);
+
+Route::get('admin/dashboard/getownersdata', [
+    'uses' => 'Admin\DashboardController@getOwnersData',
+    'as' => 'admin.dashboard.getownersdata'
+]);
+
+Route::get('admin/dashboard/getreportsdata', [
+    'uses' => 'Admin\DashboardController@getReportsData',
+    'as' => 'admin.dashboard.getreportsdata'
+]);
+
+Route::get('admin/dashboard/getattendancesdata', [
+    'uses' => 'Admin\DashboardController@getAttendancesData',
+    'as' => 'admin.dashboard.getattendancesdata'
+]);
+
+Route::get('admin/dashboard/getusersdata', [
+    'uses' => 'Admin\DashboardController@getUsersData',
+    'as' => 'admin.dashboard.getusersdata'
 ]);
 
 // Administrator Pharmacies routes.

@@ -17,7 +17,7 @@ class DashboardController extends Controller
         else{
             $user = session('user');
             $data = array(
-                'page' => 'Dashboard',
+                'page' => 'Dashboard' /*,
                 'dispensers' => $this->getDispensers($user) ?: array(),
                 'addos' => $this->getAddos($user) ?: array(),
                 'personnels' => $this->getPersonnels($user) ?: array(),
@@ -38,12 +38,160 @@ class DashboardController extends Controller
                 'reports_males' => $this->getReports($user, "Male") ?: array(),
                 'reports_females' => $this->getReports($user, "Female") ?: array(),
                 'attendances' => $this->getAttendances($user) ?: array(),
-                'users' => $this->getUsers($user) ?: array()
+                'users' => $this->getUsers($user) ?: array()*/
             );
 
             return view('admin.dashboard',compact('user','data'));
         }
     }
+
+    public function getDispensersData(){
+        $user = session('user');
+
+        // Fetching data
+        $dispensers = $this->getDispensers($user);
+
+        return response()->json([
+            'total_dispensers' => count($dispensers)
+        ],200);
+    }
+
+    public function getAddosData(){
+        $user = session('user');
+
+        // Fetching data
+        $addos = $this->getAddos($user);
+
+        return response()->json([
+            'total_addos' => count($addos)
+        ],200);
+    }
+
+    public function getPersonnelsData(){
+        $user = session('user');
+
+        // Fetching data
+        $personnels = $this->getPersonnels($user);
+            $total_personnels_pharmacists = 0;
+            $total_personnels_pharmaceutical_technicians = 0;
+            $total_personnels_medical_representatives = 0;
+
+            if(count($personnels) > 0){
+                foreach($personnels as $personnel){
+                    if($personnel->type == "Pharmacist") $total_personnels_pharmacists += 1;
+                    if($personnel->type == "Pharmaceutical Technician") $total_personnels_pharmaceutical_technicians += 1;
+                    if($personnel->type == "Medical Representative") $total_personnels_medical_representatives += 1;
+                }
+            }
+
+        return response()->json([
+            'total_personnels' => count($personnels),
+            'total_personnels_pharmacists' => $total_personnels_pharmacists,
+            'total_personnels_pharmaceutical_technicians' => $total_personnels_pharmaceutical_technicians,
+            'total_personnels_medical_representative' => $total_personnels_medical_representatives
+        ],200);
+    }
+
+    public function getPharmaciesData(){
+        $user = session('user');
+
+        // Fetching data
+        $pharmacies = $this->getPharmacies($user);
+            $total_pharmacies_renewed = 0;
+            $total_pharmacies_not_renewed = 0;
+            $total_pharmacies_pending = 0;
+            $total_pharmacies_waiting_permit = 0;
+            $total_pharmacies_closed = 0;
+            $total_pharmacies_temporary_closed = 0;
+
+            if(count($pharmacies) > 0){
+                foreach($pharmacies as $pharmacy){
+                    if($pharmacy->renewal_status == "Renewed") $total_pharmacies_renewed += 1;
+                    if($pharmacy->renewal_status == "Not Renewed") $total_pharmacies_not_renewed += 1;
+                    if($pharmacy->renewal_status == "Pending") $total_pharmacies_pending += 1;
+                    if($pharmacy->renewal_status == "Waiting Permit") $total_pharmacies_waiting_permit += 1;
+                    if($pharmacy->renewal_status == "Closed") $total_pharmacies_closed += 1;
+                    if($pharmacy->renewal_status == "Temporary Closed") $total_pharmacies_temporary_closed += 1;
+                }
+            }
+
+        return response()->json([
+            'total_pharmacies' => count($pharmacies),
+            'total_pharmacies_renewed' => $total_pharmacies_renewed,
+            'total_pharmacies_not_renewed' => $total_pharmacies_not_renewed,
+            'total_pharmacies_pending' => $total_pharmacies_pending,
+            'total_pharmacies_waiting_permit' => $total_pharmacies_waiting_permit,
+            'total_pharmacies_closed' => $total_pharmacies_closed,
+            'total_pharmacies_temporary_closed' => $total_pharmacies_temporary_closed
+        ],200);
+    }
+
+    public function getOwnersData(){
+        $user = session('user');
+
+        // Fetching data
+        $owners = $this->getOwners($user);
+            $total_owners_professionals = 0;
+            $total_owners_not_professionals = 0;
+
+            if(count($owners) > 0){
+                foreach($owners as $owner){
+                    if($owner->status == "Professional" || $owner->status == "Proffessional") $total_owners_professionals += 1;
+                    if($owner->status == "Not Professional" || $owner->status == "Not Proffessional") $total_owners_not_professionals += 1;
+                }
+            }
+
+        return response()->json([
+            'total_owners' => count($owners),
+            'total_owners_professionals' => $total_owners_professionals,
+            'total_owners_not_professionals' => $total_owners_not_professionals
+        ],200);
+    }
+
+    public function getReportsData(){
+        $user = session('user');
+
+        // Fetching data
+        $reports = $this->getReports($user);
+            $total_reports_males = 0;
+            $total_reports_females = 0;
+
+            if(count($reports) > 0){
+                foreach($reports as $report){
+                    if($report->gender == "Male") $total_reports_males += 1;
+                    if($report->status == "Female") $total_reports_females += 1;
+                }
+            }
+
+        return response()->json([
+            'total_reports' => count($reports),
+            'total_reports_males' => $total_reports_males,
+            'total_reports_females' => $total_reports_females
+        ],200);
+    }
+
+    public function getAttendancesData(){
+        $user = session('user');
+
+        // Fetching data
+        $attendances = $this->getAttendances($user);
+
+        return response()->json([
+            'total_attendances' => count($attendances)
+        ],200);
+    }
+
+    public function getUsersData(){
+        $user = session('user');
+
+        // Fetching data
+        $users = $this->getUsers($user);
+
+        return response()->json([
+            'total_users' => count($users)
+        ],200);
+    }
+
 
     public function getPharmacies($user, $status = "")
     {
@@ -52,7 +200,7 @@ class DashboardController extends Controller
         $url .= "premises";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         if($status != ""){
             $url .= "&renewal_status=";
@@ -97,7 +245,7 @@ class DashboardController extends Controller
         $url .= "reports";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         if($gender != ""){
             $url .= "&gender=";
@@ -142,7 +290,7 @@ class DashboardController extends Controller
         $url .= "users";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -182,7 +330,7 @@ class DashboardController extends Controller
         $url .= "dispensers";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -222,7 +370,7 @@ class DashboardController extends Controller
         $url .= "addos";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -262,7 +410,7 @@ class DashboardController extends Controller
         $url .= "personnels";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         if($type != ""){
             $url .= "&type=";
@@ -307,7 +455,7 @@ class DashboardController extends Controller
         $url .= "owners";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         if($status != ""){
             $url .= "&status=";
@@ -352,7 +500,7 @@ class DashboardController extends Controller
         $url .= "attendances";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);

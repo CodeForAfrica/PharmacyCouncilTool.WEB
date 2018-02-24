@@ -515,10 +515,7 @@
 @section('scripts')
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script>
-        //alert("{!! env('APP_URL') !!}");
-        //alert("{!! $user->api_token !!}")
         var url = "{!! env('APP_URL') !!}" + "getpremises" + "?api_token=" + "{!! $user->api_token !!}";
-        //alert(url);
         $(document).ready(function(){
             $('#myTable').DataTable({
                 processing: true,
