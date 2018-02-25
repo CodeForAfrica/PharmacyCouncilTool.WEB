@@ -515,7 +515,6 @@
 @section('scripts')
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script>
-        var url = "{!! env('APP_URL') !!}" + "getpremises" + "?api_token=" + "{!! $user->api_token !!}";
         $(document).ready(function(){
             $('#myTable').DataTable({
                 processing: true,

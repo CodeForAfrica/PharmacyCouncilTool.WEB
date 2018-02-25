@@ -279,6 +279,11 @@ Route::post('admin/owners/create', [
     'as' => 'admin.owners.create'
 ]);
 
+Route::post('admin/owners/datatable', [
+    'uses' => 'Admin\OwnersController@datatable',
+    'as' => 'admin.owners.datatable'
+]);
+
 // Administrator Personnels routes.
 Route::get('admin/personnel', [
     'uses' => 'Admin\PersonnelController@index',

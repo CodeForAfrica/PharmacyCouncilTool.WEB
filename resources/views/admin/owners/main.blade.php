@@ -5,7 +5,7 @@
 @stop
 
 @section('styles')
-    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 @stop
 
 @section('content')
@@ -33,41 +33,22 @@
                 <br />
             </div><!-- close div .col-md-12 -->
 
-            @if ($data['owners'])
-                <table id="myTable" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Firstname</th>
-                        <th>Middlename</th>
-                        <th>Surname</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th style="width:130px;">Options</th>
-                    </tr>
-                    </thead>
-                    <tbody style="text-align:left;">
-                        <?php $n=1; ?>
-                        @foreach($data['owners'] as $owner)
-                        <tr>
-                            <td>{{ $n++ }}</td>
-                            <td>{{ ucfirst(strtolower($owner->firstname)) }}</td>
-                            <td>{{ ucfirst(strtolower($owner->middlename)) }}</td>
-                            <td>{{ ucfirst(strtolower($owner->surname)) }}</td>
-                            <td>{{ $owner->phone }}</td>
-                            <td>{{ $owner->email }}</td>
-                            <td>
-                                <a href="{{ route('admin.owners.delete',$owner->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
-                                <a href="{{ route('admin.owners.edit',$owner->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
-                                <a href="{{ route('admin.owners.view',$owner->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                <h2>There is no any owner.</h2>
-            @endif
+            <table id="myTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Firstname</th>
+                    <th>Middlename</th>
+                    <th>Surname</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Occupation</th>
+                    <th>Status</th>
+                    <th style="width:130px;">Options</th>
+                </tr>
+                </thead>
+            </table>
+
         </div><!-- close div .admin-contents -->
 
         <!-- Modal -->
@@ -125,10 +106,30 @@
 @stop
 
 @section('scripts')
-    <script src="{{ asset('js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    "url": '{!! route('admin.owners.datatable') !!}',
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": { _token: "{{csrf_token()}}"}
+                },
+                columns: [
+                    { "data": "id" },
+                    { "data": "firstname" },
+                    { "data": "middlename" },
+                    { "data": "surname" },
+                    { "data": "phone" },
+                    { "data": "email" },
+                    { "data": "occupation" },
+                    { "data": "status" },
+                    { "data": "options", "orderable": false}
+                ]
+            });
         });
     </script>
 @stop
