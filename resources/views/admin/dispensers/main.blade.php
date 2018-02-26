@@ -34,41 +34,19 @@
                 <br />
             </div><!-- close div .col-md-12 -->
 
-            @if ($data['dispensers'])
-                <table id="myTable" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>PIN</th>
-                        <th>Fullname</th>
-                        <th>Registration Date</th>
-                        <th>Certificate No</th>
-                        <th>Training Place</th>
-                        <th style="width:130px;">Options</th>
-                    </tr>
-                    </thead>
-                    <tbody style="text-align:left;">
-                        <?php $n=1; ?>
-                        @foreach($data['dispensers'] as $dispenser)
-                        <tr>
-                            <td>{{ $n++ }}</td>
-                            <td>{{ $dispenser->pin }}</td>
-                            <td>{{ ucfirst(strtolower($dispenser->firstname)) }} {{ ucfirst(strtolower($dispenser->middlename)) }} {{ ucfirst(strtolower($dispenser->surname)) }}</td>
-                            <td>{{ $dispenser->registration_date }}</td>
-                            <td>{{ $dispenser->certificate_no }}</td>
-                            <td>{{ $dispenser->training_place }}</td>
-                            <td>
-                                <a href="{{ route('admin.dispensers.delete',$dispenser->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
-                                <a href="{{ route('admin.dispensers.edit',$dispenser->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
-                                <a href="{{ route('admin.dispensers.view',$dispenser->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                <h2>There is no any Dispenser.</h2>
-            @endif
+            <table id="myTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>PIN</th>
+                    <th>Fullname</th>
+                    <th>Registration Date</th>
+                    <th>Certificate No</th>
+                    <th>Training Place</th>
+                    <th style="width:130px;">Options</th>
+                </tr>
+                </thead>
+            </table>
         </div><!-- close div .admin-contents -->
 
         <!-- Modal -->
@@ -197,7 +175,25 @@
     <script src="{{ asset('js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    "url": '{!! route('admin.dispensers.datatable') !!}',
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": { _token: "{{csrf_token()}}"}
+                },
+                columns: [
+                    { "data": "id" },
+                    { "data": "pin" },
+                    { "data": "fullname" },
+                    { "data": "registration_date" },
+                    { "data": "certificate_no" },
+                    { "data": "training_place" },
+                    { "data": "options", "orderable": false }
+                ]
+            });
         });
     </script>
 @stop

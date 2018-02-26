@@ -217,6 +217,11 @@ Route::post('admin/dispensers/create', [
     'as' => 'admin.dispensers.create'
 ]);
 
+Route::post('admin/dispensers/datatable', [
+    'uses' => 'Admin\DispensersController@datatable',
+    'as' => 'admin.dispensers.datatable'
+]);
+
 // Administrator Addos routes.
 Route::get('admin/addos', [
     'uses' => 'Admin\AddosController@index',
