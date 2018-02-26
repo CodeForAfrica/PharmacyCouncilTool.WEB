@@ -19,18 +19,9 @@ class PharmaciesController extends Controller
         }
         else{
             $user = session('user');
-            $pharmacies = null;
-            
-            if($request->status){
-                $pharmacies = $this->getPharmacies($user, $request->status);
-            }
-            else{
-                $pharmacies = $this->getPharmacies($user);
-            }
 
             $data = array(
                 'page' => 'Pharmacies',
-                'pharmacies' => $pharmacies,
                 'owners' => $this->getOwners($user),
                 'personnels' => $this->getPersonnels($user),
                 'regions' => $this->getRegions($user)

@@ -315,6 +315,11 @@ Route::post('admin/personnel/create', [
     'as' => 'admin.personnel.create'
 ]);
 
+Route::post('admin/personnel/datatable', [
+    'uses' => 'Admin\PersonnelController@datatable',
+    'as' => 'admin.personnel.datatable'
+]);
+
 // Administrator Attendances routes.
 Route::get('admin/attendances', [
     'uses' => 'Admin\AttendancesController@index',

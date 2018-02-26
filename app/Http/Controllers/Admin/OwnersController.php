@@ -16,17 +16,8 @@ class OwnersController extends Controller
         }
         else{
             $user = session('user');
-            $owners = null;
-            
-            if($request->status){
-                $owners = $this->getOwners($user, $request->status);
-            }
-            else{
-                $owners = $this->getOwners($user);
-            }
             $data = array(
-                'page' => 'Owners',
-                'owners' => $owners
+                'page' => 'Owners'
             );
 
             return view('admin.owners.main',compact('user','data'));

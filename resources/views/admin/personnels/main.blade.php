@@ -34,43 +34,20 @@
                 <br />
             </div><!-- close div .col-md-12 -->
 
-            @if ($data['personnels'])
-                <table id="myTable" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Category</th>
-                        <th>Firstname</th>
-                        <th>Middlename</th>
-                        <th>Surname</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th style="width:130px;">Options</th>
-                    </tr>
-                    </thead>
-                    <tbody style="text-align:left;">
-                        <?php $n=1; ?>
-                        @foreach($data['personnels'] as $personnel)
-                        <tr>
-                            <td>{{ $n++ }}</td>
-                            <td>{{ $personnel->type }}</td>
-                            <td>{{ ucfirst(strtolower($personnel->firstname)) }}</td>
-                            <td>{{ ucfirst(strtolower($personnel->middlename)) }}</td>
-                            <td>{{ ucfirst(strtolower($personnel->surname)) }}</td>
-                            <td>{{ $personnel->phone }}</td>
-                            <td>{{ $personnel->email }}</td>
-                            <td>
-                                <a href="{{ route('admin.personnel.delete',$personnel->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
-                                <a href="{{ route('admin.personnel.edit',$personnel->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
-                                <a href="{{ route('admin.personnel.view',$personnel->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                <h2>There is no any personnel.</h2>
-            @endif
+            <table id="myTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Firstname</th>
+                    <th>Middlename</th>
+                    <th>Surname</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th style="width:130px;">Options</th>
+                </tr>
+                </thead>
+            </table>
         </div><!-- close div .admin-contents -->
 
         <!-- Modal -->
@@ -139,7 +116,26 @@
     <script src="{{ asset('js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    "url": '{!! route('admin.personnel.datatable') !!}',
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": { _token: "{{csrf_token()}}"}
+                },
+                columns: [
+                    { "data": "id" },
+                    { "data": "type" },
+                    { "data": "firstname" },
+                    { "data": "middlename" },
+                    { "data": "surname" },
+                    { "data": "phone" },
+                    { "data": "email" },
+                    { "data": "options", "orderable": false}
+                ]
+            });
         });
     </script>
 @stop
