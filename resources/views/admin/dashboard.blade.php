@@ -235,6 +235,7 @@
                 url: url,
                 success: function (data) {
                     // Updating
+                    console.log(data);
                     $('#total_reports').html(data.total_reports);
                     $('#total_reports_males').html(data.total_reports_males);
                     $('#total_reports_females').html(data.total_reports_females);
@@ -255,7 +256,6 @@
                 url: url,
                 success: function (data) {
                     // Updating
-                    console.log(data);
                     $('#total_attendances').html(data.total_attendances);
                 },
                 error: function (data) {
@@ -274,7 +274,6 @@
                 url: url,
                 success: function (data) {
                     // Updating
-                    console.log(data);
                     $('#total_users').html(data.total_users);
                 },
                 error: function (data) {

@@ -145,14 +145,14 @@ Route::get('admin/reports/delete/{id}', [
     'as' => 'admin.reports.delete'
 ]);
 
-Route::post('admin/pharmacies', [
-    'uses' => 'Admin\PharmaciesController@update',
-    'as' => 'admin.pharmacies.update'
-]);
-
 Route::post('admin/reports', [
     'uses' => 'Admin\ReportsController@update',
     'as' => 'admin.reports.update'
+]);
+
+Route::post('admin/reports/datatable', [
+    'uses' => 'Admin\ReportsController@datatable',
+    'as' => 'admin.reports.datatable'
 ]);
 
 // Administrator Users routes.

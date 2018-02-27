@@ -159,7 +159,7 @@ class DashboardController extends Controller
             if(count($reports) > 0){
                 foreach($reports as $report){
                     if($report->gender == "Male") $total_reports_males += 1;
-                    if($report->status == "Female") $total_reports_females += 1;
+                    if($report->gender == "Female") $total_reports_females += 1;
                 }
             }
 
