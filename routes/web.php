@@ -361,6 +361,11 @@ Route::post('admin/attendances/create', [
     'as' => 'admin.attendances.create'
 ]);
 
+Route::post('admin/attendances/datatable', [
+    'uses' => 'Admin\AttendancesController@datatable',
+    'as' => 'admin.attendances.datatable'
+]);
+
 // Adding new owner
 Route::get('admin/operations/addowner', 'Admin\OperationsController@addOwner');
 Route::get('admin/operations/addpersonnel', 'Admin\OperationsController@addPersonnel');

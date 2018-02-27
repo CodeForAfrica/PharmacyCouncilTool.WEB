@@ -5,7 +5,7 @@
 @stop
 
 @section('styles')
-    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 @stop
 
 @section('content')
@@ -27,51 +27,47 @@
                 </div>
             @endif
 
-            @if ($data['attendances'])
-                <table id="myTable" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Type</th>
-                        <th>Pharmarcy RegNo</th>
-                        <th>Pharmarcy Name</th>
-                        <th>Pharmarcist</th>
-                        <th>Days NOT Present</th>
-                        <th>Owner</th>
-                        <th style="width:130px;">Options</th>
-                    </tr>
-                    </thead>
-                    <tbody style="text-align:left;">
-                        <?php $n=1; ?>
-                        @foreach($data['attendances'] as $attendance)
-                        <tr>
-                            <td>{{ $n++ }}</td>
-                            <td>{{ $attendance->type }}</td>
-                            <td>{{ $attendance->pharmacy_registration_number }}</td>
-                            <td>{{ $attendance->pharmacy->name }}</td>
-                            <td>{{ $attendance->pharmacy->pharmacist }}</td>
-                            <td>{{ $attendance->days }}</td>
-                            <td>{{ $attendance->pharmacy->owner }}</td>
-                            <td>
-                                <a href="{{ route('admin.attendances.delete',$attendance->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
-                                <a href="{{ route('admin.attendances.edit',$attendance->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
-                                <a href="{{ route('admin.attendances.view',$attendance->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                <h2>There is no any Attendance.</h2>
-            @endif
+            <table id="myTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Pharmarcy RegNo</th>
+                    <th>Pharmarcy Name</th>
+                    <th>Pharmarcist</th>
+                    <th>Days NOT Present</th>
+                    <th>Owner</th>
+                    <th style="width:130px;">Options</th>
+                </tr>
+                </thead>
+            </table>
         </div><!-- close div .admin-contents -->
 @stop
 
 @section('scripts')
-    <script src="{{ asset('js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    "url": '{!! route('admin.attendances.datatable') !!}',
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": { _token: "{{csrf_token()}}"}
+                },
+                columns: [
+                    { "data": "id" },
+                    { "data": "type" },
+                    { "data": "pharmacy_registration_no" },
+                    { "data": "pharmacy_name" },
+                    { "data": "pharmacist" },
+                    { "data": "days" },
+                    { "data": "owner" },
+                    { "data": "options", "orderable": false }
+                ]
+            });
         });
     </script>
 @stop

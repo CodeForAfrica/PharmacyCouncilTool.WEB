@@ -5,7 +5,7 @@
 @stop
 
 @section('styles')
-    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 @stop
 
 @section('content')
@@ -85,7 +85,7 @@
 @stop
 
 @section('scripts')
-    <script src="{{ asset('js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
             $('#myTable').DataTable({
