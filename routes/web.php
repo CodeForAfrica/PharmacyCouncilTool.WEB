@@ -186,6 +186,11 @@ Route::post('admin/users/create', [
     'as' => 'admin.users.create'
 ]);
 
+Route::post('admin/users/datatable', [
+    'uses' => 'Admin\UsersController@datatable',
+    'as' => 'admin.users.datatable'
+]);
+
 // Administrator Dispensers routes.
 Route::get('admin/dispensers', [
     'uses' => 'Admin\DispensersController@index',

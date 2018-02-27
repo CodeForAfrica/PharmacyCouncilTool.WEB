@@ -33,9 +33,8 @@
                 <br />
             </div><!-- close div .col-md-12 -->
 
-            @if ($data['users'])
-                <table id="myTable" class="table table-striped">
-                    <thead>
+            <table id="myTable" class="table table-striped">
+                <thead>
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -43,27 +42,8 @@
                         <th>Date Registered</th>
                         <th style="width:170px;">Options</th>
                     </tr>
-                    </thead>
-                    <tbody style="text-align:left;">
-                        <?php $n=1; ?>
-                        @foreach($data['users'] as $user)
-                        <tr>
-                            <td>{{ $n++ }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->created_at }}</td>
-                            <td>
-                                <a href="{{ route('admin.users.delete',$user->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;" disabled>Delete</a>
-                                <a href="{{ route('admin.users.edit',$user->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
-                                <a href="{{ route('admin.users.view',$user->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                <h2>There is no any User.</h2>
-            @endif
+                </thead>
+            </table>
         </div><!-- close div .admin-contents -->
 
         <!-- Modal -->
@@ -108,7 +88,23 @@
     <script src="{{ asset('js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    "url": '{!! route('admin.users.datatable') !!}',
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": { _token: "{{csrf_token()}}"}
+                },
+                columns: [
+                    { "data": "id" },
+                    { "data": "name" },
+                    { "data": "email" },
+                    { "data": "date_registered" },
+                    { "data": "options", "orderable": false}
+                ]
+            });
         });
     </script>
 @stop
