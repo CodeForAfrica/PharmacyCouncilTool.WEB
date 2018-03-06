@@ -95,8 +95,11 @@ class DashboardController extends Controller
     public function getPharmaciesData(){
         $user = session('user');
 
+        //dd($user);
+
         // Fetching data
         $pharmacies = $this->getPharmacies($user);
+        dd($pharmacies);
             $total_pharmacies_renewed = 0;
             $total_pharmacies_not_renewed = 0;
             $total_pharmacies_pending = 0;
@@ -197,10 +200,12 @@ class DashboardController extends Controller
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
-        $url .= "premises";
+        $url .= "onlypremises";
         $url .= "?api_token=";
         $url .= $user->api_token;
         $url .= "&limit=all";
+
+        dd($url);
 
         if($status != ""){
             $url .= "&renewal_status=";
