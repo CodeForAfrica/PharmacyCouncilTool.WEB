@@ -88,7 +88,7 @@ class DashboardController extends Controller
             'total_personnels' => count($personnels),
             'total_personnels_pharmacists' => $total_personnels_pharmacists,
             'total_personnels_pharmaceutical_technicians' => $total_personnels_pharmaceutical_technicians,
-            'total_personnels_medical_representative' => $total_personnels_medical_representatives
+            'total_personnels_medical_representatives' => $total_personnels_medical_representatives
         ],200);
     }
 
