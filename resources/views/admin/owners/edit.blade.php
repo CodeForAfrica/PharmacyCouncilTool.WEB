@@ -54,7 +54,11 @@
 
                 <label>Status</label>
                 <div class="form-group">
-                    <input type="text" name="status" class="form-control no-radius" value="{{ $data['owner']->status }}" placeholder="Status" />
+                    <select name="status" class="form-control no-radius">
+                        <option value="UNKNOWN">Choose owner status</option>
+                        <option value="Proffessional" @if($data['owner']->status == "Proffessional") selected="selected" @endif>Proffessional</option>
+                        <option value="Not Proffessional" @if($data['owner']->status == "Not Proffessional") selected="selected" @endif>Not Proffessional</option>
+                    </select>
                 </div>
 
                 <input type="hidden" name="id" value="{{ $data['owner']->id }}" />
