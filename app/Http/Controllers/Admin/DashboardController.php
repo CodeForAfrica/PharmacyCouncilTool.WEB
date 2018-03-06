@@ -99,7 +99,6 @@ class DashboardController extends Controller
 
         // Fetching data
         $pharmacies = $this->getPharmacies($user);
-        dd($pharmacies);
             $total_pharmacies_renewed = 0;
             $total_pharmacies_not_renewed = 0;
             $total_pharmacies_pending = 0;
@@ -204,8 +203,6 @@ class DashboardController extends Controller
         $url .= "?api_token=";
         $url .= $user->api_token;
         $url .= "&limit=all";
-
-        dd($url);
 
         if($status != ""){
             $url .= "&renewal_status=";
