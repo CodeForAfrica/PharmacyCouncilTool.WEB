@@ -366,6 +366,42 @@ Route::post('admin/attendances/datatable', [
     'as' => 'admin.attendances.datatable'
 ]);
 
+// Administrator Regions routes.
+Route::get('admin/regions', [
+    'uses' => 'Admin\RegionsController@index',
+    'as' => 'admin.regions'
+]);
+
+Route::get('admin/regions/view/{id}', [
+    'uses' => 'Admin\RegionsController@view',
+    'as' => 'admin.regions.view'
+]);
+
+Route::get('admin/regions/edit/{id}', [
+    'uses' => 'Admin\RegionsController@edit',
+    'as' => 'admin.regions.edit'
+]);
+
+Route::get('admin/regions/delete/{id}', [
+    'uses' => 'Admin\RegionsController@delete',
+    'as' => 'admin.regions.delete'
+]);
+
+Route::post('admin/regions', [
+    'uses' => 'Admin\RegionsController@update',
+    'as' => 'admin.regions.update'
+]);
+
+Route::post('admin/attendances/create', [
+    'uses' => 'Admin\AttendancesController@create',
+    'as' => 'admin.attendances.create'
+]);
+
+Route::post('admin/regions/datatable', [
+    'uses' => 'Admin\RegionsController@datatable',
+    'as' => 'admin.regions.datatable'
+]);
+
 // Adding new owner
 Route::get('admin/operations/addowner', 'Admin\OperationsController@addOwner');
 Route::get('admin/operations/addpersonnel', 'Admin\OperationsController@addPersonnel');
