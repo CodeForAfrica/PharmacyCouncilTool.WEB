@@ -61,7 +61,7 @@
                         </div>
                         <div style="text-align:left; overflow:auto; width:100%">
                             <span class="pull-left"><a href="{{ route('admin.pharmacies') }}?status=Closed">Closed - <strong id="total_pharmacies_closed">0</strong></a></span>
-                            <span class="pull-right"><a href="{{ route('admin.pharmacies') }}?status">Temporary Closed - <strong id="total_pharmacies_temporary_closed">0</strong></a></span>
+                            <span class="pull-right"><a href="{{ route('admin.pharmacies') }}?status=Temporary Closed">Temporary Closed - <strong id="total_pharmacies_temporary_closed">0</strong></a></span>
                         </div>
                     </div>
                 </div>

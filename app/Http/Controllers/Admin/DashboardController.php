@@ -109,7 +109,7 @@ class DashboardController extends Controller
             if(count($pharmacies) > 0){
                 foreach($pharmacies as $pharmacy){
                     if($pharmacy->renewal_status == "Renewed") $total_pharmacies_renewed += 1;
-                    if($pharmacy->renewal_status == "Not Renewed") $total_pharmacies_not_renewed += 1;
+                    if($pharmacy->renewal_status == "Not Renewed" || $pharmacy->renewal_status == "Not renewed") $total_pharmacies_not_renewed += 1;
                     if($pharmacy->renewal_status == "Pending") $total_pharmacies_pending += 1;
                     if($pharmacy->renewal_status == "Waiting Permit") $total_pharmacies_waiting_permit += 1;
                     if($pharmacy->renewal_status == "Closed") $total_pharmacies_closed += 1;

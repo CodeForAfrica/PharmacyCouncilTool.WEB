@@ -12,6 +12,9 @@ class PharmaciesController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->status) $status = $request->status;
+        else $status = "";
+
         // Checking for session.
         if(!session()->has('user'))
         {
@@ -22,6 +25,7 @@ class PharmaciesController extends Controller
 
             $data = array(
                 'page' => 'Pharmacies',
+                'status' => $status,
                 'owners' => $this->getOwners($user),
                 'personnels' => $this->getPersonnels($user),
                 'regions' => $this->getRegions($user)
@@ -701,13 +705,15 @@ class PharmaciesController extends Controller
         $order = $request->input('order.0.column');
         $dir = $request->input('order.0.dir');
         $search = $request->input('search.value');
+        $status = $request->status;
 
         $values = array(
             'limit' => $limit,
             'start' => $start,
             'order' => $order,
             'dir' => $dir,
-            'search' => $search
+            'search' => $search,
+            'status' => $status
         );
 
         $client = new \GuzzleHttp\Client(['http_errors' => true]);

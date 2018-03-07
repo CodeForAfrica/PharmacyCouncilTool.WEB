@@ -16,6 +16,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>Pharmacies</h1>
+                    <?php
+                        if($data['status'] != ""){?>
+                            <h5>Pharmacies with Renewal Status of&nbsp;&nbsp;<span class="color-pink">{{$data['status']}}</span></h5>
+                        <?php }
+                    ?>
                 </div>
             </div>
         </div><!-- close div .admin-bottom -->
@@ -523,7 +528,7 @@
                     "url": '{!! route('admin.pharmacies.datatable') !!}',
                     "dataType": "json",
                     "type": "POST",
-                    "data": { _token: "{{csrf_token()}}"}
+                    "data": { _token: "{{csrf_token()}}", status: "{{$data['status']}}"}
                 },
                 columns: [
                     { "data": "id" },
