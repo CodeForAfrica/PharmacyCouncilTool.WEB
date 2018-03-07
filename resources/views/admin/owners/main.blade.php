@@ -16,6 +16,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>Owners</h1>
+                    <?php
+                        if($data['status'] != ""){?>
+                            <h5 class="color-pink">{{$data['status']}}s</h5>
+                        <?php }
+                    ?>
                 </div>
             </div>
         </div><!-- close div .admin-bottom -->
@@ -116,7 +121,7 @@
                     "url": '{!! route('admin.owners.datatable') !!}',
                     "dataType": "json",
                     "type": "POST",
-                    "data": { _token: "{{csrf_token()}}"}
+                    "data": { _token: "{{csrf_token()}}", status: "{{$data['status']}}"}
                 },
                 columns: [
                     { "data": "id" },

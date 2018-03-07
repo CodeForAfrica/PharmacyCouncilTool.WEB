@@ -16,6 +16,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>Reports</h1>
+                    <?php
+                        if($data['gender'] != ""){?>
+                            <h5 class="color-pink">{{$data['gender']}}s</h5>
+                        <?php }
+                    ?>
                 </div>
             </div>
         </div><!-- close div .admin-bottom -->
@@ -53,7 +58,7 @@
                     "url": '{!! route('admin.reports.datatable') !!}',
                     "dataType": "json",
                     "type": "POST",
-                    "data": { _token: "{{csrf_token()}}"}
+                    "data": { _token: "{{csrf_token()}}", gender: "{{$data['gender']}}"}
                 },
                 columns: [
                     { "data": "id" },

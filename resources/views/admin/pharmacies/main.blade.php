@@ -18,7 +18,7 @@
                     <h1>Pharmacies</h1>
                     <?php
                         if($data['status'] != ""){?>
-                            <h5>Pharmacies with Renewal Status of&nbsp;&nbsp;<span class="color-pink">{{$data['status']}}</span></h5>
+                            <h5 class="color-pink">{{$data['status']}}</h5>
                         <?php }
                     ?>
                 </div>

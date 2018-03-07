@@ -9,6 +9,9 @@ class ReportsController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->gender) $gender = $request->gender;
+        else $gender = "";
+
         // Checking for session.
         if(!session()->has('user'))
         {
@@ -18,7 +21,8 @@ class ReportsController extends Controller
             $user = session('user');
 
             $data = array(
-                'page' => 'More'
+                'page' => 'More',
+                'gender' => $gender
             );
             return view('admin.reports',compact('user','data'));
         }
@@ -239,13 +243,15 @@ class ReportsController extends Controller
         $order = $request->input('order.0.column');
         $dir = $request->input('order.0.dir');
         $search = $request->input('search.value');
+        $gender = $request->gender;
 
         $values = array(
             'limit' => $limit,
             'start' => $start,
             'order' => $order,
             'dir' => $dir,
-            'search' => $search
+            'search' => $search,
+            'gender' => $gender
         );
 
         $client = new \GuzzleHttp\Client(['http_errors' => true]);

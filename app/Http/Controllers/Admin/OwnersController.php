@@ -9,6 +9,9 @@ class OwnersController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->status) $status = $request->status;
+        else $status = "";
+
         // Checking for session.
         if(!session()->has('user'))
         {
@@ -17,7 +20,8 @@ class OwnersController extends Controller
         else{
             $user = session('user');
             $data = array(
-                'page' => 'Owners'
+                'page' => 'Owners',
+                'status' => $status,
             );
 
             return view('admin.owners.main',compact('user','data'));
@@ -300,13 +304,15 @@ class OwnersController extends Controller
         $order = $request->input('order.0.column');
         $dir = $request->input('order.0.dir');
         $search = $request->input('search.value');
+        $status = $request->status;
 
         $values = array(
             'limit' => $limit,
             'start' => $start,
             'order' => $order,
             'dir' => $dir,
-            'search' => $search
+            'search' => $search,
+            'status' => $status
         );
 
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
