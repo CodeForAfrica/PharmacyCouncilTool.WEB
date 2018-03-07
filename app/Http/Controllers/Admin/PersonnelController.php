@@ -9,6 +9,9 @@ class PersonnelController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->type) $type = $request->type;
+        else $type = "";
+
         // Checking for session.
         if(!session()->has('user'))
         {
@@ -17,7 +20,8 @@ class PersonnelController extends Controller
         else{
             $user = session('user');
             $data = array(
-                'page' => 'Personnel'
+                'page' => 'Personnel',
+                'type' => $type,
             );
 
             return view('admin.personnels.main',compact('user','data'));
@@ -320,13 +324,15 @@ class PersonnelController extends Controller
         $order = $request->input('order.0.column');
         $dir = $request->input('order.0.dir');
         $search = $request->input('search.value');
+        $type = $request->type;
 
         $values = array(
             'limit' => $limit,
             'start' => $start,
             'order' => $order,
             'dir' => $dir,
-            'search' => $search
+            'search' => $search,
+            'type' => $type
         );
 
         $client = new \GuzzleHttp\Client(['http_errors' => true]);

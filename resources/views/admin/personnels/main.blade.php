@@ -16,6 +16,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>Personnel</h1>
+                    <?php
+                        if($data['type'] != ""){?>
+                            <h5 class="color-pink">{{$data['type']}}s</h5>
+                        <?php }
+                    ?>
                 </div>
             </div>
         </div><!-- close div .admin-bottom -->
@@ -123,7 +128,7 @@
                     "url": '{!! route('admin.personnel.datatable') !!}',
                     "dataType": "json",
                     "type": "POST",
-                    "data": { _token: "{{csrf_token()}}"}
+                    "data": { _token: "{{csrf_token()}}", type: "{{$data['type']}}"}
                 },
                 columns: [
                     { "data": "id" },
