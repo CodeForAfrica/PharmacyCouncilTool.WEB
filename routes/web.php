@@ -392,14 +392,71 @@ Route::post('admin/regions', [
     'as' => 'admin.regions.update'
 ]);
 
-Route::post('admin/attendances/create', [
-    'uses' => 'Admin\AttendancesController@create',
-    'as' => 'admin.attendances.create'
-]);
-
 Route::post('admin/regions/datatable', [
     'uses' => 'Admin\RegionsController@datatable',
     'as' => 'admin.regions.datatable'
+]);
+
+// Administrator Districts routes.
+Route::get('admin/districts', [
+    'uses' => 'Admin\DistrictsController@index',
+    'as' => 'admin.districts'
+]);
+
+Route::get('admin/districts/view/{id}', [
+    'uses' => 'Admin\DistrictsController@view',
+    'as' => 'admin.districts.view'
+]);
+
+Route::get('admin/districts/edit/{id}', [
+    'uses' => 'Admin\DistrictsController@edit',
+    'as' => 'admin.districts.edit'
+]);
+
+Route::get('admin/districts/delete/{id}', [
+    'uses' => 'Admin\DistrictsController@delete',
+    'as' => 'admin.districts.delete'
+]);
+
+Route::post('admin/districts', [
+    'uses' => 'Admin\DistrictsController@update',
+    'as' => 'admin.districts.update'
+]);
+
+Route::post('admin/districts/datatable', [
+    'uses' => 'Admin\DistrictsController@datatable',
+    'as' => 'admin.districts.datatable'
+]);
+
+// Administrator Wards routes.
+Route::get('admin/wards', [
+    'uses' => 'Admin\WardsController@index',
+    'as' => 'admin.wards'
+]);
+
+Route::get('admin/wardds/view/{id}', [
+    'uses' => 'Admin\WardsController@view',
+    'as' => 'admin.wards.view'
+]);
+
+Route::get('admin/wards/edit/{id}', [
+    'uses' => 'Admin\WardsController@edit',
+    'as' => 'admin.wards.edit'
+]);
+
+Route::get('admin/wards/delete/{id}', [
+    'uses' => 'Admin\WardsController@delete',
+    'as' => 'admin.wards.delete'
+]);
+
+Route::post('admin/wards', [
+    'uses' => 'Admin\WardsController@update',
+    'as' => 'admin.wards.update'
+]);
+
+Route::post('admin/wards/datatable', [
+    'uses' => 'Admin\WardsController@datatable',
+    'as' => 'admin.wards.datatable'
 ]);
 
 // Adding new owner

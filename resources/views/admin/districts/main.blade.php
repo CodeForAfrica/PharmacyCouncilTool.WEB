@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Administrator - Regions | Maduka ya Madawa - Code for Tanzania
+    Administrator - Districts | Maduka ya Madawa - Code for Tanzania
 @stop
 
 @section('styles')
@@ -15,7 +15,7 @@
         <div class="row admin-bottom">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Regions</h1>
+                    <h1>Districts</h1>
                 </div>
             </div>
         </div><!-- close div .admin-bottom -->
@@ -33,8 +33,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Capital</th>
-                    <th>Districts</th>
-                    <th>Zone</th>
+                    <th>Region</th>
                     <th>Population</th>
                     <th style="width:130px;">Options</th>
                 </tr>
@@ -51,7 +50,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    "url": '{!! route('admin.regions.datatable') !!}',
+                    "url": '{!! route('admin.districts.datatable') !!}',
                     "dataType": "json",
                     "type": "POST",
                     "data": { _token: "{{csrf_token()}}"}
@@ -60,8 +59,7 @@
                     { "data": "id" },
                     { "data": "name" },
                     { "data": "capital" },
-                    { "data": "districts" },
-                    { "data": "zone" },
+                    { "data": "region" },
                     { "data": "population" },
                     { "data": "options", "orderable": false }
                 ]

@@ -18,8 +18,8 @@
                         <li><a href="{{ route('admin.attendances') }}">Attendances</a></li>
                         <li><a href="{{ route('admin.users') }}">Users</a></li>
                         <li><a href="{{ route('admin.regions') }}">Regions</a></li>
-                        <li><a href="{{ route('admin.users') }}">Districts</a></li>
-                        <li><a href="{{ route('admin.users') }}">Wards</a></li>
+                        <li><a href="{{ route('admin.districts') }}">Districts</a></li>
+                        <li><a href="{{ route('admin.wards') }}">Wards</a></li>
                     </ul>
                 </li>
             </ul>

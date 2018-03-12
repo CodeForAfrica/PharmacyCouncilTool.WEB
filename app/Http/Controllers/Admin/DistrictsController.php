@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class RegionsController extends Controller
+class DistrictsController extends Controller
 {
     public function index()
     {
@@ -19,7 +19,7 @@ class RegionsController extends Controller
             $data = array(
                 'page' => 'More'
             );
-            return view('admin.regions.main',compact('user','data'));
+            return view('admin.districts.main',compact('user','data'));
         }
     }
 
@@ -42,7 +42,7 @@ class RegionsController extends Controller
 
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
-        $url .= "datatables/getregions";
+        $url .= "datatables/getdistricts";
         $url .= "?api_token=";
         $url .= $user->api_token;
 
