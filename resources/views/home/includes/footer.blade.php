@@ -1,7 +1,7 @@
 <footer>
     <div class="container">
         <div class="col-md-6">
-            <h2>Maduka ya Dawa - PC</h2>
+            <h2>Maduka ya Dawa</h2>
             <h3>{{ trans('app.Footer_Heading') }}</h3>
             <h4>{{ trans('app.Footer_Description') }}</h4>
         </div><!-- close div .col-md-6 -->
