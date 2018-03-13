@@ -799,7 +799,7 @@ class PharmaciesController extends Controller
         $url .= "owners";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -832,57 +832,6 @@ class PharmaciesController extends Controller
         }
     }
 
-    public function getOwner($user, $firstname = "", $middlename = "", $surname = "")
-    {
-        // Checking variables
-        if($firstname == "") $firstname = "[null]";
-        if($middlename == "") $middlename = "[null]";
-        if($surname == "") $surname = "[null]";
-
-        $client = new \GuzzleHttp\Client(['http_errors' => true]);
-        $url = env('APP_URL');
-        $url .= "owners";
-        $url .= "?api_token=";
-        $url .= $user->api_token;
-        $url .= "&limit=1";
-        $url .= "&firstname=";
-        $url .= $firstname;
-        $url .= "&middlename=";
-        $url .= $middlename;
-        $url .= "&surname=";
-        $url .= $surname;
-
-        try{
-            $response = $client->request('GET', $url);
-            $response_json = json_decode($response->getBody());
-
-            if($response_json->owner)
-            {
-                return $response_json->owner;
-            }
-            else{
-                // No Owner.
-                return null;
-            }
-        }
-        catch (ClientErrorResponseException $e) {
-            \Log::info("Client error :" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (ServerErrorResponseException $e) {
-            \Log::info("Server error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (BadResponseException $e) {
-            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (\Exception $e) {
-            \Log::info("Err" . $e->getMessage());
-            return null;
-        }
-    }
-
     public function getPersonnels($user)
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
@@ -890,7 +839,7 @@ class PharmaciesController extends Controller
         $url .= "personnels";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -923,63 +872,6 @@ class PharmaciesController extends Controller
         }
     }
 
-    public function getPersonnel($user,  $type = "", $firstname = "", $middlename = "", $surname = "")
-    {
-        // Checking variables
-        if($firstname == "") $firstname = "[null]";
-        if($middlename == "") $middlename = "[null]";
-        if($surname == "") $surname = "[null]";
-
-        $client = new \GuzzleHttp\Client(['http_errors' => true]);
-        $url = env('APP_URL');
-        $url .= "personnels";
-        $url .= "?api_token=";
-        $url .= $user->api_token;
-        $url .= "&limit=1";
-        $url .= "&firstname=";
-        $url .= $firstname;
-        $url .= "&middlename=";
-        $url .= $middlename;
-        $url .= "&surname=";
-        $url .= $surname;
-
-        if($type != "")
-        {
-            $url .= "&type=";
-            $url .= $type;
-        }
-
-        try{
-            $response = $client->request('GET', $url);
-            $response_json = json_decode($response->getBody());
-
-            if($response_json->personnel)
-            {
-                return $response_json->personnel;
-            }
-            else{
-                // No Personel.
-                return null;
-            }
-        }
-        catch (ClientErrorResponseException $e) {
-            \Log::info("Client error :" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (ServerErrorResponseException $e) {
-            \Log::info("Server error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (BadResponseException $e) {
-            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (\Exception $e) {
-            \Log::info("Err" . $e->getMessage());
-            return null;
-        }
-    }
-
     public function getRegions($user)
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
@@ -987,7 +879,7 @@ class PharmaciesController extends Controller
         $url .= "regions";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -1020,47 +912,6 @@ class PharmaciesController extends Controller
         }
     }
 
-    public function getRegion($user,$name)
-    {
-        $client = new \GuzzleHttp\Client(['http_errors' => true]);
-        $url = env('APP_URL');
-        $url .= "regions";
-        $url .= "?api_token=";
-        $url .= $user->api_token;
-        $url .= "&limit=1";
-        $url .= "&name=".$name."";
-
-        try{
-            $response = $client->request('GET', $url);
-            $response_json = json_decode($response->getBody());
-
-            if($response_json->region)
-            {
-                return $response_json->region;
-            }
-            else{
-                // No Region.
-                return null;
-            }
-        }
-        catch (ClientErrorResponseException $e) {
-            \Log::info("Client error :" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (ServerErrorResponseException $e) {
-            \Log::info("Server error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (BadResponseException $e) {
-            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (\Exception $e) {
-            \Log::info("Err" . $e->getMessage());
-            return null;
-        }
-    }
-
     public function getDistricts($user)
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
@@ -1068,7 +919,7 @@ class PharmaciesController extends Controller
         $url .= "districts";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -1101,47 +952,6 @@ class PharmaciesController extends Controller
         }
     }
 
-    public function getDistrict($user, $name)
-    {
-        $client = new \GuzzleHttp\Client(['http_errors' => true]);
-        $url = env('APP_URL');
-        $url .= "districts";
-        $url .= "?api_token=";
-        $url .= $user->api_token;
-        $url .= "&limit=1";
-        $url .= "&name=".$name."*";
-
-        try{
-            $response = $client->request('GET', $url);
-            $response_json = json_decode($response->getBody());
-
-            if($response_json->district)
-            {
-                return $response_json->district;
-            }
-            else{
-                // No Distirct.
-                return null;
-            }
-        }
-        catch (ClientErrorResponseException $e) {
-            \Log::info("Client error :" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (ServerErrorResponseException $e) {
-            \Log::info("Server error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (BadResponseException $e) {
-            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (\Exception $e) {
-            \Log::info("Err" . $e->getMessage());
-            return null;
-        }
-    }
-
     public function getWards($user)
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
@@ -1149,7 +959,7 @@ class PharmaciesController extends Controller
         $url .= "wards";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -1161,47 +971,6 @@ class PharmaciesController extends Controller
             }
             else{
                 // No Region.
-                return null;
-            }
-        }
-        catch (ClientErrorResponseException $e) {
-            \Log::info("Client error :" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (ServerErrorResponseException $e) {
-            \Log::info("Server error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (BadResponseException $e) {
-            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
-            return null;
-        }
-        catch (\Exception $e) {
-            \Log::info("Err" . $e->getMessage());
-            return null;
-        }
-    }
-
-    public function getWard($user, $name)
-    {
-        $client = new \GuzzleHttp\Client(['http_errors' => true]);
-        $url = env('APP_URL');
-        $url .= "wards";
-        $url .= "?api_token=";
-        $url .= $user->api_token;
-        $url .= "&limit=1";
-        $url .= "&name=".$name."";
-
-        try{
-            $response = $client->request('GET', $url);
-            $response_json = json_decode($response->getBody());
-
-            if($response_json->ward)
-            {
-                return $response_json->ward;
-            }
-            else{
-                // No Ward.
                 return null;
             }
         }

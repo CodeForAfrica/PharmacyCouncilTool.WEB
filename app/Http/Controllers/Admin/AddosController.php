@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class AddosController extends Controller
 {
@@ -312,6 +313,160 @@ class AddosController extends Controller
         }
     }
 
+    public function import(Request $request){
+        // Checking for session.
+        if(!session()->has('user'))
+        {
+            return redirect('admin/login');
+        }
+        else{
+            $user = session('user');
+
+            // Reserve values in arrays.
+            $ARR_Regions = $this->getRegions($user);
+            $ARR_Districts = $this->getDistricts($user);
+            $ARR_Wards = $this->getWards($user);
+            $ARR_Owners = $this->getOwners($user);
+
+            $file = $request->file('file');
+            $timestamp = Carbon::now()->timestamp;
+
+            // Uploading a file
+            // Renaming
+            $temp = explode(".", $file->getClientOriginalName());
+            $filename = $temp[0];
+            $new_filename = $filename."_".$timestamp.".".$file->getClientOriginalExtension();
+
+            //Move Uploaded File
+            $destinationPath = 'uploads/';
+            $file->move($destinationPath,$new_filename);
+
+             // Reading File
+             if(($handle = fopen(public_path().'/uploads/'.$new_filename, 'r' )) !== FALSE){
+                //fgetcsv($handle, 10000, ":");
+
+                $query_row = 0;
+                while(($data = fgetcsv($handle, 10000, ':')) !== FALSE) {
+                   // Preparing values
+                   $name = $data[1];
+                   $fin = $data[2];
+
+                   // Finding Region ID
+                   $region_key = false;
+                   $search = ['name' => strtolower($data[3])];
+                   foreach($ARR_Regions as $k => $v){
+                       if(strtolower($v->name) == $search['name']){
+                           $region_key = $k;
+                           break;
+                        }
+                    }
+
+                    if($region_key){
+                        $region_id = $ARR_Regions[$region_key]->id;
+                    }
+                    else $region_id = 9999;
+
+                    // Finding District ID based on Region ID
+                    $district_key = false;
+                    if($region_key){
+                        $search = ['region_id' => $region_id, 'name' => strtolower($data[4])];
+                        foreach($ARR_Districts as $k => $v){
+                            if($v->region_id == $search['region_id'] && strtolower($v->name) == $search['name']){
+                                $district_key = $k;
+                                break;
+                            }
+                        }
+                    }
+
+                    if($district_key){
+                        $district_id = $ARR_Districts[$district_key]->id;
+                    }
+                    else $district_id = 9999;
+
+                    // Finding Ward ID based on district ID
+                    $ward_key = false;
+                    if($district_key){
+                        $search = ['district_id' => $district_id, 'name' => strtolower($data[5])];
+                        foreach($ARR_Wards as $k => $v){
+                            if($v->district_id == $search['district_id'] && strtolower($v->name) == $search['name']){
+                                $ward_key = $k;
+                                break;
+                            }
+                        }
+                    }
+
+                    if($ward_key){
+                        $ward_id = $ARR_Wards[$ward_key]->id;
+                    }
+                    else $ward_id = 9999;
+
+                    $street = $data[6];
+
+                    // Finding Owner ID
+                    $owner_firstname = $data[7];
+                    $owner_middlename = $data[8];
+                    $owner_surname = $data[9];
+                    $owner_phone = $data[10];
+                    $owners_ids_list = array();
+
+                        // Check if owner already present.
+                        $owner_key = false;
+                        $search = ['firstname' => strtolower($owner_firstname), 'middlename' => strtolower($owner_middlename), 'surname' => strtolower($owner_surname)];
+                        if($ARR_Owners){
+                            foreach($ARR_Owners as $k => $v){
+                                if(strtolower($v->firstname) == $search['firstname'] && strtolower($v->middlename) == $search['middlename'] && strtolower($v->surname) == $search['surname']){
+                                    $owner_key = $k;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if($owner_key){
+                            $owner_id = $ARR_Owners[$owner_key]->id;
+                            $owners_ids_list[] = $owner_id;
+                        }
+                        else{
+                            // Add Owner
+                            $values = array(
+                                'firstname' => $owner_firstname,
+                                'middlename' => $owner_middlename,
+                                'surname' => $owner_surname,
+                                'phone' => $owner_phone,
+                                'email' => "",
+                                'occupation' => "",
+                                'status' => ""
+                             );
+ 
+                            $owner = $this->addOwner($user, $values);
+
+                            if(!empty($owner) && isset($owner->id)) $owners_ids_list[] = $owner->id;
+                        }
+
+                        $owners_ids = implode(":",$owners_ids_list);
+
+                        $values = array(
+                            'name' => $name,
+                            'fin' => $fin,
+                            'region_id' => $region_id,
+                            'district_id' => $district_id,
+                            'ward_id' => $ward_id,
+                            'street' => $street,
+                            'owners_ids' => $owners_ids
+                         );
+
+                         // Add Addo.
+                        $addo = $this->addAddo($user, $values);
+
+                    $query_row = $query_row + 1;
+                    if($query_row >= 30) break; // <-- Submitting only 30 records for now.
+                }// <- End of While loop
+                fclose($handle);
+            }
+
+            return redirect('admin/addos')->with(['message' => 'Addos imported.','class' => 'success']);
+        }
+    }
+
     public function getAddos($user)
     {
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
@@ -319,7 +474,7 @@ class AddosController extends Controller
         $url .= "addos";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -359,7 +514,7 @@ class AddosController extends Controller
         $url .= "owners";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -399,7 +554,7 @@ class AddosController extends Controller
         $url .= "regions";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -439,7 +594,7 @@ class AddosController extends Controller
         $url .= "districts";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -479,7 +634,7 @@ class AddosController extends Controller
         $url .= "wards";
         $url .= "?api_token=";
         $url .= $user->api_token;
-        $url .= "&limit=5";
+        $url .= "&limit=all";
 
         try{
             $response = $client->request('GET', $url);
@@ -491,6 +646,85 @@ class AddosController extends Controller
             }
             else{
                 // No Region.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function addOwner($user, $values)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "owners";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+
+        try{
+            $promise = $client->requestAsync('POST', $url, ['json' => $values]);
+            $response = $promise->wait();
+            $response_json = json_decode($response->getBody());
+
+            if($response_json->owner)
+            {
+                return $response_json->owner;
+            }
+            else{
+                // No Owner.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function addAddo($user, $values)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "addos";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+
+        try{
+            $promise = $client->requestAsync('POST', $url, ['json' => $values]);
+            $response = $promise->wait();
+            $response_json = json_decode($response->getBody());
+            if($response_json->addo)
+            {
+                return $response_json->addo;
+            }
+            else{
+                // No Addo.
                 return null;
             }
         }

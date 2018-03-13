@@ -113,6 +113,10 @@ Route::post('admin/pharmacies/import', [
     'as' => 'admin.pharmacies.import'
 ]);
 
+Route::get('admin/pharmacies/import', function(){
+    return redirect('admin/pharmacies');
+});
+
 Route::post('admin/pharmacies/datatable', [
     'uses' => 'Admin\PharmaciesController@datatable',
     'as' => 'admin.pharmacies.datatable'
@@ -257,6 +261,15 @@ Route::post('admin/addos/create', [
     'uses' => 'Admin\AddosController@create',
     'as' => 'admin.addos.create'
 ]);
+
+Route::post('admin/addos/import', [
+    'uses' => 'Admin\AddosController@import',
+    'as' => 'admin.addos.import'
+]);
+
+Route::get('admin/addos/import', function(){
+    return redirect('admin/addos');
+});
 
 // Administrator Owners routes.
 Route::get('admin/owners', [

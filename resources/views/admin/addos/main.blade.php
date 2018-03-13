@@ -29,6 +29,7 @@
             @endif
             <div class="col-md-12" style="overflow:auto;">
                 <button type="button" class="btn btn-md btn-success no-radius pull-right" data-toggle="modal" data-target="#newAddoModal">NEW ADDO</button>
+                <button type="button" class="btn btn-md btn-primary no-radius pull-right" data-toggle="modal" data-target="#importAddosModal" style="margin-right: 20px;">IMPORT ADDOS</button>
                 <br />
                 <hr />
                 <br />
@@ -40,7 +41,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Accreditation No</th>
+                        <th>FIN</th>
                         <th>Region</th>
                         <th>District</th>
                         <th>Ward</th>
@@ -55,12 +56,12 @@
                         <tr>
                             <td>{{ $n++ }}</td>
                             <td>{{ $addo->name }}</td>
-                            <td>{{ $addo->accreditation_no }}</td>
+                            <td>{{ $addo->fin }}</td>
                             <td>{{ $addo->region->name }}</td>
                             <td>{{ $addo->district->name }}</td>
                             <td>{{ $addo->ward->name }}</td>
-                            <td>{{ ucfirst(strtolower($addo->owner->firstname)) }} {{ ucfirst(strtolower($addo->owner->middlename)) }} {{ ucfirst(strtolower($addo->owner->surname)) }}</td>
-                            <td>{{ $addo->owner->phone }}</td>
+                            <td></td>
+                            <td></td>
                             <td>
                                 <a href="{{ route('admin.addos.delete',$addo->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
                                 <a href="{{ route('admin.addos.edit',$addo->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
@@ -205,6 +206,40 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-lg btn-pink no-radius pull-right" value="ADD ADDO" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- close div .modal-content -->
+            </div>
+        </div><!-- close div .modal -->
+
+         <!-- Modal -->
+         <div id="importAddosModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Import Addos</h4>
+                    </div>
+                    <div class="modal-body" style="overflow:auto;padding:20px;font-family: 'Roboto', sans-serif">
+                        <div class="alert alert-info no-radius" role="alert">
+                            <span class="fa fa-info-circle"></span>
+                            The data file should be in <strong>CSV</strong> format, with semicolon <strong style="font-weight:bolder; font-size:18px;">:</strong> as the delimiter.
+                        </div>
+
+                        <form method="POST" action="{{ route('admin.addos.import') }}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="col-md-12">
+                                <label>Upload File</label>
+                                <div class="form-group">
+                                    <input type="file" name="file" class="form-control-file" id="file">
+                                </div>
+
+                                <br />
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-lg btn-pink no-radius pull-right">ADD ADDOS</button>
                                 </div>
                             </div>
                         </form>
