@@ -35,45 +35,20 @@
                 <br />
             </div><!-- close div .col-md-12 -->
 
-            @if ($data['addos'])
-                <table id="myTable" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>FIN</th>
-                        <th>Region</th>
-                        <th>District</th>
-                        <th>Ward</th>
-                        <th>Owner Fullname</th>
-                        <th>Owner Phonenumber</th>
-                        <th style="width:130px;">Options</th>
-                    </tr>
-                    </thead>
-                    <tbody style="text-align:left;">
-                        <?php $n=1; ?>
-                        @foreach($data['addos'] as $addo)
-                        <tr>
-                            <td>{{ $n++ }}</td>
-                            <td>{{ $addo->name }}</td>
-                            <td>{{ $addo->fin }}</td>
-                            <td>{{ $addo->region->name }}</td>
-                            <td>{{ $addo->district->name }}</td>
-                            <td>{{ $addo->ward->name }}</td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <a href="{{ route('admin.addos.delete',$addo->id) }}" class="btn btn-xs btn-danger no-radius" style="margin-right:10px;">Delete</a>
-                                <a href="{{ route('admin.addos.edit',$addo->id) }}" type="button" class="btn btn-xs btn-warning no-radius" style="margin-right:10px;">Edit</a>
-                                <a href="{{ route('admin.addos.view',$addo->id) }}" type="button" class="btn btn-xs btn-success no-radius">View</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                <h2>There is no any Addo.</h2>
-            @endif
+            <table id="myTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>FIN</th>
+                    <th>Region</th>
+                    <th>District</th>
+                    <th>Ward</th>
+                    <th>Owners</th>
+                    <th style="width:130px;">Options</th>
+                </tr>
+                </thead>
+            </table>
         </div><!-- close div .admin-contents -->
 
         <!-- Modal -->
@@ -254,7 +229,26 @@
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    "url": '{!! route('admin.addos.datatable') !!}',
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": { _token: "{{csrf_token()}}"}
+                },
+                columns: [
+                    { "data": "id" },
+                    { "data": "name" },
+                    { "data": "fin" },
+                    { "data": "region", "orderable": false },
+                    { "data": "district", "orderable": false },
+                    { "data": "ward", "orderable": false },
+                    { "data": "owners", "orderable": false },
+                    { "data": "options", "orderable": false}
+                ]
+            });
         });
     </script>
 

@@ -271,6 +271,11 @@ Route::get('admin/addos/import', function(){
     return redirect('admin/addos');
 });
 
+Route::post('admin/addos/datatable', [
+    'uses' => 'Admin\AddosController@datatable',
+    'as' => 'admin.addos.datatable'
+]);
+
 // Administrator Owners routes.
 Route::get('admin/owners', [
     'uses' => 'Admin\OwnersController@index',
