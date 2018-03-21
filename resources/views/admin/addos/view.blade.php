@@ -54,7 +54,7 @@
             </table>
 
             <div class="pull-right">
-                <a href="{{ route('admin.addos.delete',$data['addo']->id) }}" class="btn btn-md btn-danger no-radius" style="margin-right:10px;" disabled>Delete</a>
+                <a href="{{ route('admin.addos.delete',$data['addo']->id) }}" class="btn btn-md btn-danger no-radius" style="margin-right:10px;">Delete</a>
                 <a href="{{ route('admin.addos.edit',$data['addo']->id) }}" type="button" class="btn btn-md btn-warning no-radius" style="margin-right:10px;">Edit</a>
             </div>
         </div><!-- close div .admin-contents -->
