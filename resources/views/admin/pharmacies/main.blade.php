@@ -96,6 +96,7 @@
                                         <option value="0" selected="selected">Choose Category</option>
                                         <option value="Retail">Retail</option>
                                         <option value="Wholesale">Wholesale</option>
+                                        <option value="Wholesale and Retail">Wholesale and Retail</option>
                                         <option value="Medical Device">Medical Device</option>
                                         <option value="ADDO">ADDO</option>
                                         <option value="ARW">ARW</option>

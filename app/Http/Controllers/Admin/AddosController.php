@@ -40,7 +40,7 @@ class AddosController extends Controller
 
             $client = new \GuzzleHttp\Client(['http_errors' => true]);
             $url = env('APP_URL');
-            $url .= "addos";
+            $url .= "addos"; 
             $url .= "/";
             $url .= $id;
             $url .= "?api_token=";
@@ -165,12 +165,12 @@ class AddosController extends Controller
             else{
                 $values = array(
                     'name' => $request->name,
-                    'accreditation_no' => $request->accreditation_no,
+                    'fin' => $request->fin,
                     'region_id' => $request->region_id,
                     'district_id' => $request->district_id,
                     'ward_id' => $request->ward_id,
                     'street' => $request->street,
-                    'owner_id' => $request->owner_id
+                    'owners_ids' => $request->owners_ids
                 );
     
                 try{
@@ -266,18 +266,18 @@ class AddosController extends Controller
             $url .= $user->api_token;
 
             // Check if required fields are filled
-            if($request->region_id == 0 || $request->district_id == 0 || $request->ward_id == 0 || $request->owner_id == 0){
+            if($request->region_id == 0 || $request->district_id == 0 || $request->ward_id == 0 || $request->owners_ids == 0){
                 return redirect()->back()->with(['message' => 'Fill required fields.','class' => 'warning']);
             }
             else{
                 $values = array(
                     'name' => $request->name,
-                    'accreditation_no' => $request->accreditation_no,
+                    'fin' => $request->fin,
                     'region_id' => $request->region_id,
                     'district_id' => $request->district_id,
                     'ward_id' => $request->ward_id,
                     'street' => $request->street,
-                    'owner_id' => $request->owner_id
+                    'owners_ids' => $request->owners_ids
                 );
     
                 try{

@@ -33,9 +33,9 @@
                     <input type="text" name="name" class="form-control no-radius" value="{{ $data['addo']->name }}" placeholder="Name" />
                 </div>
 
-                <label>Accreditaition Number</label>
+                <label>FIN</label>
                 <div class="form-group">
-                    <input type="text" name="accreditation_no" class="form-control no-radius" value="{{ $data['addo']->accreditation_no }}" placeholder="Accreditation Number" />
+                    <input type="text" name="fin" class="form-control no-radius" value="{{ $data['addo']->fin }}" placeholder="Accreditation Number" />
                 </div>
 
                 <label>Region</label>
@@ -85,11 +85,11 @@
                 </div>
                 
                 <div id="old-owner-div" class="form-group">
-                    <select id="owner_id" name="owner_id" class="form-control no-radius">
+                    <select id="owners_ids" name="owner_id" class="form-control no-radius">
                         <option value="0">Choose Addo Owner</option>
                         @if(count($data['owners']) > 0)
                             @foreach($data['owners'] as $owner)
-                                <option value="{{ $owner->id }}" @if($data['addo']->owner_id == $owner->id) selected="selected" @endif>{{ ucfirst(strtolower($owner->firstname)) }} {{ ucfirst(strtolower($owner->middlename)) }} {{ ucfirst(strtolower($owner->surname)) }} ({{ ucfirst(strtolower($owner->phone)) }})</option>
+                                <option value="{{ $owner->id }}" @if($data['addo']->owners_ids == $owner->id) selected="selected" @endif>{{ ucfirst(strtolower($owner->firstname)) }} {{ ucfirst(strtolower($owner->middlename)) }} {{ ucfirst(strtolower($owner->surname)) }} ({{ ucfirst(strtolower($owner->phone)) }})</option>
                             @endforeach
                         @endif
                     </select>

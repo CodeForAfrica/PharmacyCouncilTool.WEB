@@ -24,8 +24,8 @@
                     <td>{{ $data['addo']->name }}</td>
                 </tr>
                 <tr>
-                    <th>Accreditation Number</th>
-                    <td>{{ $data['addo']->accreditation_no }}</td>
+                    <th>FIN</th>
+                    <td>{{ $data['addo']->fin }}</td>
                 </tr>
                 <tr>
                     <th>Region</th>
@@ -45,7 +45,7 @@
                 </tr>
                 <tr>
                     <th>Owner</th>
-                    <td>{{ ucfirst(strtolower($data['addo']->owner->firstname)) }} {{ ucfirst(strtolower($data['addo']->owner->surname)) }}</td>
+                    <td>{{ $data['addo']->owner->firstname }} {{ $data['addo']->owner->middlename }} {{ $data['addo']->owner->surname }}</td>
                 </tr>
                 <tr>
                     <th>Date Added</th>

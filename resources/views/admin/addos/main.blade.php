@@ -71,9 +71,9 @@
                             </div>
 
                             <div class="col-md-12">
-                                <label>Accreditaition Number</label>
+                                <label>FIN</label>
                                 <div class="form-group">
-                                    <input type="text" name="accreditation_no" class="form-control no-radius" value="" placeholder="Accreditation Number" />
+                                    <input type="text" name="fin" class="form-control no-radius" value="" placeholder="FIN" />
                                 </div>
                             </div>
 
@@ -120,7 +120,7 @@
                                 <label class="pull-left">Owner</label>
                                 <button type="button" id="new-owner-btn" class="pull-right btn btn-primary btn-xs no-radius" style="font-size: 12px; font-weight: bold;">+ New Owner</button>
                                 <div id="old-owner-div" class="form-group">
-                                    <select id="owner_id" name="owner_id" class="form-control no-radius">
+                                    <select id="owners_ids" name="owners_ids" class="form-control no-radius">
                                         <option value="0">Choose Addo Owner</option>
                                         @if(count($data['owners']) > 0)
                                             @foreach($data['owners'] as $owner)
