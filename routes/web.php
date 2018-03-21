@@ -226,6 +226,15 @@ Route::post('admin/dispensers/create', [
     'as' => 'admin.dispensers.create'
 ]);
 
+Route::post('admin/dispensers/import', [
+    'uses' => 'Admin\DispensersController@import',
+    'as' => 'admin.dispensers.import'
+]);
+
+Route::get('admin/dispensers/import', function(){
+    return redirect('admin/dispensers');
+});
+
 Route::post('admin/dispensers/datatable', [
     'uses' => 'Admin\DispensersController@datatable',
     'as' => 'admin.dispensers.datatable'
@@ -266,10 +275,6 @@ Route::post('admin/addos/import', [
     'uses' => 'Admin\AddosController@import',
     'as' => 'admin.addos.import'
 ]);
-
-Route::get('admin/addos/import', function(){
-    return redirect('admin/addos');
-});
 
 Route::post('admin/addos/datatable', [
     'uses' => 'Admin\AddosController@datatable',

@@ -29,6 +29,7 @@
             @endif
             <div class="col-md-12" style="overflow:auto;">
                 <button type="button" class="btn btn-md btn-success no-radius pull-right" data-toggle="modal" data-target="#newDispenserModal">NEW DISPENSER</button>
+                <button type="button" class="btn btn-md btn-primary no-radius pull-right" data-toggle="modal" data-target="#importDispensersModal" style="margin-right: 20px;">IMPORT DISPENSERS</button>
                 <br />
                 <hr />
                 <br />
@@ -161,6 +162,40 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-lg btn-pink no-radius pull-right" value="ADD DISPENSER" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- close div .modal-content -->
+            </div>
+        </div><!-- close div .modal -->
+
+        <!-- Modal -->
+        <div id="importDispensersModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Import Dispensers</h4>
+                    </div>
+                    <div class="modal-body" style="overflow:auto;padding:20px;font-family: 'Roboto', sans-serif">
+                        <div class="alert alert-info no-radius" role="alert">
+                            <span class="fa fa-info-circle"></span>
+                            The data file should be in <strong>CSV</strong> format, with semicolon <strong style="font-weight:bolder; font-size:18px;">:</strong> as the delimiter.
+                        </div>
+
+                        <form method="POST" action="{{ route('admin.dispensers.import') }}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="col-md-12">
+                                <label>Upload File</label>
+                                <div class="form-group">
+                                    <input type="file" name="file" class="form-control-file" id="file">
+                                </div>
+
+                                <br />
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-lg btn-pink no-radius pull-right">ADD DISPENSERS</button>
                                 </div>
                             </div>
                         </form>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class DispensersController extends Controller
 {
@@ -305,6 +306,78 @@ class DispensersController extends Controller
         }
     }
 
+    public function import(Request $request){
+         // Checking for session.
+         if(!session()->has('user'))
+         {
+             return redirect('admin/login');
+         }
+         else{
+            $user = session('user');
+
+            $file = $request->file('file');
+            $timestamp = Carbon::now()->timestamp;
+
+            // Uploading a file
+            // Renaming
+            $temp = explode(".", $file->getClientOriginalName());
+            $filename = $temp[0];
+            $new_filename = $filename."_".$timestamp.".".$file->getClientOriginalExtension();
+
+            //Move Uploaded File
+            $destinationPath = 'uploads/';
+            $file->move($destinationPath,$new_filename);
+
+            // Reading File
+            if(($handle = fopen(public_path().'/uploads/'.$new_filename, 'r' )) !== FALSE){
+                //fgetcsv($handle, 10000, ":");
+
+                $query_row = 0;
+                while(($data = fgetcsv($handle, 10000, ':')) !== FALSE) {
+                    // Preparing values
+                   $pin = $data[1];
+                   $firstname = $data[2];
+                   $middlename = $data[3];
+                   $surname = $data[4];
+                   $registration_date = $data[5];
+                   $birth_date = $data[6];
+                   $sex = $data[7];
+                   $phone = $data[8];
+                   $email = $data[9];
+                   $postal_address = $data[10];
+                   $nationality = $data[11];
+                   $certificate_no = $data[12];
+                   $training_place = $data[13];
+
+                   $values = array(
+                    'pin' => $pin,
+                    'firstname' => $firstname,
+                    'middlename' => $middlename,
+                    'surname' => $surname,
+                    'registration_date' => $registration_date,
+                    'birth_date' => $birth_date,
+                    'sex' => $sex,
+                    'phone' => $phone,
+                    'email' => $email,
+                    'postal_address' => $postal_address,
+                    'nationality' => $nationality,
+                    'certificate_no' => $certificate_no,
+                    'training_place' => $training_place
+                );
+
+                // Add Dispenser.
+                $dispenser = $this->addDispenser($user, $values);
+
+                $query_row = $query_row + 1;
+                if($query_row >= 30) break; // <-- Submitting only 30 records for now.
+                }// <- End of While loop
+                fclose($handle);
+            }
+
+            return redirect('admin/dispensers')->with(['message' => 'Dispensers imported.','class' => 'success']);
+        }
+    }
+
     public function datatable(Request $request){
         $user = session('user');
 
@@ -368,6 +441,45 @@ class DispensersController extends Controller
             if($response_json->dispensers)
             {
                 return $response_json->dispensers;
+            }
+            else{
+                // No Dispenser.
+                return null;
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            \Log::info("Client error :" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (ServerErrorResponseException $e) {
+            \Log::info("Server error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (BadResponseException $e) {
+            \Log::info("BadResponse error" . $e->getResponse()->getBody(true));
+            return null;
+        }
+        catch (\Exception $e) {
+            \Log::info("Err" . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function addDispenser($user, $values)
+    {
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "dispensers";
+        $url .= "?api_token=";
+        $url .= $user->api_token;
+
+        try{
+            $promise = $client->requestAsync('POST', $url, ['json' => $values]);
+            $response = $promise->wait();
+            $response_json = json_decode($response->getBody());
+            if($response_json->dispenser)
+            {
+                return $response_json->dispenser;
             }
             else{
                 // No Dispenser.
