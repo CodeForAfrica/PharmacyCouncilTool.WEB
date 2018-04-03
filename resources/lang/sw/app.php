@@ -67,5 +67,9 @@ return [
     'Ward' => 'Kata',
     'Find_Another_Pharmacies' => 'Tafuta Maduka ya Dawa Mengine',
     'Pharmacy_Not_Found_Based_On_That_Location_Message' => 'Hakuna Duka la Dawa lilopatikana kulingana na taarifa ulizojaza.',
-    'No_Pharmacy_Found' => 'Hakuna Duka la Dawa.'
+    'No_Pharmacy_Found' => 'Hakuna Duka la Dawa.',
+    'Embed' => 'Pachika',
+    'Embed_This_Tool' => 'Pachika Kifaa Hichi',
+    'Embed_This_Tool_Words' => 'Nakili kanuni zilizopachikwa hapa chini na uziweke kwenye tovuti yako.',
+    'Embed_Sample' => 'Mfano wa Kupachika'
 ];

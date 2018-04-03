@@ -1,39 +1,13 @@
-<div class="container-fluid container-fluid-purple">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <br /><br />
-                <img class="visible-md visible-lg" src="images/pharmacy.png" />
-                <img class="visible-xs visible-sm" src="images/pharmacy.png" style="width:48px;" />
-            </div><!-- close div .col-md6 -->
-            <div class="col-sx-6 col-sm-6 col-md-6" style="padding-left:0px;padding-right:0px;">
-                <br /><br />
-                <div class="navs">
-                    <!--
-                    <ul>
-                        <li><a href="#simu-ya-mkononi">Simu ya Mkononi</a></li>
-                    </ul>
-                    -->
-                    <span class="pull-right">
-                        <a href="#" data-toggle="modal" data-target="#embedModal">{{ trans('app.Embed') }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{{ route('switchlanguage') }}?lang=en">ENG</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                        <a href="{{ route('switchlanguage') }}?lang=sw">SW</a>
-                    </span>
-                </div><!-- close div .navs -->
-            </div><!-- close div .col-md6 -->
-        </div><!-- close div .row -->
+@extends('layouts.master')
 
-        <br /><br /><br /><br /><br /><br />
+@section('title')
+    Maduka ya Madawa - Embed | Code for Tanzania
+@stop
+
+@section('content')
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 col-lg-6">
-                <div class="motto" id="motto-hakiki">
-                    <h1 class="visible-md visible-lg">{{ trans('app.Verify') }}<?php if(session('locale') == "sw") echo '<br/>taarifa za'; ?><br />{{ trans('app.A_Pharmacy') }}</h1>
-                </div>
-                <div class="motto" id="motto-ripoti" style="display:none;">
-                    <h1 class="visible-md visible-lg">{{ trans('app.Report') }}<?php if(session('locale') == "sw") echo '<br/>matatizo ya'; ?><br />{{ trans('app.A_Pharmacy') }}</h1>
-                </div>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="row maduka-tabs">
                     <ul class="nav nav-tabs">
                         <li class="active"  id="#tafuta-tab-toggle"><a data-toggle="tab" href="#tafuta-tab">{{ strtoupper(trans('app.LookUp')) }}</a></li>
@@ -190,28 +164,7 @@
                         </div><!-- close div #ripoti-tab -->
                     </div>
                 </div>
-            </div><!-- close div .col-md-6 -->
-        </div><!-- close div .row -->
-    </div><!-- close div .container -->
-
-    <!-- Modal -->
-    <div id="embedModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{{ trans('app.Embed_This_Tool') }}</h4>
-                </div>
-                <div class="modal-body">
-                    <p>{{ trans('app.Embed_This_Tool_Words') }}</p>
-                    <div class="form-group">
-                        <textarea class="form-control" rows="3"><iframe src="http://report.pc.go.tz/embed" frameborder="0" scrolling="no" height="400px" width="100%"></iframe></textarea>
-                    </div>
-
-                    <br />
-                    <a href="/embed">{{ trans('app.Embed_Sample') }}</a>
-                </div>
-            </div>
+            </div><!-- close div .col-md-12 -->
         </div>
     </div>
-</div><!-- close div .container-fluid -->
+@stop

@@ -67,5 +67,9 @@ return [
     'Ward' => 'Ward',
     'Find_Another_Pharmacies' => 'Find Another Pharmacies',
     'Pharmacy_Not_Found_Based_On_That_Location_Message' => 'There are no pharmacies found match your search query.',
-    'No_Pharmacy_Found' => 'No Pharmacy Found.'
+    'No_Pharmacy_Found' => 'No Pharmacy Found.',
+    'Embed' => 'Embed',
+    'Embed_This_Tool' => 'Embed This Tool',
+    'Embed_This_Tool_Words' => 'Copy and paste the following codes on your website.',
+    'Embed_Sample' => "Embed Sample"
 ];

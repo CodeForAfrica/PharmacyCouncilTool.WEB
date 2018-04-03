@@ -494,3 +494,9 @@ Route::get('/switchlanguage', [
     'as' => 'switchlanguage',
     'uses' => 'LanguageController@index'
 ]);
+
+// Embed route
+Route::get('/embed', [
+    'uses' => 'EmbedController@index',
+    'as' => 'embed'
+]);
