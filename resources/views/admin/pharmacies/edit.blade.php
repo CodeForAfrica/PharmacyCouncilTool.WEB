@@ -140,7 +140,7 @@
                         <button type="button" id="new-owner-btn" class="pull-right btn btn-primary btn-xs no-radius" style="font-size: 12px; font-weight: bold;">+ New Owner</button>
                     </div>
                     <div id="old-owner-div" class="form-group">
-                        <select id="owner_id" name="owner_id" class="form-control no-radius">
+                        <select id="owners_ids" name="owners_ids" class="form-control no-radius">
                             <option value="0">Choose Premise Owner</option>
                             
                         </select>
@@ -355,7 +355,11 @@
                 <div class="col-md-6">
                     <label>Submitted Dispenser Contract</label>
                     <div class="form-group">
-                        <input type="text" name="submitted_dispenser_contract" class="form-control no-radius" value="{{ $data['pharmacy']->submitted_dispenser_contract }}" placeholder="Submitted Dispenser Contract" />
+                        <select name="submitted_dispenser_contract" class="form-control no-radius">
+                            <option value="0">Choose option</option>
+                            <option value="Yes" @if($data['pharmacy']->submitted_dispenser_contract == "Yes") selected="selected" @endif>Yes</option>
+                            <option value="No" @if($data['pharmacy']->submitted_dispenser_contract == "No") selected="selected" @endif>No</option>
+                        </select>
                     </div>
                 </div>
 
@@ -410,7 +414,15 @@
                 <div class="col-md-6">
                     <label>Renewal Status</label>
                     <div class="form-group">
-                        <input type="text" name="renewal_status" class="form-control no-radius" value="{{ $data['pharmacy']->renewal_status }}" placeholder="Renewal Status" />
+                        <select name="renewal_status" class="form-control no-radius">
+                            <option value="0">Choose Status</option>
+                            <option value="Renewed" @if($data['pharmacy']->renewal_status == "Renewed") selected="selected" @endif>Renewed</option>
+                            <option value="Pending" @if($data['pharmacy']->renewal_status == "Pending") selected="selected" @endif>Pending</option>
+                            <option value="Waiting for Permit" @if($data['pharmacy']->renewal_status == "Waiting for Permit") selected="selected" @endif>Waiting for Permit</option>
+                            <option value="Not Renewed" @if($data['pharmacy']->renewal_status == "Not Renewed") selected="selected" @endif>Not Renewed</option>
+                            <option value="Closed" @if($data['pharmacy']->renewal_status == "Closed") selected="selected" @endif>Closed</option>
+                            <option value="Temporary Closed"  @if($data['pharmacy']->renewal_status == "Temporary Closed") selected="selected" @endif>Temporary Closed</option>
+                        </select>
                     </div>
                 </div>
 

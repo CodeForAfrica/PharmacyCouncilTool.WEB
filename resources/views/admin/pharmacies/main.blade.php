@@ -173,7 +173,7 @@
                                     <button type="button" id="new-owner-btn" class="pull-right btn btn-primary btn-xs no-radius" style="font-size: 12px; font-weight: bold;">+ New Owner</button>
                                 </div>
                                 <div id="old-owner-div" class="form-group">
-                                    <select id="owner_id" name="owner_id" class="form-control no-radius">
+                                    <select id="owners_ids" name="owners_ids" class="form-control no-radius">
                                         <option value="">Choose Premise Owner</option>
                                         @if(count($data['owners']) > 0)
                                             @foreach($data['owners'] as $owner)
@@ -392,7 +392,11 @@
                             <div class="col-md-6">
                                 <label>Submitted Dispenser Contract</label>
                                 <div class="form-group">
-                                    <input type="text" name="submitted_dispenser_contract" class="form-control no-radius" value="" placeholder="Submitted Dispenser Contract" />
+                                    <select name="submitted_dispenser_contract" class="form-control no-radius">
+                                        <option value="0">Choose option</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
                                 </div>
                             </div>
 
