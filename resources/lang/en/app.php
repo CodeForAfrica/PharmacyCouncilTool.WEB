@@ -56,5 +56,16 @@ return [
     'Facebook_Message' => 'Visit our Facebook page "www.facebook.com/pc" and send us a message to verify or report a pharmacy from your mobile device.',
     'Facebook_Message_Two' => '',
     'Footer_Heading' => 'Verify and Report A Pharmacy',
-    'Footer_Description' => 'Through this tool, you can verify and report different pharmacy information.'
+    'Footer_Description' => 'Through this tool, you can verify and report different pharmacy information.',
+    'LookUp' => 'Look UP',
+    'Choose_A_Place' => 'Choose a Place',
+    'OR' => 'Or',
+    'Enter_Pharmacy_Name' => 'Enter a Pharmacy Name',
+    'Pharmacy_Name' => 'Pharmacy Name',
+    'Region' => 'Region',
+    'District' => 'District',
+    'Ward' => 'Ward',
+    'Find_Another_Pharmacies' => 'Find Another Pharmacies',
+    'Pharmacy_Not_Found_Based_On_That_Location_Message' => 'There are no pharmacies found match your search query.',
+    'No_Pharmacy_Found' => 'No Pharmacy Found.'
 ];

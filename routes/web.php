@@ -485,6 +485,7 @@ Route::post('admin/wards/datatable', [
 // Adding new owner
 Route::get('admin/operations/addowner', 'Admin\OperationsController@addOwner');
 Route::get('admin/operations/addpersonnel', 'Admin\OperationsController@addPersonnel');
+Route::get('admin/operations/getregions', 'Admin\OperationsController@getRegions');
 Route::get('admin/operations/getdistricts', 'Admin\OperationsController@getDistricts');
 Route::get('admin/operations/getwards', 'Admin\OperationsController@getWards');
 

@@ -163,6 +163,61 @@ class OperationsController extends Controller
         ],200);
     }
 
+    public function getRegions(Request $request){
+        $errors = false;
+        $success = false;
+        $message = "";
+
+        $user = session('user');
+        
+        $client = new \GuzzleHttp\Client(['http_errors' => true]);
+        $url = env('APP_URL');
+        $url .= "regions";
+        $url .= "?limit=all&order_by=name,asc";
+
+        try{
+            $response = $client->request('GET', $url);
+            $response_json = json_decode($response->getBody());
+
+            if($response_json->regions)
+            {
+                $success = true;
+                $message = '';
+                if($response_json->regions){
+                    foreach($response_json->regions as $region){
+                        $message .= '<option value="'.$region->id.'">'.$region->name.'</option>';
+                    }
+                }
+            }
+            else{
+                // No Region.
+                $success = false;
+                $message = "Error";
+            }
+        }
+        catch (ClientErrorResponseException $e) {
+            $success = false;
+            $message = $e->getResponse()->getBody(true);
+        }
+        catch (ServerErrorResponseException $e) {
+            $success = false;
+            $message = $e->getResponse()->getBody(true);
+        }
+        catch (BadResponseException $e) {
+            $success = false;
+            $message = $e->getResponse()->getBody(true);
+        }
+        catch (\Exception $e) {
+            $success = false;
+            $message = $e->getMessage();
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ],200);
+    }
+
     public function getDistricts(Request $request){
         $errors = false;
         $success = false;
@@ -173,11 +228,9 @@ class OperationsController extends Controller
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
         $url .= "districts";
-        $url .= "?api_token=";
-        $url .= $user->api_token;
-        $url .= "&region_id=";
+        $url .= "?region_id=";
         $url .= $request->region_id;
-        $url .= "&limit=all";
+        $url .= "&limit=all&order_by=name,asc";
 
         try{
             $response = $client->request('GET', $url);
@@ -186,7 +239,7 @@ class OperationsController extends Controller
             if($response_json->districts)
             {
                 $success = true;
-                $message = '<option value="0">Choose District</option>';
+                $message = '';
                 if($response_json->districts){
                     foreach($response_json->districts as $district){
                         $message .= '<option value="'.$district->id.'">'.$district->name.'</option>';
@@ -232,11 +285,9 @@ class OperationsController extends Controller
         $client = new \GuzzleHttp\Client(['http_errors' => true]);
         $url = env('APP_URL');
         $url .= "wards";
-        $url .= "?api_token=";
-        $url .= $user->api_token;
-        $url .= "&district_id=";
+        $url .= "?district_id=";
         $url .= $request->district_id;
-        $url .= "&limit=all";
+        $url .= "&limit=all&order_by=name,asc";  
 
         try{
             $response = $client->request('GET', $url);
@@ -245,7 +296,7 @@ class OperationsController extends Controller
             if($response_json->wards)
             {
                 $success = true;
-                $message = '<option value="0">Choose Ward</option>';
+                $message = '';
                 if($response_json->wards){
                     foreach($response_json->wards as $ward){
                         $message .= '<option value="'.$ward->id.'">'.$ward->name.'</option>';

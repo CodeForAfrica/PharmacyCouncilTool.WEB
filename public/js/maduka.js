@@ -1,6 +1,10 @@
 // API url
 var API_URL = "http://htools-tz-pharmacy-reporting-tool-api.dokku-1.codefortanzania.org/api/";
-// var API_URL = "http://127.0.0.1:8090/api/";
+//var API_URL = "http://127.0.0.1:8090/api/";
+
+$(function(){
+    getRegions();
+});
 
 $('#hakiki-duka-la-dawa-button').click(function(){
     $('#container-fluid-hakiki').slideUp("slow");
@@ -52,6 +56,7 @@ $('#hakiki-button').click(function(){
         url: url,
         cache: true,
         success: function(data){
+            console.log(data);
             var pharmacy = data.pharmacy;
 
             $('.pharmacy-registration-number').html($('#pharmacy-regno').val());
@@ -162,4 +167,183 @@ $('.ripoti-tatizo-jingine-button').click(function(){
 
     $('#ripoti-form').show();
     $('#ripoti-results').hide()
+});
+
+// Pharmacy LookUp
+var region_error = true;
+var district_error = true;
+var ward_error = true;
+var tafuta_pharmacy_name_error = true;
+
+function validateTafutaForm(){
+    if((!region_error && !district_error && !ward_error) || !tafuta_pharmacy_name_error){
+        $('#tafuta-button').prop('disabled', false);
+    }
+    else $('#tafuta-button').prop('disabled', true);
+}
+
+// Function to fetch regions.
+var getRegions = function(){
+    let type = "GET";
+    let url =  "/admin/operations/getregions";
+
+    $.ajax({
+        type: type,
+        url: url,
+        success: function (data) {
+            if(data.success){
+                $('#region').append(data.message);
+                $("#region").prop( "disabled", false);
+            }
+            else{
+                //$("#error-message span").html(data.message);
+                //$("#error-message").show();
+            }
+        },
+        error: function (data) {
+            //$("#error-message span").html("Something went wrong, try to add new owner again.");
+            //$("#error-message").show();
+        }
+    });
+}
+
+// Region is changed to fetch Districts.
+$('#region').change(function(){
+    // Disable District select
+    $('#district').html("<option value='0'>Choose District</option>");
+    $("#district").prop( "disabled", true);
+
+    // Disable Ward select
+    $('#ward').html("<option value='0'>Choose Ward</option>");
+    $("#ward").prop( "disabled", true);
+
+    // Set errors.
+    if($('#region').val() == 0){
+        region_error = true;
+        district_error = true;
+        ward_error = true;
+    }
+    else region_error = false;
+
+    var formData = "region_id=" + $('#region').val();
+
+    let type = "GET";
+    let url =  "/admin/operations/getdistricts";
+
+    $.ajax({
+        type: type,
+        url: url,
+        data: formData,
+        success: function (data) {
+            if(data.success){
+                $('#district').append(data.message);
+                $("#district").prop( "disabled", false);
+            }
+            else{
+                //$("#error-message span").html(data.message);
+                //$("#error-message").show();
+            }
+        },
+        error: function (data) {
+            //$("#error-message span").html("Something went wrong, try to add new owner again.");
+            //$("#error-message").show();
+        }
+    });
+
+    validateTafutaForm();
+});
+
+// District is changed to fetch Wards.
+$('#district').change(function(){
+    // Disable Ward select
+    $('#ward').html("<option value='0'>Choose Ward</option>");
+    $("#ward").prop( "disabled", true);
+
+    // Set errors.
+    if($('#district').val() == 0){
+        district_error = true;
+        ward_error = true;
+    }
+    else district_error = false;
+
+    var formData = "district_id=" + $('#district').val();
+
+    let type = "GET";
+    let url =  "/admin/operations/getwards";
+    
+
+    $.ajax({
+        type: type,
+        url: url,
+        data: formData,
+        success: function (data) {
+            if(data.success){
+                $('#ward').append(data.message);
+                $("#ward").prop( "disabled", false);
+            }
+            else{
+                //$("#error-message span").html(data.message);
+                //$("#error-message").show();
+            }
+        },
+        error: function (data) {
+            //$("#error-message span").html("Something went wrong, try to add new owner again.");
+            //$("#error-message").show();
+        }
+    });
+
+    validateTafutaForm();
+});
+
+$('#ward').change(function(){
+    if($('#ward').val() == 0){
+        ward_error = true;
+    }
+    else ward_error = false;
+
+    validateTafutaForm();
+});
+
+$('#tafuta-pharmacy-name').keyup(function(){
+    if($('#tafuta-pharmacy-name').val().length >= 3)
+        tafuta_pharmacy_name_error = false;
+    else 
+        tafuta_pharmacy_name_error = true;
+
+    validateTafutaForm();
+});
+
+$('#tafuta-button').click(function(){
+    var url = API_URL + "lookup?region=" + $('#region').val() + "&district=" + $('#district').val() + "&ward=" + $('#ward').val() + "&name=" + $('#tafuta-pharmacy-name').val();
+
+    $.ajax({
+        dataType: "json",
+        url: url,
+        cache: true,
+        success: function(data){
+            console.log(data);
+            if(data.status == 200){
+                $('.tafuta-query').html(data.tafuta_query);
+                $('#tafuta-results-data').html(data.table_data);
+                $('#tafuta-form').hide();
+                $('#tafuta-results-found').show();
+            }
+            else{
+                $('#tafuta-form').hide();
+                $('#tafuta-results-not-found').show();
+            }
+        },
+        error: function(e){
+            console.log(e.message);
+        }
+    });
+});
+
+$('.tafuta-duka-jingine-button').click(function(){
+   // $('#pharmacy-regno').val("");
+    $('#tafuta-button').prop('disabled', true);
+
+    $('#tafuta-results-found').hide();
+    $('#tafuta-results-not-found').hide();
+    $('#tafuta-form').show();
 });

@@ -35,12 +35,74 @@
             <div class="col-md-6">
                 <div class="row maduka-tabs">
                     <ul class="nav nav-tabs">
-                        <li class="active" id="#hakiki-tab-toggle"><a data-toggle="tab" href="#hakiki-tab">{{ strtoupper(trans('app.Verify')) }}</a></li>
+                        <li class="active"  id="#tafuta-tab-toggle"><a data-toggle="tab" href="#tafuta-tab">{{ strtoupper(trans('app.LookUp')) }}</a></li>
+                        <li id="#hakiki-tab-toggle"><a data-toggle="tab" href="#hakiki-tab">{{ strtoupper(trans('app.Verify')) }}</a></li>
                         <li><a data-toggle="tab" href="#ripoti-tab" id="#ripoti-tab-toggle">{{ strtoupper(trans('app.Report')) }}</a></li>
                     </ul>
 
                     <div class="tab-content">
-                        <div id="hakiki-tab" class="tab-pane fade in active">
+                        <div id="tafuta-tab" class="tab-pane fade in active">
+                            <div class="hakiki-form no-radius" id="tafuta-form" style="display: ;">
+                                <span>{{ trans('app.Choose_A_Place') }}</span>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <select class="form-control" id="region">
+                                            <option value="0" selected="selected">{{ trans('app.Region') }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-control" id="district" disabled>
+                                            <option value="0" selected="selected">{{ trans('app.District') }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-control" id="ward" disabled>
+                                            <option value="0" selected="selected">{{ trans('app.Ward') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <span>{{ trans('app.OR') }} {{ trans('app.Enter_Pharmacy_Name') }}</span>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="{{ trans('app.Pharmacy_Name') }}" id="tafuta-pharmacy-name"/>
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-lg btn-block btn-pink no-radius" id="tafuta-button" disabled>{{ strtoupper(trans('app.LookUp')) }}</button>
+                                </div>
+                            </div><!-- close div #tafuta-form -->
+
+                            <div class="tafuta-results-found" id="tafuta-results-found" style="display: none;">
+                                <div class="alert alert-success" role="alert">
+                                    <span class="fa fa-check-circle-o"></span>&nbsp;&nbsp;
+                                    <span class="tafuta-query"></span>
+                                </div><!-- close div .alert-success -->
+                                <div class="maelezo" style="height: 160px; overflow: scroll; overflow-x: hidden;">
+                                    <table id="tafuta-results-data" class="table table-results">
+                                        
+                                    </table>
+                                </div><!-- close div .maelezo -->
+                                <br />
+                                <br />
+                                <button type="button" class="btn btn-pink no-radius btn-block tafuta-duka-jingine-button">{{ strtoupper(trans('app.Find_Another_Pharmacies')) }}</button>
+                            </div><!-- close div .tafuta-results-found -->
+
+                            <div class="tafuta-results-not-found" id="tafuta-results-not-found"style="display:none;">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="fa fa-ban"></span>&nbsp;&nbsp;
+                                    <span>{{ trans('app.No_Pharmacy_Found') }}</span>
+                                </div><!-- close div .alert-success -->
+                                <p>{{ trans('app.Pharmacy_Not_Found_Based_On_That_Location_Message') }}</p>
+                                <p>{{ trans('app.Pharmacy_Not_Found_Message_Two') }}</p>
+                                <br /><br /><br />
+                                <button type="button" class="btn btn-pink no-radius btn-block tafuta-duka-jingine-button">{{ trans('app.Find_Another_Pharmacies') }}</button>
+                            </div><!-- closed div .tafuta-results-not-found -->
+
+                        </div><!-- close div #tafuta-form -->
+                        <div id="hakiki-tab" class="tab-pane fade">
                             <div class="hakiki-form no-radius" id="hakiki-form" style="display:;">
                                 <div class="arrow_box">
                                     <img src="images/sticker_blured.jpg" class="img-responsive"/>
@@ -61,7 +123,6 @@
                                     <span>{{ trans('app.Pharmacy_With_Registration_Number') }}<strong class="pharmacy-registration-number">222XX</strong> {{ trans('app.Is_Registered') }}</span>
                                 </div><!-- close div .alert-success -->
                                 <div class="maelezo">
-                                    <br />
                                     <table class="table">
                                         <tr>
                                             <td style="width:30%;"><strong>{{ trans('app.Pharmacy_Name') }}</strong></td>

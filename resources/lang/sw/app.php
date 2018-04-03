@@ -56,5 +56,16 @@ return [
     'Facebook_Message' => 'Tembelea kurasa yetu ya Facebook "www.facecbook.com/pc" na tuma ujumbe kuhakiki na kuripoti duka la dawa kupitia simy yako.',
     'Facebook_Message_Two' => '',
     'Footer_Heading' => 'Hakiki na Ripoti Maduka ya Dawa',
-    'Footer_Description' => 'Kupitia kifaa hichi unaweza kuhakiki na kuripoti taarifa mbalimbali zinazohusu duka la dawa.'
+    'Footer_Description' => 'Kupitia kifaa hichi unaweza kuhakiki na kuripoti taarifa mbalimbali zinazohusu duka la dawa.',
+    'LookUp' => 'Tafuta',
+    'Choose_A_Place' => 'Chagua Mahali',
+    'OR' => 'Au',
+    'Enter_Pharmacy_Name' => 'Ingiza Jina la Duka la Dawa',
+    'Pharmacy_Name' => 'Jina la Duka la Dawa',
+    'Region' => 'Mkoa',
+    'District' => 'Wilaya',
+    'Ward' => 'Kata',
+    'Find_Another_Pharmacies' => 'Tafuta Maduka ya Dawa Mengine',
+    'Pharmacy_Not_Found_Based_On_That_Location_Message' => 'Hakuna Duka la Dawa lilopatikana kulingana na taarifa ulizojaza.',
+    'No_Pharmacy_Found' => 'Hakuna Duka la Dawa.'
 ];

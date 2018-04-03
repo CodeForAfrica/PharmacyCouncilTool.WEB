@@ -711,7 +711,8 @@
                 success: function (data) {
                     console.log(data);
                     if(data.success){
-                        $('#district_id').html(data.message);
+                        $('#district_id').html('<option value="0">Choose District</option>');
+                        $('#district_id').append(data.message);
                         $("#district_id").prop( "disabled", false);
                     }
                     else{
@@ -743,7 +744,8 @@
                 success: function (data) {
                     console.log(data);
                     if(data.success){
-                        $('#ward_id').html(data.message);
+                        $('#ward_id').html('<option value="0">Choose Ward</option>');
+                        $('#ward_id').append(data.message);
                         $("#ward_id").prop( "disabled", false);
                     }
                     else{
