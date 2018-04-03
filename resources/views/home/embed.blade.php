@@ -21,17 +21,17 @@
                                 <span>{{ trans('app.Choose_A_Place') }}</span>
 
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-xs-4">
                                         <select class="form-control" id="region">
                                             <option value="0" selected="selected">{{ trans('app.Region') }}</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-xs-4">
                                         <select class="form-control" id="district" disabled>
                                             <option value="0" selected="selected">{{ trans('app.District') }}</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-xs-4">
                                         <select class="form-control" id="ward" disabled>
                                             <option value="0" selected="selected">{{ trans('app.Ward') }}</option>
                                         </select>
